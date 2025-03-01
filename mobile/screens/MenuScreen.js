@@ -13,7 +13,7 @@ const MenuScreen = ({ navigation }) => {
     <ImageBackground source={require('../assets/back.png')} style={styles.background}>
       <SafeAreaView style={styles.safeArea}>
         
-        {/* Profile Header */}
+        {/* Profile Headers */}
         <View style={styles.profileContainer}>
           <Image source={require('../assets/rizal.png')} style={styles.profileImage} />
           <View style={styles.profileInfo}>
