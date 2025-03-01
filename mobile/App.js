@@ -12,6 +12,7 @@ import MenuScreen from './screens/MenuScreen';
 import ChapterScreen from './screens/ChapterScreen';
 import ChapterDetailsScreen from './screens/ChapterDetailsScreen';
 import ProfileScreen from './screens/ProfileScreen';
+import ShopScreen from './screens/ShopScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -34,6 +35,7 @@ const App = () => {
         <Stack.Screen name="Chapter" component={ChapterScreen} />
         <Stack.Screen name="ChapterDetail" component={ChapterDetailsScreen} />
         <Stack.Screen name="Profile" component={ProfileScreen} />
+        <Stack.Screen name="Shop" component={ShopScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

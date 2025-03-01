@@ -50,7 +50,7 @@ const MenuScreen = ({ navigation }) => {
             <FontAwesome5 name="calendar-alt" size={22} color="white" />
             <Text style={styles.navText}>CHALLENGES</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.navItem}>
+          <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Shop')}>
             <Image source={require('../assets/shop.png')} style={styles.navIcon} />
             <Text style={styles.navText}>SHOP</Text>
           </TouchableOpacity>
