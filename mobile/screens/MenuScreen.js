@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
   chapterButton: {
     width: 63,
     height: 63,
-    backgroundColor: 'rgb(56, 50, 50)',
+    backgroundColor: 'rgb(50, 43, 43)',
     borderRadius: 30,
     alignItems: 'center',
     justifyContent: 'center',
@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
   navbar: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: 'rgba(120, 116, 116, 0.86)',
+    backgroundColor: 'rgba(102, 99, 99, 0.67)',
     padding: 15,
     borderRadius: 10,
     marginLeft: -11,
