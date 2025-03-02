@@ -42,8 +42,8 @@ const MenuScreen = ({ navigation }) => {
 
         {/* Bottom Navigation */}
         <View style={styles.navbar}>
-          <TouchableOpacity style={styles.navItem}>
-            <Image source={require('../assets/practice.png')} style={styles.navIcon} />
+          <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Practice')}>
+            <Image source={require('../assets/practice.png')} style={styles.navIcon }/>
             <Text style={styles.navText}>PRACTICE</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Chapter')}>
