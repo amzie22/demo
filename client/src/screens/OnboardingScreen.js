@@ -14,7 +14,7 @@ const OnboardingScreen = ({ navigation }) => {
             navigation.replace('Login');
         }
     };
-
+//adahjdahjdhahda
     const screens = [
         {
             title: 'WELCOME',

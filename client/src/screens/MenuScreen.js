@@ -44,6 +44,15 @@ const MenuScreen = ({ navigation }) => {
 
         {/* Bottom Navigation */}
         <View style={styles.navbar}>
+
+          <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Practice')}>
+            <Image source={require('../assets/practice.png')} style={styles.navIcon }/>
+            <Text style={styles.navText}>PRACTICE</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Chapter')}>
+            <FontAwesome5 name="calendar-alt" size={22} color="white" />
+            <Text style={styles.navText}>CHALLENGES</Text>
+
         <TouchableOpacity style={[styles.navItem, { marginLeft: 20 }]}>
           <Image source={require('../assets/practice.png')} style={styles.navIcon} />
           <Text style={styles.navText}>PRACTICE</Text>
