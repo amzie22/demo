@@ -1,16 +1,14 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, ImageBackground, ScrollView, Dimensions } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
 
 const ShopScreen = () => {
   const [orchivium, setOrchivium] = useState(0);
-  const circles = Array(5).fill(null);
-  const colors = ['#784C34', '#FF5733', '#33FF57', '#3357FF', '#FF33A1'];
 
   return (
     <ImageBackground 
-      source={require('../assets/MainBG.jpg')} 
+      source={require('../assets/MainBG.png')} 
       style={styles.background}
       resizeMode="cover"
     >
@@ -25,15 +23,38 @@ const ShopScreen = () => {
             <View style={styles.box} />
           </View>
           <View style={styles.line} />
-          <ScrollView 
-            horizontal 
-            showsHorizontalScrollIndicator={false} 
-            contentContainerStyle={styles.circleContainer}
-          >
-            {circles.map((_, index) => (
-              <View key={index} style={[styles.circle, { backgroundColor: colors[index % colors.length] }]} />
-            ))}
-          </ScrollView>
+          <Text style={styles.avatarText}>AVATAR</Text>
+          <View style={styles.circleScrollContainer}>
+            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+              <View style={styles.circleContainer}>
+                <View style={styles.circle} />
+                <View style={styles.circle} />
+                <View style={styles.circle} />
+                <View style={styles.circle} />
+                <View style={styles.circle} />
+                <View style={styles.circle} />
+                <View style={styles.circle} />
+                <View style={styles.circle} />
+                <View style={styles.circle} />
+                <View style={styles.circle} />
+              </View>
+            </ScrollView>
+          </View>
+          <View style={styles.line} />
+          <Text style={styles.avatarText}>THEMES</Text>
+          <View style={styles.squareScrollContainer}>
+            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+              <View style={styles.squareContainer}>
+                <View style={styles.square} />
+                <View style={styles.square} />
+                <View style={styles.square} />
+                <View style={styles.square} />
+                <View style={styles.square} />
+              </View>
+            </ScrollView>
+          </View>
+          <View style={styles.line} />
+          
         </View>
       </ScrollView>
     </ImageBackground>
@@ -56,6 +77,8 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     width: '100%', 
+    height: '100%',
+    paddingBottom: 50,
   },
   header: {
     flexDirection: 'row',
@@ -74,8 +97,7 @@ const styles = StyleSheet.create({
   },
   orchiviumText: {
     fontSize: 16,
-    fontWeight: 'bold',
-    color: '#3D261C',
+    color: '#3D261C'
   },
   line: {
     width: '80%',
@@ -87,7 +109,7 @@ const styles = StyleSheet.create({
   boxContainer: {
     alignItems: 'center',
     marginTop: 20,
-    marginBottom: 15, 
+    marginBottom: 15,
   },
   box: {
     width: 300,
@@ -95,17 +117,48 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     backgroundColor: '#784C34',
   },
+  squareScrollContainer: {
+    width: '100%',
+  },
+  squareContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
+    marginBottom: 10,
+    paddingLeft: 30,
+    paddingRight: 30,
+  },
+  square: {
+    width: 130,
+    height: 280,
+    borderRadius: 16,
+    backgroundColor: '#784C34',
+    marginHorizontal: 10,
+  },
+  avatarText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#3D261C',
+    marginTop: 15,
+    marginBottom: 10,
+  },
+  circleScrollContainer: {
+    width: '100%',
+  },
   circleContainer: {
     flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 0,
+    justifyContent: 'space-between',
+    marginTop: 20,
+    marginBottom: 10,
+    paddingLeft: 30,
+    paddingRight: 30,
   },
   circle: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    marginHorizontal: 10,
+    width: 60,
+    height: 60,
+    borderRadius: 40,
+    backgroundColor: '#784C34',
+    marginHorizontal: 5,
   },
 });
 
