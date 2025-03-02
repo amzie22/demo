@@ -52,16 +52,8 @@ const MenuScreen = ({ navigation }) => {
           <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Chapter')}>
             <FontAwesome5 name="calendar-alt" size={22} color="white" />
             <Text style={styles.navText}>CHALLENGES</Text>
-
-        <TouchableOpacity style={[styles.navItem, { marginLeft: 20 }]}>
-          <Image source={require('../assets/practice.png')} style={styles.navIcon} />
-          <Text style={styles.navText}>PRACTICE</Text>
-        </TouchableOpacity>
-
-          <TouchableOpacity style={styles.navItem}>
-          <Image source={require('../assets/challenges.png')} style={styles.navIcon} />
-          <Text style={styles.navText}>CHALLENGES</Text>
           </TouchableOpacity>
+          
           <TouchableOpacity style={[styles.navItem, { marginLeft: 70 }]}>
             <Image source={require('../assets/shop.png')} style={styles.navIcon} />
             <Text style={styles.navText}>SHOP</Text>

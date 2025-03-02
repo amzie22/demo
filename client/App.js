@@ -4,27 +4,27 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 
-import SplashScreenComponent from './screens/SplashScreen';
-import OnboardingScreen from './screens/OnboardingScreen';
-import LoginScreen from './screens/LoginScreen';
-import SignupScreen from './screens/SignupScreen';
-import VerificationScreen from './screens/VerificationScreen';
-import MenuScreen from './screens/MenuScreen';
-import ChapterScreen from './screens/ChapterScreen';
-import ChapterDetailsScreen from './screens/ChapterDetailsScreen';
-import ProfileScreen from './screens/ProfileScreen';
-import ShopScreen from './screens/ShopScreen';
-import PracticeScreen from './screens/PracticeScreen';
+import SplashScreenComponent from './src/screens/SplashScreen';
+import OnboardingScreen from './src/screens/OnboardingScreen';
+import LoginScreen from './src/screens/LoginScreen';
+import SignupScreen from './src/screens/SignupScreen';
+import VerificationScreen from './src/screens/VerificationScreen';
+import MenuScreen from './src/screens/MenuScreen';
+import ChapterScreen from './src/screens/ChapterScreen';
+import ChapterDetailsScreen from './src/screens/ChapterDetailsScreen';
+import ProfileScreen from './src/screens/ProfileScreen';
+import ShopScreen from './src/screens/ShopScreen';
+import PracticeScreen from './src/screens/PracticeScreen';
 
 // Import practice screens
-import PracticeAScreen from './screens/practices/A';
+import PracticeAScreen from './src/screens/practices/A';
 // Add other practice screens as needed
 
 const Stack = createNativeStackNavigator();
 
 const loadFonts = () => {
   return Font.loadAsync({
-    'DoctrinaChristianaBold': require('./assets/fonts/DoctrinaChristianaBold.otf'),
+    'DoctrinaChristianaBold': require('./src/assets/fonts/DoctrinaChristianaBold.otf'),
   });
 };
 
