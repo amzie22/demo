@@ -46,10 +46,7 @@ const App = () => {
     prepare();
   }, []);
 
-  if (!fontsLoaded) {
-    return null;
-  }
-
+ 
   return (
     <NavigationContainer>
       <Stack.Navigator 
