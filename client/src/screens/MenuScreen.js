@@ -46,7 +46,10 @@ const MenuScreen = ({ navigation }) => {
 
         {/* Bottom Navigation */}
         <View style={styles.navbar}>
-
+        <TouchableOpacity style={[styles.navItem, { marginRight: 0 }]} onPress={() => navigation.navigate('Test')}>
+            <Image source={require('../assets/practice.png')} style={styles.navIcon }/>
+            <Text style={styles.navText}>TEST</Text>
+          </TouchableOpacity>
           <TouchableOpacity style={[styles.navItem, { marginRight: 15 }]} onPress={() => navigation.navigate('Practice')}>
             <Image source={require('../assets/practice.png')} style={styles.navIcon }/>
             <Text style={styles.navText}>PRACTICE</Text>
@@ -55,6 +58,7 @@ const MenuScreen = ({ navigation }) => {
             <FontAwesome5 name="calendar-alt" size={32} color="white" />
             <Text style={styles.navText}>CHALLENGES</Text>
           </TouchableOpacity>
+          
           
           {/* CHAPTER Button - Centered Inside Navbar */}
           <View style={styles.chapterButtonContainer}>

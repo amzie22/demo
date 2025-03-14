@@ -15,6 +15,7 @@ import ChapterDetailsScreen from './src/screens/ChapterDetailsScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 import ShopScreen from './src/screens/ShopScreen';
 import PracticeScreen from './src/screens/PracticeScreen';
+import TestScreen from './src/screens/TestScreen';
 
 // Import practice screens
 import PracticeAScreen from './src/screens/practices/A';
@@ -63,6 +64,7 @@ const App = () => {
         <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="Shop" component={ShopScreen} />
         <Stack.Screen name="Practice" component={PracticeScreen} />
+        <Stack.Screen name="Test" component={TestScreen} />
         {/* Add practice screens */}
         <Stack.Screen name="A" component={PracticeAScreen} />
         {/* Add other practice screens as needed */}
