@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ImageBackground, Dimensions } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Text, StyleSheet, ImageBackground, Dimensions, TouchableOpacity } from 'react-native';
 import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useNavigation } from '@react-navigation/native';
+import Sketch from '../../components/Sketch'; // Import the custom Sketch component
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const { width, height } = Dimensions.get('window');
 
@@ -16,6 +18,7 @@ const A = () => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
   const navigation = useNavigation();
+  const sketchRef = useRef(null);
 
   useEffect(() => {
     SplashScreen.preventAutoHideAsync();
@@ -28,6 +31,16 @@ const A = () => {
   if (!fontsLoaded) {
     return null; // Render nothing while waiting for fonts to load
   }
+
+  const handleClear = () => {
+    if (sketchRef.current) {
+      sketchRef.current.clear();
+    }
+  };
+
+  const handlePlay = () => {
+    // Implement play functionality
+  };
 
   return (
     <ImageBackground 
@@ -42,10 +55,26 @@ const A = () => {
         </View>
       ) : (
         <View style={styles.container}>
-          <View style={styles.overlayBox} />
+          <View style={styles.overlayBox}>
+            <Sketch ref={sketchRef} style={styles.canvas} />
+          </View>
           <View style={styles.box}>
             <Text style={styles.smallText}>A</Text>
             <Text style={styles.largeText}>A</Text>
+          </View>
+          <View style={styles.iconContainer}>
+            <View style={styles.iconWrapper}>
+              <TouchableOpacity onPress={handlePlay}>
+                <Icon name="play" size={40} color="#000" />
+              </TouchableOpacity>
+              <Text style={styles.iconText}>Animation</Text>
+            </View>
+            <View style={styles.iconWrapper}>
+              <TouchableOpacity onPress={handleClear}>
+                <Icon name="eraser" size={40} color="#000" />
+              </TouchableOpacity>
+              <Text style={styles.iconText}>Erase</Text>
+            </View>
           </View>
         </View>
       )}
@@ -65,7 +94,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%', 
     height: '100%',
-    paddingBottom: 50,
+    paddingBottom: 30,
   },
   smallText: {
     fontSize: 35,
@@ -96,14 +125,33 @@ const styles = StyleSheet.create({
     width: 320,
     height: '60%',
     borderRadius: 16,
-    top: '20%', 
-    transform: [{ translateY: -'50%' }], 
+    top: '12%', 
+    transform: [{ translateY: -'50%' }], // Corrected transform value
     zIndex: 1,
+  },
+  canvas: {
+    flex: 1,
+    backgroundColor: 'transparent',
   },
   errorText: {
     fontSize: 20,
     color: 'red',
     textAlign: 'center',
+  },
+  iconContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '60%',
+    marginTop: 40,
+
+  },
+  iconWrapper: {
+    alignItems: 'center',
+  },
+  iconText: {
+    marginTop: 5,
+    fontSize: 16,
+    color: '#000',
   },
 });
 
