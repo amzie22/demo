@@ -16,7 +16,7 @@ const ChapterDetailsScreen = () => {
             <TouchableOpacity style={styles.episodeItem}>
               <Text style={styles.episodeText}>Episode 1</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.episodeItem}>
+            <TouchableOpacity style={styles.episodeItem}> 
               <Text style={styles.episodeText}>Episode 2</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.episodeItem}>

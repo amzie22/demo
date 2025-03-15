@@ -12,10 +12,14 @@ import VerificationScreen from './src/screens/VerificationScreen';
 import MenuScreen from './src/screens/MenuScreen';
 import ChapterScreen from './src/screens/ChapterScreen';
 import ChapterDetailsScreen from './src/screens/ChapterDetailsScreen';
+import Chapter1DetailsScreen from './src/screens/Chapter1DetailsScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 import ShopScreen from './src/screens/ShopScreen';
 import PracticeScreen from './src/screens/PracticeScreen';
 import TestScreen from './src/screens/TestScreen';
+import ClickableBooksScreen from './src/screens/ClickableBooksScreen';
+import SkipScreen from './src/screens/SkipScreen';
+import SetupScreen from './src/screens/SetupScreen';
 
 // Import practice screens
 import PracticeAScreen from './src/screens/practices/A';
@@ -61,10 +65,14 @@ const App = () => {
         <Stack.Screen name="Menu" component={MenuScreen} />
         <Stack.Screen name="Chapter" component={ChapterScreen} />
         <Stack.Screen name="ChapterDetail" component={ChapterDetailsScreen} />
+        <Stack.Screen name="Chapter1Details" component={Chapter1DetailsScreen} />
         <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="Shop" component={ShopScreen} />
         <Stack.Screen name="Practice" component={PracticeScreen} />
         <Stack.Screen name="Test" component={TestScreen} />
+        <Stack.Screen name="ClickableBooks" component={ClickableBooksScreen} />
+        <Stack.Screen name="Skip" component={SkipScreen} />
+        <Stack.Screen name="Setup" component={SetupScreen} />
         {/* Add practice screens */}
         <Stack.Screen name="A" component={PracticeAScreen} />
         {/* Add other practice screens as needed */}

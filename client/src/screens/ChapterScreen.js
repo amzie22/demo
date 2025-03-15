@@ -9,13 +9,12 @@ const ChapterScreen = ({ navigation }) => {
       style={styles.container}
     >
       <ScrollView contentContainerStyle={styles.content}>
-        <TouchableOpacity 
-          style={styles.chapterCard}
-        >
+        <TouchableOpacity style={styles.chapterCard}
+        onPress={() => navigation.navigate('Chapter1Details')}>
           <Text style={styles.chapterText}>Chapter 1</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.chapterCard}  
-        onPress={() => navigation.navigate('ChapterDetail')}>
+        onPress={() => navigation.navigate('ChapterDetails')}>
           <Text style={styles.chapterText}>Chapter 2</Text>
         </TouchableOpacity>
       </ScrollView>

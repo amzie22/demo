@@ -12,9 +12,9 @@ const MenuScreen = ({ navigation }) => {
   const progressPercentage = (currentXP / maxXP) * 100;
 
   return (
-    <ImageBackground source={require('../assets/back.png')} style={styles.background}>
+    <ImageBackground source={require("../assets/back.png")} style={styles.background}>
       <SafeAreaView style={styles.safeArea}>
-        
+
         {/* Profile Headers */}
         <View style={styles.profileContainer}>
           <Image source={require('../assets/rizal.png')} style={styles.profileImage} />
@@ -46,24 +46,20 @@ const MenuScreen = ({ navigation }) => {
 
         {/* Bottom Navigation */}
         <View style={styles.navbar}>
-        <TouchableOpacity style={[styles.navItem, { marginRight: 0 }]} onPress={() => navigation.navigate('Test')}>
-            <Image source={require('../assets/practice.png')} style={styles.navIcon }/>
-            <Text style={styles.navText}>TEST</Text>
-          </TouchableOpacity>
+
           <TouchableOpacity style={[styles.navItem, { marginRight: 15 }]} onPress={() => navigation.navigate('Practice')}>
-            <Image source={require('../assets/practice.png')} style={styles.navIcon }/>
+            <Image source={require('../assets/practice.png')} style={styles.navIcon} />
             <Text style={styles.navText}>PRACTICE</Text>
           </TouchableOpacity>
           <TouchableOpacity style={[styles.navItem, { marginRight: 45 }]} onPress={() => navigation.navigate('Chapter')}>
             <FontAwesome5 name="calendar-alt" size={32} color="white" />
             <Text style={styles.navText}>CHALLENGES</Text>
           </TouchableOpacity>
-          
-          
+
           {/* CHAPTER Button - Centered Inside Navbar */}
           <View style={styles.chapterButtonContainer}>
             <TouchableOpacity onPress={() => navigation.navigate('Chapter')} style={styles.chapterButton}>
-              <Image source={require('../assets/chapter.png')} style={styles.chapterIcon} />
+              <Image source={require('../assets/challenges.png')} style={styles.chapterIcon} />
             </TouchableOpacity>
           </View>
 
@@ -89,15 +85,15 @@ const styles = StyleSheet.create({
   },
   safeArea: {
     flex: 1,
-    paddingHorizontal: Platform.OS === 'ios' ? '0.5%' : '0.5%', // Adjust padding for iOS and Android
+    paddingHorizontal: Platform.OS === 'ios' ? '0.5%' : '0.5%',
   },
   /* Profile Header*/
   profileContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     position: 'absolute',
-    top: Platform.OS === 'ios' ? '10%' : '9%', // Adjust top position for iOS and Android
-    left: Platform.OS === 'ios' ? '8%' : '6%', // Adjust top position for iOS and Android,
+    top: Platform.OS === 'ios' ? '10%' : '9%',
+    left: Platform.OS === 'ios' ? '8%' : '6%',
     fontFamily: 'Cardo',
   },
   profileImage: {
@@ -146,11 +142,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.32)',
-    width: Platform.OS === 'ios' ? '86%' : '89%', // Adjust top position for iOS and Android, // Adjust the width as needed
+    width: Platform.OS === 'ios' ? '86%' : '89%',
     height: Platform.OS === 'ios' ? '22%' : '20%',
-    alignSelf: 'center', // Center the chat box horizontally
+    alignSelf: 'center',
     position: 'absolute',
-    bottom: Platform.OS === 'ios' ? '25%' : '22%', // Adjust bottom position for iOS and Android
+    bottom: Platform.OS === 'ios' ? '25%' : '22%',
   },
   /* CHAPTER Button - Centered */
   chapterButtonContainer: {
@@ -193,19 +189,19 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     resizeMode: 'contain',
-  }, 
+  },
 
   /* Bottom Navigation */
   navbar: {
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center', // Center items vertically
+    alignItems: 'center',
     backgroundColor: 'rgba(102, 99, 99, 0.67)',
     borderRadius: 12,
     position: 'absolute',
-    bottom: Platform.OS === 'ios' ? '3%' : '2%', // Adjust top position for iOS and Android
-    width: Platform.OS === 'ios' ? '92%' : '95%', // Adjust the width as needed
-    alignSelf: 'center', // Center the navbar horizontally
+    bottom: Platform.OS === 'ios' ? '3%' : '2%',
+    width: Platform.OS === 'ios' ? '92%' : '95%',
+    alignSelf: 'center',
     height: Platform.OS === 'ios' ? '12%' : '10%',
   },
   navItem: {

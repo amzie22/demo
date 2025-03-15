@@ -1,6 +1,5 @@
-// SignupScreen.js
 import React, { useState } from 'react';
-import { StyleSheet, View, TextInput, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, TextInput, Text, TouchableOpacity, ImageBackground } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -12,96 +11,84 @@ const SignupScreen = ({ navigation }) => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   return (
-    <LinearGradient
-      colors={['#081c36', '#0f2e4c', '#081c36']}
+    <ImageBackground
+      source={require('../assets/splash.png')}
       style={styles.container}
     >
-      <View style={styles.cosmicOverlay}>
-        <LinearGradient
-          colors={['rgba(42, 82, 152, 0.4)', 'rgba(0, 0, 0, 0)']}
-          style={styles.cosmicGlow}
-          start={{ x: 0.5, y: 0 }}
-          end={{ x: 0.5, y: 0.3 }}
-        />
-      </View>
-      
-      <View style={styles.libraryBottom}>
-        <View style={styles.libraryRow} />
-      </View>
-      
-      <View style={styles.formContainer}>
-        <Text style={styles.title}>SIGN-UP</Text>
-        
-        <Text style={styles.label}>Email:</Text>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter your email"
-            placeholderTextColor="rgba(255,255,255,0.5)"
-            value={email}
-            onChangeText={setEmail}
-          />
-        </View>
-        
-        <Text style={styles.label}>Password:</Text>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter your password"
-            placeholderTextColor="rgba(255,255,255,0.5)"
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry={!showPassword}
-          />
-          <TouchableOpacity 
-            style={styles.eyeIcon} 
-            onPress={() => setShowPassword(!showPassword)}
-          >
-            <Ionicons 
-              name={showPassword ? "eye-off-outline" : "eye-outline"} 
-              size={20} 
-              color="white" 
+
+        <View style={styles.formContainer}>
+          <Text style={styles.title}>SIGN-UP</Text>
+          
+          <Text style={styles.label}>Email:</Text>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.input}
+              placeholder="Enter your email"
+              placeholderTextColor="rgba(255,255,255,0.5)"
+              value={email}
+              onChangeText={setEmail}
             />
+          </View>
+          
+          <Text style={styles.label}>Password:</Text>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.input}
+              placeholder="Enter your password"
+              placeholderTextColor="rgba(255,255,255,0.5)"
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry={!showPassword}
+            />
+            <TouchableOpacity 
+              style={styles.eyeIcon} 
+              onPress={() => setShowPassword(!showPassword)}
+            >
+              <Ionicons 
+                name={showPassword ? "eye-off-outline" : "eye-outline"} 
+                size={20} 
+                color="white" 
+              />
+            </TouchableOpacity>
+          </View>
+          
+          <Text style={styles.label}>Re-enter Password:</Text>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.input}
+              placeholder="Re-enter your password"
+              placeholderTextColor="rgba(255,255,255,0.5)"
+              value={confirmPassword}
+              onChangeText={setConfirmPassword}
+              secureTextEntry={!showConfirmPassword}
+            />
+            <TouchableOpacity 
+              style={styles.eyeIcon} 
+              onPress={() => setShowConfirmPassword(!showConfirmPassword)}
+            >
+              <Ionicons 
+                name={showConfirmPassword ? "eye-off-outline" : "eye-outline"} 
+                size={20} 
+                color="white" 
+              />
+            </TouchableOpacity>
+          </View>
+          
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate('Verification')}
+          >
+            <Text style={styles.buttonText}>SIGN-UP</Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity
+            style={styles.loginLink}
+            onPress={() => navigation.navigate('Login')}
+          >
+            <Text style={styles.loginText}>Already have an account? Login</Text>
           </TouchableOpacity>
         </View>
-        
-        <Text style={styles.label}>Re-enter Password:</Text>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Re-enter your password"
-            placeholderTextColor="rgba(255,255,255,0.5)"
-            value={confirmPassword}
-            onChangeText={setConfirmPassword}
-            secureTextEntry={!showConfirmPassword}
-          />
-          <TouchableOpacity 
-            style={styles.eyeIcon} 
-            onPress={() => setShowConfirmPassword(!showConfirmPassword)}
-          >
-            <Ionicons 
-              name={showConfirmPassword ? "eye-off-outline" : "eye-outline"} 
-              size={20} 
-              color="white" 
-            />
-          </TouchableOpacity>
-        </View>
-        
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate('Verification')}
-        >
-          <Text style={styles.buttonText}>SIGN-UP</Text>
-        </TouchableOpacity>
-        
-        <TouchableOpacity
-          style={styles.loginLink}
-          onPress={() => navigation.navigate('Login')}
-        >
-          <Text style={styles.loginText}>Already have an account? Login</Text>
-        </TouchableOpacity>
-      </View>
-    </LinearGradient>
+    </ImageBackground>
   );
 };
 
@@ -111,40 +98,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  cosmicOverlay: {
-    position: 'absolute',
+  overlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     width: '100%',
-    height: '100%',
-  },
-  cosmicGlow: {
-    width: '100%',
-    height: '40%',
-    position: 'absolute',
-    top: 0,
-  },
-  libraryBottom: {
-    position: 'absolute',
-    bottom: 0,
-    width: '100%',
-    height: '40%',
-    backgroundColor: 'rgba(20, 35, 55, 0.8)',
-  },
-  libraryRow: {
-    position: 'absolute',
-    bottom: 0,
-    width: '100%',
-    height: 80,
-    backgroundColor: 'rgba(30, 20, 10, 0.8)',
   },
   formContainer: {
     width: '85%',
     padding: 20,
-    backgroundColor: 'rgba(15, 30, 50, 0.8)',
     borderRadius: 12,
     alignItems: 'center',
     paddingVertical: 30,
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
+    borderWidth: 2,
   },
   title: {
     fontSize: 28,

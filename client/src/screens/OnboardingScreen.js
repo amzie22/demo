@@ -1,6 +1,6 @@
-// OnboardingScreen.js
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions, ImageBackground } from 'react-native';
+
 
 const { width } = Dimensions.get('window');
 
@@ -36,19 +36,25 @@ const OnboardingScreen = ({ navigation }) => {
     const currentData = screens[currentScreen - 1];
 
     return (
-        <View style={styles.screen}>
-            <View style={styles.content}>
-                <Text style={styles.title}>{currentData.title}</Text>
-                <Text style={styles.description}>{currentData.description}</Text>
-                <TouchableOpacity style={styles.button} onPress={handleNext}>
-                    <Text style={styles.buttonText}>{currentData.buttonText}</Text>
-                </TouchableOpacity>
+        <ImageBackground source={require('../assets/loginback.png')} style={styles.background}>
+            <View style={styles.screen}>
+                <View style={styles.content}>
+                    <Text style={styles.title}>{currentData.title}</Text>
+                    <Text style={styles.description}>{currentData.description}</Text>
+                    <TouchableOpacity style={styles.button} onPress={handleNext}>
+                        <Text style={styles.buttonText}>{currentData.buttonText}</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
-        </View>
+        </ImageBackground>
     );
 };
 
 const styles = StyleSheet.create({
+    background: {
+        flex: 1,
+        resizeMode: 'cover',
+    },
     screen: {
         flex: 1,
         justifyContent: 'center',
@@ -56,7 +62,6 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     content: {
-        backgroundColor: '#444', // Darker content background
         padding: 30,
         borderRadius: 10,
         width: width * 0.8, // Adjust width as needed
