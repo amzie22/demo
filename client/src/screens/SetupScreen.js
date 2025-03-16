@@ -5,7 +5,7 @@ const SetupScreen = ({ navigation }) => {
   const [name, setName] = useState('');
 
   return (
-    <ImageBackground source={require('../assets/library_bg.jpg')} style={styles.background}>
+    <ImageBackground style={styles.background}>
       <View style={styles.overlay}>
         <Text style={styles.promptText}>"What would you like me to call you?"</Text>
         <TextInput
