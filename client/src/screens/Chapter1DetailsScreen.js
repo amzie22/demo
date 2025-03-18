@@ -1,9 +1,18 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ImageBackground, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Text, StyleSheet, SafeAreaView, ImageBackground, TouchableOpacity, Animated } from 'react-native';
 
 const Chapter1DetailsScreen = ({ navigation }) => {
   const [dialogueStep, setDialogueStep] = useState(0);
   const [selectedChoice, setSelectedChoice] = useState(null);
+  const backgroundColor = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(backgroundColor, {
+      toValue: 1,
+      duration: 1000,
+      useNativeDriver: false,
+    }).start();
+  }, []);
 
   const handleChoiceSelection = (choice) => {
     setSelectedChoice(choice);
@@ -20,6 +29,11 @@ const Chapter1DetailsScreen = ({ navigation }) => {
     setDialogueStep(dialogueStep + 1);
   };
 
+  const interpolatedColor = backgroundColor.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['#2E242499', '#291711CC']
+  });
+
   return (
     <ImageBackground source={require('../assets/back.png')} style={styles.background}>
       <SafeAreaView style={styles.safeArea}>
@@ -28,11 +42,15 @@ const Chapter1DetailsScreen = ({ navigation }) => {
           {/* Step 1: Initial Choices */}
           {dialogueStep === 0 && (
             <View style={styles.choicesContainer}>
-              <TouchableOpacity style={styles.choiceButton} onPress={handleNextDialogue}>
-                <Text style={styles.choiceText}>"Hello? Where am I?"</Text>
+              <TouchableOpacity onPress={handleNextDialogue}>
+                <Animated.View style={[styles.choiceButton, { backgroundColor: interpolatedColor }]}>
+                  <Text style={styles.choiceText}>"Hello? Where am I?"</Text>
+                </Animated.View>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.choiceButton} onPress={handleNextDialogue}>
-                <Text style={styles.choiceText}>(Remain silent and observe.)</Text>
+              <TouchableOpacity onPress={handleNextDialogue}>
+                <Animated.View style={[styles.choiceButton, { backgroundColor: interpolatedColor }]}>
+                  <Text style={styles.choiceText}>(Remain silent and observe.)</Text>
+                </Animated.View>
               </TouchableOpacity>
             </View>
           )}
@@ -41,7 +59,7 @@ const Chapter1DetailsScreen = ({ navigation }) => {
           {dialogueStep === 1 && (
             <TouchableOpacity onPress={handleNextDialogue}>
               <Text style={styles.dialogueText}>
-                "Welcome, Traveler, to the Archives of the Written World. I am Scribeon, or you may call me Scrib."
+                "Welcome, Traveler, to the Archives of {'\n'} the Written World. I am Scribeon, or you {'\n'} may call me Scrib."
               </Text>
             </TouchableOpacity>
           )}
@@ -49,178 +67,251 @@ const Chapter1DetailsScreen = ({ navigation }) => {
           {/* Step 3: Second Response */}
           {dialogueStep === 2 && (
             <TouchableOpacity onPress={handleNextDialogue}>
+              <View style={styles.characterContainer}>
+                <Text style={styles.characterName}>Scribeon/Scrib:</Text>
+              </View>
               <Text style={styles.dialogueText}>
-                <Text style={styles.characterName}>Scribeon/Scrib:</Text> "These halls contain the voices of countless generations, whispering their stories across time."
+                "These halls contain the voices of {'\n'} countless generations, whispering their {'\n'} stories across time."
               </Text>
             </TouchableOpacity>
           )}
 
           {/* Step 4: New Choices */}
           {dialogueStep === 3 && (
-            <View style={styles.choicesContainer}>
-              <TouchableOpacity style={styles.choiceButton} onPress={() => handleChoiceSelection('archives')}>
-                <Text style={styles.choiceText}>"The Archives of the Written World?"</Text>
+            <View style={styles.choicesContainer1}>
+              <TouchableOpacity onPress={() => handleChoiceSelection('archives')}>
+                <Animated.View style={[styles.choiceButton1, { backgroundColor: interpolatedColor }]}>
+                  <Text style={styles.choiceText}>"The Archives of the Written World?"</Text>
+                </Animated.View>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.choiceButton} onPress={() => handleChoiceSelection('why')}>
-                <Text style={styles.choiceText}>"Why am I here?"
-                </Text>
+              <TouchableOpacity onPress={() => handleChoiceSelection('why')}>
+                <Animated.View style={[styles.choiceButton1, { backgroundColor: interpolatedColor }]}>
+                  <Text style={styles.choiceText}>"Why am I here?"</Text>
+                </Animated.View>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.choiceButton} onPress={() => handleChoiceSelection('who')}>
-                <Text style={styles.choiceText}>"Who are you?"
-                </Text>
+              <TouchableOpacity onPress={() => handleChoiceSelection('who')}>
+                <Animated.View style={[styles.choiceButton1, { backgroundColor: interpolatedColor }]}>
+                  <Text style={styles.choiceText}>"Who are you?"</Text>
+                </Animated.View>
               </TouchableOpacity>
             </View>
           )}
 
+          {/* Step 5: First Response */}
           {dialogueStep === 4 && selectedChoice === 'archives' && (
             <TouchableOpacity onPress={handleNextDialogue}>
-              <Text style={styles.dialogueText}>
-                <Text style={styles.characterName}>Scribeon/Scrib:</Text> "This archive is the heart of all written knowledge, a living repository of words, stories, and wisdom from countless civilizations."
+              <View style={styles.characterContainer}>
+                <Text style={styles.characterName}>Scribeon/Scrib:</Text>
+              </View>
+              <Text style={styles.dialogueText1}>
+                "This archive is the heart of all written knowledge, a living repository of words, stories, and wisdom from countless civilizations."
               </Text>
             </TouchableOpacity>
           )}
 
-          {dialogueStep === 5 && selectedChoice === 'archives' && (
-            <TouchableOpacity onPress={handleNextDialogue}>
-              <Text style={styles.dialogueText}>
-                <Text style={styles.characterName}>Scribeon/Scrib:</Text> "Every language, every inscription, every thought ever recorded finds refuge here."
-              </Text>
-            </TouchableOpacity>
-          )}
-
-          {dialogueStep === 6 && selectedChoice === 'archives' && (
-            <View style={styles.choicesContainer}>
-              <TouchableOpacity style={styles.choiceButton} onPress={handleNextDialogue}>
-                <Text style={styles.choiceText}>"Can I read these writings?"</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.choiceButton} onPress={handleNextDialogue}>
-                <Text style={styles.choiceText}>"Who created this place?"</Text>
-              </TouchableOpacity>
-            </View>
-          )}
-
-          {dialogueStep === 7 && selectedChoice === 'archives' && (
-            <TouchableOpacity onPress={handleNextDialogue}>
-              <Text style={styles.dialogueText}>
-                <Text style={styles.characterName}>Scribeon/Scrib:</Text> "Enough talk, Traveler. The worlds call to you. Look around, let the whispers of history guide your steps."
-              </Text>
-            </TouchableOpacity>
-          )}
-
-          {dialogueStep === 8 && selectedChoice === 'archives' && (
-            <TouchableOpacity onPress={handleNextDialogue}>
-              <Text style={styles.dialogueText}>
-                <Text style={styles.characterName}>Scribeon/Scrib:</Text> "There is much to uncover, and only you can decide where your journey begins"
-              </Text>
-            </TouchableOpacity>
-          )}
-
-          {dialogueStep === 9 && selectedChoice === 'archives' && (
-            <TouchableOpacity onPress={handleNextDialogue}>
-              <Text style={styles.dialogueText}>
-                <Text style={styles.characterName}>Scribeon/Scrib:</Text> "Feel free to look around..."
-              </Text>
-            </TouchableOpacity>
-          )}
-
+          {/* Step 6: Second Response */}
           {dialogueStep === 4 && selectedChoice === 'why' && (
             <TouchableOpacity onPress={handleNextDialogue}>
+              <View style={styles.characterContainer}>
+                <Text style={styles.characterName1}>Scribeon/Scrib:</Text>
+              </View>
               <Text style={styles.dialogueText}>
-                <Text style={styles.characterName}>Scribeon/Scrib:</Text> "You were chosen by the words themselves. Few are called, and even fewer arrive."
+                "You were chosen by the words themselves. Few are called, and even fewer arrive."
               </Text>
             </TouchableOpacity>
           )}
 
-          {dialogueStep === 5 && selectedChoice === 'why' && (
-            <TouchableOpacity onPress={handleNextDialogue}>
-              <Text style={styles.dialogueText}>
-                <Text style={styles.characterName}>Scribeon/Scrib:</Text> "Perhaps there is a tale within you that must be written, or a secret within these walls meant only for you to uncover."
-              </Text>
-            </TouchableOpacity>
-          )}
-
-          {dialogueStep === 6 && selectedChoice === 'why' && (
-            <View style={styles.choicesContainer}>
-              <TouchableOpacity style={styles.choiceButton} onPress={handleNextDialogue}>
-                <Text style={styles.choiceText}>"A tale within me? What do you mean?"</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.choiceButton} onPress={handleNextDialogue}>
-                <Text style={styles.choiceText}>"How do I leave?"</Text>
-              </TouchableOpacity>
-            </View>
-          )}
-
-          {dialogueStep === 7 && selectedChoice === 'why' && (
-            <TouchableOpacity onPress={handleNextDialogue}>
-              <Text style={styles.dialogueText}>
-                <Text style={styles.characterName}>Scribeon/Scrib:</Text> "Enough talk, Traveler. The worlds call to you. Look around, let the whispers of history guide your steps."
-              </Text>
-            </TouchableOpacity>
-          )}
-
-          {dialogueStep === 8 && selectedChoice === 'why' && (
-            <TouchableOpacity onPress={handleNextDialogue}>
-              <Text style={styles.dialogueText}>
-                <Text style={styles.characterName}>Scribeon/Scrib:</Text> "There is much to uncover, and only you can decide where your journey begins"
-              </Text>
-            </TouchableOpacity>
-          )}
-
-          {dialogueStep === 9 && selectedChoice === 'why' && (
-            <TouchableOpacity onPress={handleNextDialogue}>
-              <Text style={styles.dialogueText}>
-                <Text style={styles.characterName}>Scribeon/Scrib:</Text> "Feel free to look around..."
-              </Text>
-            </TouchableOpacity>
-          )}
-
+          {/* Step 7: Third Response */}
           {dialogueStep === 4 && selectedChoice === 'who' && (
             <TouchableOpacity onPress={handleNextDialogue}>
+              <View style={styles.characterContainer}>
+                <Text style={styles.characterName}>Scribeon/Scrib:</Text>
+              </View>
               <Text style={styles.dialogueText}>
-                <Text style={styles.characterName}>Scribeon/Scrib:</Text> "I am Scribeon, guardian of these archives, and your guide."
+                "You were chosen by the words themselves. Few are called, and even fewer arrive."
               </Text>
             </TouchableOpacity>
           )}
 
-          {dialogueStep === 5 && selectedChoice === 'who' && (
+          {/* Step 8: Fourth Response */}
+          {dialogueStep === 5 && selectedChoice === 'archives' && (
             <TouchableOpacity onPress={handleNextDialogue}>
-              <Text style={styles.dialogueText}>
-                <Text style={styles.characterName}>Scribeon/Scrib:</Text> "Perhaps there is a tale within you that must be written, or a secret within these walls meant only for you to uncover."
+              <View style={styles.characterContainer}>
+                <Text style={styles.characterName}>Scribeon/Scrib:</Text>
+              </View>
+              <Text style={styles.dialogueText2}>
+              “Every language, every inscription, every {'\n'} thought ever recorded finds refuge {'\n'}here.”
               </Text>
             </TouchableOpacity>
           )}
+            {dialogueStep === 5 && selectedChoice === 'why' && (
+              <TouchableOpacity onPress={handleNextDialogue}>
+                <View style={styles.characterContainer}>
+                  <Text style={styles.characterName}>Scribeon/Scrib:</Text>
+                </View>
+                <Text style={styles.dialogueText2}>
+                “Perhaps there is a tale within you that {'\n'}must be written, or a secret within these {'\n'}walls meant only for you to uncover.”
+                </Text>
+              </TouchableOpacity>
+          )}
+          {dialogueStep === 5 && selectedChoice === 'who' && (
+              <TouchableOpacity onPress={handleNextDialogue}>
+                <View style={styles.characterContainer}>
+                  <Text style={styles.characterName}>Scribeon/Scrib:</Text>
+                </View>
+                <Text style={styles.dialogueText2}>
+                “Perhaps there is a tale within you that {'\n'}must be written, or a secret within these {'\n'}walls meant only for you to uncover.”
+                </Text>
+              </TouchableOpacity>
+          )}
 
+          {/* Step 9: Fifth Response */}
+          {dialogueStep === 6 && selectedChoice === 'archives' && (
+            <View style={styles.choicesContainer2}>
+            <TouchableOpacity onPress={handleNextDialogue}>
+              <Animated.View style={[styles.choiceButton, { backgroundColor: interpolatedColor }]}>
+                <Text style={styles.choiceText}>"Can i read these writings?"</Text>
+              </Animated.View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleNextDialogue}>
+              <Animated.View style={[styles.choiceButton, { backgroundColor: interpolatedColor }]}>
+                <Text style={styles.choiceText}>"Who created this place?"</Text>
+              </Animated.View>
+            </TouchableOpacity>
+            </View>
+          )}
+          {dialogueStep === 6 && selectedChoice === 'why' && (
+              <TouchableOpacity onPress={handleNextDialogue}>
+                <View style={styles.characterContainer}>
+                  <Text style={styles.characterName}>Scribeon/Scrib:</Text>
+                </View>
+                <Text style={styles.dialogueText3}>
+                "The Archives do not bring visitors {'\n'}without reason."
+                </Text>
+              </TouchableOpacity>
+          )}
           {dialogueStep === 6 && selectedChoice === 'who' && (
             <View style={styles.choicesContainer}>
-              <TouchableOpacity style={styles.choiceButton} onPress={handleNextDialogue}>
+            <TouchableOpacity onPress={handleNextDialogue}>
+              <Animated.View style={[styles.choiceButton, { backgroundColor: interpolatedColor }]}>
                 <Text style={styles.choiceText}>"What really is this place?"</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.choiceButton} onPress={handleNextDialogue}>
-                <Text style={styles.choiceText}>"Can I read these writings?"</Text>
-              </TouchableOpacity>
+              </Animated.View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleNextDialogue}>
+              <Animated.View style={[styles.choiceButton, { backgroundColor: interpolatedColor }]}>
+                <Text style={styles.choiceText}>"Can i read these writing?"</Text>
+              </Animated.View>
+            </TouchableOpacity>
+            </View>
+          )}
+          
+          {/* Step 10: Sixth Response */}
+          {dialogueStep === 7 && selectedChoice === 'why' && (
+            <View style={styles.choicesContainer2}>
+            <TouchableOpacity onPress={handleNextDialogue}>
+              <Animated.View style={[styles.choiceButton, { backgroundColor: interpolatedColor }]}>
+                <Text style={styles.choiceText}>"A tale within me? What do you mean?"</Text>
+              </Animated.View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleNextDialogue}>
+              <Animated.View style={[styles.choiceButton, { backgroundColor: interpolatedColor }]}>
+                <Text style={styles.choiceText}>"How do I leave?"</Text>
+              </Animated.View>
+            </TouchableOpacity>
             </View>
           )}
 
+          {/* Step 11: Seventh Response */}
+          {dialogueStep === 7 && selectedChoice === 'archives' && (
+            <TouchableOpacity onPress={handleNextDialogue}>
+              <View style={styles.characterContainer}>
+                <Text style={styles.characterName}>Scribeon/Scrib:</Text>
+              </View>
+              <Text style={styles.dialogueText2}>
+              "Enough talk, Traveler. The words call to you. Look around, let the whispers of history guide your steps.”
+              </Text>
+            </TouchableOpacity>
+          )}
+          {dialogueStep === 8 && selectedChoice === 'why' && (
+            <TouchableOpacity onPress={handleNextDialogue}>
+              <View style={styles.characterContainer}>
+                <Text style={styles.characterName}>Scribeon/Scrib:</Text>
+              </View>
+              <Text style={styles.dialogueText2}>
+              "Enough talk, Traveler. The words call to you. Look around, let the whispers of history guide your steps.”
+              </Text>
+            </TouchableOpacity>
+          )}
           {dialogueStep === 7 && selectedChoice === 'who' && (
             <TouchableOpacity onPress={handleNextDialogue}>
-              <Text style={styles.dialogueText}>
-                <Text style={styles.characterName}>Scribeon/Scrib:</Text> "Enough talk, Traveler. The worlds call to you. Look around, let the whispers of history guide your steps."
+              <View style={styles.characterContainer}>
+                <Text style={styles.characterName}>Scribeon/Scrib:</Text>
+              </View>
+              <Text style={styles.dialogueText2}>
+              "Enough talk, Traveler. The words call to you. Look around, let the whispers of history guide your steps.”
               </Text>
             </TouchableOpacity>
           )}
 
+          {/* Step 12: Eight Response */}
+          {dialogueStep === 8 && selectedChoice === 'archives' && (
+            <TouchableOpacity onPress={handleNextDialogue}>
+              <View style={styles.characterContainer}>
+                <Text style={styles.characterName1}>Scribeon/Scrib:</Text>
+              </View>
+              <Text style={styles.dialogueText}>
+              “There is much to uncover, and only you {'\n'}can decide where your journey begins."
+              </Text>
+            </TouchableOpacity>
+          )}
+          {dialogueStep === 9 && selectedChoice === 'why' && (
+            <TouchableOpacity onPress={handleNextDialogue}>
+              <View style={styles.characterContainer}>
+                <Text style={styles.characterName1}>Scribeon/Scrib:</Text>
+              </View>
+              <Text style={styles.dialogueText}>
+              “There is much to uncover, and only you {'\n'}can decide where your journey begins."
+              </Text>
+            </TouchableOpacity>
+          )}
           {dialogueStep === 8 && selectedChoice === 'who' && (
             <TouchableOpacity onPress={handleNextDialogue}>
+              <View style={styles.characterContainer}>
+                <Text style={styles.characterName1}>Scribeon/Scrib:</Text>
+              </View>
               <Text style={styles.dialogueText}>
-                <Text style={styles.characterName}>Scribeon/Scrib:</Text> "There is much to uncover, and only you can decide where your journey begins"
+              “There is much to uncover, and only you {'\n'}can decide where your journey begins."
               </Text>
             </TouchableOpacity>
           )}
-
+          {/* Step 13: Ninth Response */}
+          {dialogueStep === 9 && selectedChoice === 'archives' && (
+            <TouchableOpacity onPress={handleNextDialogue}>
+              <View style={styles.characterContainer}>
+                <Text style={styles.characterName}>Scribeon/Scrib:</Text>
+              </View>
+              <Text style={styles.dialogueText4}>
+              “Feel free to look around...”
+              </Text>
+            </TouchableOpacity>
+          )}
+          {dialogueStep === 10 && selectedChoice === 'why' && (
+            <TouchableOpacity onPress={handleNextDialogue}>
+              <View style={styles.characterContainer}>
+                <Text style={styles.characterName1}>Scribeon/Scrib:</Text>
+              </View>
+              <Text style={styles.dialogueText4}>
+              “Feel free to look around...”
+              </Text>
+            </TouchableOpacity>
+          )}
           {dialogueStep === 9 && selectedChoice === 'who' && (
             <TouchableOpacity onPress={handleNextDialogue}>
-              <Text style={styles.dialogueText}>
-                <Text style={styles.characterName}>Scribeon/Scrib:</Text> "Feel free to look around..."
+              <View style={styles.characterContainer}>
+                <Text style={styles.characterName}>Scribeon/Scrib:</Text>
+              </View>
+              <Text style={styles.dialogueText4}>
+              “Feel free to look around...”
               </Text>
             </TouchableOpacity>
           )}
@@ -243,27 +334,89 @@ const styles = StyleSheet.create({
     paddingBottom: 50,
   },
   dialogueContainer: {
-    backgroundColor: 'rgba(107, 103, 103, 0.61)',
+    backgroundColor: 'rgba(143, 139, 139, 0.38)',
     padding: 20,
     borderRadius: 15,
-    width: '90%',
+    width: '91%',
   },
   dialogueText: {
     color: '#FFFFFF',
-    fontSize: 18,
-    textAlign: 'center',
+    fontSize: 13,
+    textAlign: 'left',
+    marginLeft: 40,
+    paddingTop: 38,
+    paddingBottom: 60,
+  },
+  dialogueText1: {
+    color: '#FFFFFF',
+    fontSize: 13,
+    textAlign: 'left',
+    marginLeft: 40,
+    paddingTop: 33,
+    paddingBottom: 50,
+  },
+  dialogueText2: {
+    color: '#FFFFFF',
+    fontSize: 13,
+    textAlign: 'left',
+    marginLeft: 40,
+    marginTop: 14,
+    paddingTop: 26,
+    paddingBottom: 57,
+  },
+  dialogueText3: {
+    color: '#FFFFFF',
+    fontSize: 13,
+    textAlign: 'left',
+    marginLeft: 40,
+    marginTop: 14,
+    paddingTop: 26,
+    paddingBottom: 72,
+  },
+  dialogueText4: {
+    color: '#FFFFFF',
+    fontSize: 13,
+    textAlign: 'left',
+    marginLeft: 40,
+    marginTop: 10,
+    paddingTop: 30,
+    paddingBottom: 87,
   },
   characterName: {
     fontWeight: 'bold',
-    fontSize: 12,
+    fontSize: 20,
     color: '#FFFFFF',
+  },
+  characterName1: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    color: '#FFFFFF',
+    marginTop: 15,
+  },
+  characterContainer: {
+    marginTop: 2,
+    marginBottom: -29,
+    marginLeft: 20,
   },
   choicesContainer: {
     marginTop: 54.7,
   },
+  choicesContainer1: {
+    marginTop: 19,
+  },
+  choicesContainer2: {
+    marginTop: 19,
+    marginBottom: 35,
+  },
   choiceButton: {
-    backgroundColor: '#291711CC',
     padding: 10,
+    marginLeft: 10,
+    marginRight: 25,
+    marginVertical: 5,
+    borderRadius: 20,
+  },
+  choiceButton1: {
+    padding: 8,
     marginLeft: 10,
     marginRight: 25,
     marginVertical: 5,
@@ -273,6 +426,7 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 12,
     textAlign: 'left',
+    marginLeft: 8,
   },
 });
 

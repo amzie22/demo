@@ -11,9 +11,13 @@ const SkipScreen = ({ navigation }) => {
   };
 
   const handleNextDialogue = () => {
-    // Navigate to ClickableBooks when dialog is complete
-    if ((dialogueStep === 9) && (selectedChoice === 'archives' || selectedChoice === 'why' || selectedChoice === 'who')) {
-      navigation.navigate('ClickableBooks');
+   
+
+    // Navigate to SetupScreen for specific conditions
+    if ((dialogueStep === 5 && selectedChoice === 'never') || 
+        (dialogueStep === 5 && selectedChoice === 'know') || 
+        (dialogueStep === 4 && selectedChoice === 'seen')) {
+      navigation.navigate('SetupScreen');
       return;
     }
     
@@ -27,17 +31,23 @@ const SkipScreen = ({ navigation }) => {
 
         {dialogueStep === 0 && (
             <TouchableOpacity onPress={handleNextDialogue}>
-              <Text style={styles.dialogueText}>
-                <Text style={styles.characterName}>Scribeon/Scrib:</Text> "Ah... this one. it seems you have stumbled upon something rare."
-              </Text>
+              <View style={styles.characterContainer}>
+              <Text style={styles.characterName}>Scribeon/Scrib:</Text>
+             </View>
+            <Text style={styles.dialogueText1}>
+              "Ah... this one. It seems you have stumbled upon something rare."
+            </Text>
             </TouchableOpacity>
           )}
 
           {dialogueStep === 1 && (
             <TouchableOpacity onPress={handleNextDialogue}>
-              <Text style={styles.dialogueText}>
-                <Text style={styles.characterName}>Scribeon/Scrib:</Text> "This is Baybayin - the ancient writing system of the Philippines. Have you heard of it before?."
-              </Text>
+              <View style={styles.characterContainer}>
+              <Text style={styles.characterName}>Scribeon/Scrib:</Text>
+             </View>
+            <Text style={styles.dialogueText1}>
+              "This is Baybayin - the ancient writing system of the Philippines. Have you heard it before?"
+            </Text>
             </TouchableOpacity>
           )}
 
@@ -61,67 +71,92 @@ const SkipScreen = ({ navigation }) => {
 
           {dialogueStep === 3 && selectedChoice === 'never' && (
             <TouchableOpacity onPress={handleNextDialogue}>
-              <Text style={styles.dialogueText}>
-                <Text style={styles.characterName}>Scribeon/Scrib:</Text> "No? thats not surprising. It has been forgotten by many."
-              </Text>
+             <View style={styles.characterContainer}>
+              <Text style={styles.characterName}>Scribeon/Scrib:</Text>
+             </View>
+            <Text style={styles.dialogueText1}>
+              "No? That's not surprising. It has been forgotten by many."
+            </Text>
             </TouchableOpacity>
           )}
 
           {dialogueStep === 4 && selectedChoice === 'never' && (
             <TouchableOpacity onPress={handleNextDialogue}>
-              <Text style={styles.dialogueText}>
-                <Text style={styles.characterName}>Scribeon/Scrib:</Text> "But perhaps, with your help, it can shine and be known again..."
-              </Text>
+             <View style={styles.characterContainer}>
+              <Text style={styles.characterName}>Scribeon/Scrib:</Text>
+             </View>
+            <Text style={styles.dialogueText1}>
+              "But perhaps, with your help, it can shine and be known again..."
+            </Text>
             </TouchableOpacity>
           )}
 
           {dialogueStep === 5 && selectedChoice === 'never' && (
             <TouchableOpacity onPress={handleNextDialogue}>
-              <Text style={styles.dialogueText}>
-                <Text style={styles.characterName}>Scribeon/Scrib:</Text> "Before we proceed, I need you to answer these questions first..."
-              </Text>
+              <View style={styles.characterContainer}>
+              <Text style={styles.characterName}>Scribeon/Scrib:</Text>
+             </View>
+            <Text style={styles.dialogueText1}>
+              "Before we proceed, I need you to answer these questions first..."
+            </Text>
             </TouchableOpacity>
           )}
 
 
           {dialogueStep === 3 && selectedChoice === 'know' && (
             <TouchableOpacity onPress={handleNextDialogue}>
-              <Text style={styles.dialogueText}>
-                <Text style={styles.characterName}>Scribeon/Scrib:</Text> "Ah, you're familiar with Baybayin! That's wonderful. Then you may know just how precious and unique it is."
-              </Text>
+              <View style={styles.characterContainer}>
+              <Text style={styles.characterName}>Scribeon/Scrib:</Text>
+             </View>
+            <Text style={styles.dialogueText1}>
+              "Ah, you're familiar with Baybayin! That's wonderful. Then you may know just how precious and unique it is."
+            </Text>
             </TouchableOpacity>
           )}
 
           {dialogueStep === 4 && selectedChoice === 'know' && (
             <TouchableOpacity onPress={handleNextDialogue}>
-              <Text style={styles.dialogueText}>
-                <Text style={styles.characterName}>Scribeon/Scrib:</Text> "With your knowledge, we can help bring it back to the forefront."
-              </Text>
+              <View style={styles.characterContainer}>
+              <Text style={styles.characterName}>Scribeon/Scrib:</Text>
+             </View>
+            <Text style={styles.dialogueText1}>
+              "With your knowledge, we can help bring it back to the forefront."
+            </Text>
             </TouchableOpacity>
           )}
 
           {dialogueStep === 5 && selectedChoice === 'know' && (
             <TouchableOpacity onPress={handleNextDialogue}>
-              <Text style={styles.dialogueText}>
-                <Text style={styles.characterName}>Scribeon/Scrib:</Text> "Before we proceed, I need you to answer these questions first..."
-              </Text>
+              <View style={styles.characterContainer}>
+              <Text style={styles.characterName}>Scribeon/Scrib:</Text>
+             </View>
+            <Text style={styles.dialogueText1}>
+              "Before we proceed, I need you to answer these questions first..."
+            </Text>
             </TouchableOpacity>
           )}
 
 
           {dialogueStep === 3 && selectedChoice === 'seen' && (
             <TouchableOpacity onPress={handleNextDialogue}>
-              <Text style={styles.dialogueText}>
-                <Text style={styles.characterName}>Scribeon/Scrib:</Text> "Then you're in the perfect place. Let us uncover its forgotten stories, and perhaps, you'll find a piece of yourself in its symbols."
-              </Text>
+              <View style={styles.characterContainer}>
+              <Text style={styles.characterName}>Scribeon/Scrib:</Text>
+             </View>
+            <Text style={styles.dialogueText1}>
+              "Then you're in the perfect place. Let us uncover its forgotten stories, and perhaps, you'll find a piece of yourself in its symbols."
+            </Text>
             </TouchableOpacity>
           )}
 
           {dialogueStep === 4 && selectedChoice === 'seen' && (
             <TouchableOpacity onPress={handleNextDialogue}>
-              <Text style={styles.dialogueText}>
-                <Text style={styles.characterName}>Scribeon/Scrib:</Text> "Before we proceed, I need you to answer these questions first..."
-              </Text>
+              <View style={styles.characterContainer}>
+              <Text style={styles.characterName}>Scribeon/Scrib:</Text>
+             </View>
+            <Text style={styles.dialogueText1}>
+              "Before we proceed, I need you to answer these questions first..."
+            </Text>
+             
             </TouchableOpacity>
           )}
 
