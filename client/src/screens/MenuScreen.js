@@ -9,7 +9,7 @@ const MenuScreen = ({ navigation }) => {
   const maxXP = 10000;
   const currentXP = 500;
   const currentLevel = 10;
-  const progressPercentage = (currentXP / maxXP) * 100;
+  const progressPercentage = (currentXP / maxXP) * 1000;
 
   return (
     <ImageBackground source={require("../assets/back.png")} style={styles.background}>
@@ -59,7 +59,7 @@ const MenuScreen = ({ navigation }) => {
           {/* CHAPTER Button - Centered Inside Navbar */}
           <View style={styles.chapterButtonContainer}>
             <TouchableOpacity onPress={() => navigation.navigate('Chapter')} style={styles.chapterButton}>
-              <Image source={require('../assets/challenges.png')} style={styles.chapterIcon} />
+              <Image source={require('../assets/chapter.png')} style={styles.chapterIcon} />
             </TouchableOpacity>
           </View>
 

@@ -21,6 +21,7 @@ import ClickableBooksScreen from './src/screens/ClickableBooksScreen';
 import SkipScreen from './src/screens/SkipScreen';
 import SetupScreen from './src/screens/SetupScreen';
 
+
 // Import practice screens
 import PracticeAScreen from './src/screens/practices/A';
 // Add other practice screens as needed
@@ -64,7 +65,7 @@ const App = () => {
         <Stack.Screen name="Verification" component={VerificationScreen} />
         <Stack.Screen name="Menu" component={MenuScreen} />
         <Stack.Screen name="Chapter" component={ChapterScreen} />
-        <Stack.Screen name="ChapterDetail" component={ChapterDetailsScreen} />
+        <Stack.Screen name="ChapterDetails" component={ChapterDetailsScreen} />
         <Stack.Screen name="Chapter1Details" component={Chapter1DetailsScreen} />
         <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="Shop" component={ShopScreen} />
@@ -72,7 +73,8 @@ const App = () => {
         <Stack.Screen name="Test" component={TestScreen} />
         <Stack.Screen name="ClickableBooks" component={ClickableBooksScreen} />
         <Stack.Screen name="Skip" component={SkipScreen} />
-        <Stack.Screen name="Setup" component={SetupScreen} />
+        <Stack.Screen name="SetupScreen" component={SetupScreen} />
+        
         {/* Add practice screens */}
         <Stack.Screen name="A" component={PracticeAScreen} />
         {/* Add other practice screens as needed */}
