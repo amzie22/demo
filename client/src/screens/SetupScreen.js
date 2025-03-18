@@ -33,6 +33,7 @@ const SetupScreen = ({ navigation }) => {
   };
 
   return (
+
     <ImageBackground source={require('../assets/back.png')} style={styles.background}>
       <SafeAreaView style={styles.safeArea}>
         {step === 1 ? (
