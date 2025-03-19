@@ -1,11 +1,37 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, TextInput, Text, TouchableOpacity, ImageBackground } from 'react-native';
+import { StyleSheet, View, TextInput, Text, TouchableOpacity, ImageBackground, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+
+  const handleLogin = async () => {
+    if (!email || !password) {
+      Alert.alert("Login Failed", "Email and password are required");
+      return;
+    }
+    try { //change ip address based on your connection
+      const response = await axios.post("http://192.168.1.10:3000/api/auth/login", {
+        Email: email,
+        Password: password,
+      });
+      console.log('Login response:', response.data); // Log the entire response
+      if (response.status === 200) {
+        const { token, User_ID } = response.data;
+        await AsyncStorage.setItem('userData', JSON.stringify({ token, User_ID }));
+        console.log('User data stored successfully:', { token, User_ID });
+        navigation.replace("Menu");
+      } else {
+        Alert.alert("Login Failed", "Invalid email or password");
+      }
+    } catch (error) {
+      Alert.alert("Login Failed", error.response?.data?.error || "An unexpected error occurred");
+    }
+  };
 
   return (
     <ImageBackground source={require('../assets/splash.png')} style={styles.background}>
@@ -52,7 +78,7 @@ const LoginScreen = ({ navigation }) => {
           
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate('Verification')}
+            onPress={handleLogin}
           >
             <Text style={styles.buttonText}>LOGIN</Text>
           </TouchableOpacity>
