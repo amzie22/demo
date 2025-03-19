@@ -11,13 +11,11 @@ const SkipScreen = ({ navigation }) => {
   };
 
   const handleNextDialogue = () => {
-   
-
     // Navigate to SetupScreen for specific conditions
     if ((dialogueStep === 5 && selectedChoice === 'never') || 
         (dialogueStep === 5 && selectedChoice === 'know') || 
         (dialogueStep === 4 && selectedChoice === 'seen')) {
-      navigation.navigate('SetupScreen');
+      navigation.navigate('Setup'); // Correct screen name
       return;
     }
     

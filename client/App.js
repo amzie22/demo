@@ -16,15 +16,12 @@ import Chapter1DetailsScreen from './src/screens/Chapter1DetailsScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 import ShopScreen from './src/screens/ShopScreen';
 import PracticeScreen from './src/screens/PracticeScreen';
+import Practices from './src/screens/Practices';
 import TestScreen from './src/screens/TestScreen';
 import ClickableBooksScreen from './src/screens/ClickableBooksScreen';
 import SkipScreen from './src/screens/SkipScreen';
 import SetupScreen from './src/screens/SetupScreen';
 
-
-// Import practice screens
-import PracticeAScreen from './src/screens/practices/A';
-// Add other practice screens as needed
 
 const Stack = createNativeStackNavigator();
 
@@ -70,14 +67,11 @@ const App = () => {
         <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="Shop" component={ShopScreen} />
         <Stack.Screen name="Practice" component={PracticeScreen} />
+        <Stack.Screen name="Practices" component={Practices} /> 
         <Stack.Screen name="Test" component={TestScreen} />
         <Stack.Screen name="ClickableBooks" component={ClickableBooksScreen} />
         <Stack.Screen name="Skip" component={SkipScreen} />
-        <Stack.Screen name="SetupScreen" component={SetupScreen} />
-        
-        {/* Add practice screens */}
-        <Stack.Screen name="A" component={PracticeAScreen} />
-        {/* Add other practice screens as needed */}
+        <Stack.Screen name="Setup" component={SetupScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
