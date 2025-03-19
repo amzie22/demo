@@ -27,14 +27,15 @@ const VerificationScreen = ({ navigation }) => {
     <ImageBackground source={require('../assets/splash.png')} style={styles.background}>
       <View style={styles.container}>
         <View style={styles.formContainer}>
-          <Text style={styles.title}>Verify your account</Text>
+          <Text style={styles.title}>Verify your {'\n\t\t\t'}account</Text>
           
           <Text style={styles.subtitle}>
-            Please enter the verification code we sent to your email/phone number
+            Please enter the verification code we{'\n'} sent to you at example@email.com
           </Text>
           
-          <Text style={styles.timerText}>Code expires in 3 minutes</Text>
+          <Text style={styles.timerText}>Code expires in 5 minutes</Text>
           
+          <Text style={styles.label}>Enter your 6 digit code</Text>
           <View style={styles.codeContainer}>
             {[0, 1, 2, 3, 4, 5].map((index) => (
               <TextInput
@@ -56,7 +57,7 @@ const VerificationScreen = ({ navigation }) => {
           </TouchableOpacity>
           
           <TouchableOpacity style={styles.resendLink}>
-            <Text style={styles.resendText}>Didn't get a code? Send it again</Text>
+            <Text style={styles.resendText}>Didn't get your code? Resend Code</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -75,29 +76,38 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   formContainer: {
-    width: '85%',
+    width: '78%',
+    height: '61%',
     padding: 20,
-    borderRadius: 12,
+    borderRadius: 18,
     alignItems: 'center',
     paddingVertical: 30,
-    borderWidth: 1,
+    borderWidth: 0.3,
+    borderColor: 'white',
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     color: 'white',
-    marginBottom: 16,
+    marginBottom: 29,
     fontWeight: 'bold',
+  },
+  label: {
+    alignSelf: 'flex-start',
+    color: 'white',
+    marginBottom: 18,
+    fontSize: 14,
+    marginTop: '11',
   },
   subtitle: {
     fontSize: 14,
-    color: 'rgba(255, 255, 255, 0.8)',
+    color: 'white',
     textAlign: 'center',
-    marginBottom: 10,
+    marginBottom: 20,
     paddingHorizontal: 10,
   },
   timerText: {
-    fontSize: 12,
-    color: 'rgba(255, 255, 255, 0.6)',
+    fontSize: 14,
+    color: 'white',
     marginBottom: 25,
   },
   codeContainer: {
@@ -107,18 +117,18 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   codeInput: {
-    width: 40,
+    width: 34,
     height: 45,
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    borderRadius: 8,
+    backgroundColor: 'white',
+    borderRadius: 10,
     color: 'white',
     fontSize: 18,
     fontWeight: 'bold',
   },
   button: {
-    width: '100%',
-    height: 45,
-    backgroundColor: '#006E7F',
+    width: '55%',
+    height: 43,
+    backgroundColor: '#382318',
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',

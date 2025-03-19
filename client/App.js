@@ -20,7 +20,7 @@ import TestScreen from './src/screens/TestScreen';
 import ClickableBooksScreen from './src/screens/ClickableBooksScreen';
 import SkipScreen from './src/screens/SkipScreen';
 import SetupScreen from './src/screens/SetupScreen';
-
+import AfterSetupScreen from './src/screens/AfterSetupScreen';
 
 // Import practice screens
 import PracticeAScreen from './src/screens/practices/A';
@@ -74,6 +74,7 @@ const App = () => {
         <Stack.Screen name="ClickableBooks" component={ClickableBooksScreen} />
         <Stack.Screen name="Skip" component={SkipScreen} />
         <Stack.Screen name="SetupScreen" component={SetupScreen} />
+        <Stack.Screen name="AfterSetupScreen" component={AfterSetupScreen} />
         
         {/* Add practice screens */}
         <Stack.Screen name="A" component={PracticeAScreen} />

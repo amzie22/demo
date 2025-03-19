@@ -18,18 +18,18 @@ const LoginScreen = ({ navigation }) => {
             <TextInput
               style={styles.input}
               placeholder="Enter your email"
-              placeholderTextColor="rgba(255,255,255,0.5)"
+              placeholderTextColor="#B3B3B3"
               value={email}
               onChangeText={setEmail}
             />
           </View>
           
-          <Text style={styles.label}>Password:</Text>
+          <Text style={styles.label1}>Password:</Text>
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.input}
               placeholder="Enter your password"
-              placeholderTextColor="rgba(255,255,255,0.5)"
+              placeholderTextColor="#B3B3B3"
               value={password}
               onChangeText={setPassword}
               secureTextEntry={!showPassword}
@@ -41,7 +41,7 @@ const LoginScreen = ({ navigation }) => {
               <Ionicons 
                 name={showPassword ? "eye-off-outline" : "eye-outline"} 
                 size={20} 
-                color="white" 
+                color="#B3B3B3" 
               />
             </TouchableOpacity>
           </View>
@@ -61,7 +61,7 @@ const LoginScreen = ({ navigation }) => {
             style={styles.signupLink}
             onPress={() => navigation.navigate('Signup')}
           >
-            <Text style={styles.signupText}>Create an account</Text>
+            <Text style={styles.signupText}>Create account? Sign-up</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -80,17 +80,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   formContainer: {
-    width: '85%',
+    width: '78%',
+    height: '56%',
     padding: 20,
-    borderRadius: 12,
+    borderRadius: 18,
     alignItems: 'center',
     paddingVertical: 30,
-    borderWidth: 2,
+    borderWidth: 0.3,
+    borderColor: 'white',
   },
   title: {
     fontSize: 28,
     color: 'white',
-    marginBottom: 30,
+    marginTop: '35',
+    marginBottom: 29,
     fontWeight: 'bold',
     letterSpacing: 2,
   },
@@ -98,7 +101,15 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     color: 'white',
     marginBottom: 5,
-    fontSize: 14,
+    fontSize: 15,
+    marginTop: '-11',
+  },
+  label1: {
+    alignSelf: 'flex-start',
+    color: 'white',
+    marginBottom: 5,
+    fontSize: 15,
+    marginTop: '11',
   },
   inputContainer: {
     width: '100%',
@@ -109,8 +120,8 @@ const styles = StyleSheet.create({
   },
   input: {
     width: '100%',
-    height: 45,
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    height: 43,
+    backgroundColor: '#F5F5F5',
     borderRadius: 8,
     paddingHorizontal: 15,
     color: 'white',
@@ -118,30 +129,30 @@ const styles = StyleSheet.create({
   },
   eyeIcon: {
     position: 'absolute',
-    right: 15,
+    right: 7,
   },
   forgotContainer: {
     width: '100%',
     alignItems: 'flex-end',
-    marginTop: 5,
-    marginBottom: 20,
+    marginTop: -2,
+    marginBottom: 18,
   },
   forgotText: {
     color: 'rgba(255, 255, 255, 0.7)',
     fontSize: 13,
   },
   button: {
-    width: '100%',
-    height: 45,
-    backgroundColor: '#006E7F',
+    width: '55%',
+    height: 43,
+    backgroundColor: '#382318',
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: '25',
   },
   buttonText: {
     color: 'white',
     fontSize: 16,
-    fontWeight: 'bold',
     letterSpacing: 1,
   },
   signupLink: {
@@ -151,6 +162,7 @@ const styles = StyleSheet.create({
   signupText: {
     color: 'rgba(255, 255, 255, 0.8)',
     fontSize: 14,
+    marginTop: '-10',
   },
 });
 

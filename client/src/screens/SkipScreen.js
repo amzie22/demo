@@ -34,8 +34,8 @@ const SkipScreen = ({ navigation }) => {
               <View style={styles.characterContainer}>
               <Text style={styles.characterName}>Scribeon/Scrib:</Text>
              </View>
-            <Text style={styles.dialogueText1}>
-              "Ah... this one. It seems you have stumbled upon something rare."
+            <Text style={styles.dialogueText}>
+              "Ah... this one. It seems you have stumbled{'\n'} upon something rare."
             </Text>
             </TouchableOpacity>
           )}
@@ -45,8 +45,8 @@ const SkipScreen = ({ navigation }) => {
               <View style={styles.characterContainer}>
               <Text style={styles.characterName}>Scribeon/Scrib:</Text>
              </View>
-            <Text style={styles.dialogueText1}>
-              "This is Baybayin - the ancient writing system of the Philippines. Have you heard it before?"
+            <Text style={styles.dialogueText}>
+              "This is Baybayin - the ancient writing system {'\n'}of the Philippines. Have you heard it before?"
             </Text>
             </TouchableOpacity>
           )}
@@ -74,8 +74,8 @@ const SkipScreen = ({ navigation }) => {
              <View style={styles.characterContainer}>
               <Text style={styles.characterName}>Scribeon/Scrib:</Text>
              </View>
-            <Text style={styles.dialogueText1}>
-              "No? That's not surprising. It has been forgotten by many."
+            <Text style={styles.dialogueText}>
+              "No? That's not surprising. It has been {'\n'}forgotten by many."
             </Text>
             </TouchableOpacity>
           )}
@@ -85,8 +85,8 @@ const SkipScreen = ({ navigation }) => {
              <View style={styles.characterContainer}>
               <Text style={styles.characterName}>Scribeon/Scrib:</Text>
              </View>
-            <Text style={styles.dialogueText1}>
-              "But perhaps, with your help, it can shine and be known again..."
+            <Text style={styles.dialogueText}>
+              "But perhaps, with your help, it can shine and{'\n'} be known again..."
             </Text>
             </TouchableOpacity>
           )}
@@ -96,8 +96,8 @@ const SkipScreen = ({ navigation }) => {
               <View style={styles.characterContainer}>
               <Text style={styles.characterName}>Scribeon/Scrib:</Text>
              </View>
-            <Text style={styles.dialogueText1}>
-              "Before we proceed, I need you to answer these questions first..."
+            <Text style={styles.dialogueText}>
+              "Before we proceed, I need you to answer{'\n'} these questions first..."
             </Text>
             </TouchableOpacity>
           )}
@@ -119,8 +119,8 @@ const SkipScreen = ({ navigation }) => {
               <View style={styles.characterContainer}>
               <Text style={styles.characterName}>Scribeon/Scrib:</Text>
              </View>
-            <Text style={styles.dialogueText1}>
-              "With your knowledge, we can help bring it back to the forefront."
+            <Text style={styles.dialogueText}>
+              "With your knowledge, we can help bring it {'\n'}back to the forefront."
             </Text>
             </TouchableOpacity>
           )}
@@ -130,8 +130,8 @@ const SkipScreen = ({ navigation }) => {
               <View style={styles.characterContainer}>
               <Text style={styles.characterName}>Scribeon/Scrib:</Text>
              </View>
-            <Text style={styles.dialogueText1}>
-              "Before we proceed, I need you to answer these questions first..."
+            <Text style={styles.dialogueText}>
+              "Before we proceed, I need you to answer {'\n'}these questions first..."
             </Text>
             </TouchableOpacity>
           )}
@@ -178,20 +178,35 @@ const styles = StyleSheet.create({
     paddingBottom: 50,
   },
   dialogueContainer: {
-    backgroundColor: 'rgba(107, 103, 103, 0.61)',
+    backgroundColor: 'rgba(143, 139, 139, 0.38)',
     padding: 20,
     borderRadius: 15,
-    width: '90%',
+    width: '91%',
   },
   dialogueText: {
     color: '#FFFFFF',
-    fontSize: 18,
-    textAlign: 'center',
+    fontSize: 13,
+    textAlign: 'left',
+    marginLeft: 30,
+    paddingTop: 2,
+    paddingBottom: 55,
+    marginBottom: 20,
   },
+  dialogueText1: {
+    color: '#FFFFFF',
+    fontSize: 13,
+    textAlign: 'left',
+    marginLeft: 30,
+    paddingTop: 2,
+    paddingBottom: 58,
+  },  
   characterName: {
     fontWeight: 'bold',
-    fontSize: 12,
+    fontSize: 20,
     color: '#FFFFFF',
+    marginTop: 5,
+    marginBottom: 5,
+    marginLeft: 10,
   },
   choicesContainer: {
     marginTop: 54.7,
