@@ -48,20 +48,33 @@ const PracticeScreen = () => {
     ['M', 'n', 'N'],
     ['P', 'S', 'T'],
     ['W', 'Y']
-  ];
+  ]; 
 
-  const handleBoxPress = (smallText) => {
-    const screenName = smallText.replace('/', '');
-    navigation.navigate(screenName);
+  const handleBoxPress = (smallText, largeText) => {
+    navigation.navigate('Practices', { smallText, largeText });
   };
 
   const renderBoxes = () => {
     const rows = [];
     for (let i = 0; i < smallTexts.length; i++) {
+      if (i === 0) {
+        rows.push(
+          <View key="vowelLabel" style={styles.labelContainer}>
+            <Text style={styles.labelText}>Vowel</Text>
+          </View>
+        );
+      } else if (i === 1) {
+        rows.push(
+          <View key="consonantLabel" style={styles.labelContainer}>
+            <Text style={styles.labelText}>Consonant</Text>
+          </View>
+        );
+      }
+
       rows.push(
         <View key={i} style={i === 5 ? styles.lastBoxContainer : styles.boxContainer}>
           {smallTexts[i].map((smallText, index) => (
-            <TouchableOpacity key={index} style={styles.box} onPress={() => handleBoxPress(smallText)}>
+            <TouchableOpacity key={index} style={styles.box} onPress={() => handleBoxPress(smallText, largeTexts[i][index])}>
               <Text style={styles.smallText}>{smallText}</Text>
               <Text style={styles.largeText}>{largeTexts[i][index]}</Text>
             </TouchableOpacity>
@@ -81,7 +94,10 @@ const PracticeScreen = () => {
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.container}>
           <View style={styles.header}>
-            <Text style={styles.headerText}>PRACTICE MODE</Text>
+            <Text style={styles.headerText}>PRACTICE</Text>
+            <TouchableOpacity style={styles.exitButton} onPress={() => navigation.navigate('Menu')}>
+              <Text style={styles.exitButtonText}>{'<<'}</Text>
+            </TouchableOpacity>
           </View>
           <View style={styles.line} />
           {renderBoxes()}
@@ -129,6 +145,20 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: 'bold',
     color: '#3D261C',
+    flex: 1,
+    textAlign: 'center',
+  },
+  exitButton: {
+    position: 'absolute',
+    left: 20,
+    top: -3,
+    borderRadius: 16,
+    padding: 10,
+  },
+  exitButtonText: {
+    color: '#000',
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   line: {
     width: '80%',
@@ -170,6 +200,16 @@ const styles = StyleSheet.create({
     fontSize: 50,
     color: '#d9d9d9',
     fontFamily: 'DoctrinaChristianaBold', 
+  },
+  labelContainer: {
+    width: '80%',
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  labelText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#3D261C',
   },
 });
 
