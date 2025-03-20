@@ -1,15 +1,19 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ImageBackground } from 'react-native';
 
 const ChapterDetailsScreen = () => {
   return (
-    <LinearGradient 
-      colors={['#F5E6D3', '#E6D5BC']} 
-      style={styles.container}
+    <ImageBackground 
+      source={require('../assets/MainBG.png')} 
+      style={styles.background}
+      resizeMode="cover"
     >
       <ScrollView contentContainerStyle={styles.content}>
-        <View style={styles.chapterCard}>
+        <ImageBackground 
+          source={require('../assets/chapter_choices.png')} 
+          style={styles.chapterCard}
+          imageStyle={{ borderRadius: 10 }} // Ensure the image respects the border radius
+        >
           <Text style={styles.chapterTitle}>Chapter 2</Text>
           <Text style={styles.chapterSubtitle}>The Laguna Copperplate Inscription</Text>
           <View style={styles.episodeList}>
@@ -23,14 +27,14 @@ const ChapterDetailsScreen = () => {
               <Text style={styles.episodeText}>Episode 3</Text>
             </TouchableOpacity>
           </View>
-        </View>
+        </ImageBackground>
       </ScrollView>
-    </LinearGradient>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  background: {
     flex: 1,
   },
   content: {
@@ -39,7 +43,6 @@ const styles = StyleSheet.create({
   },
   chapterCard: {
     width: '80%',
-    backgroundColor: '#8B4513',
     borderRadius: 10,
     padding: 20,
     elevation: 5,
@@ -49,14 +52,14 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
   },
   chapterTitle: {
-    color: '#FFFFFF',
+    color: '#000000', // Change text color to black
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 10,
   },
   chapterSubtitle: {
-    color: '#FFFFFF',
+    color: '#000000', // Change text color to black
     fontSize: 16,
     textAlign: 'center',
     marginBottom: 20,
@@ -68,10 +71,10 @@ const styles = StyleSheet.create({
   episodeItem: {
     padding: 15,
     borderBottomWidth: 1,
-    borderBottomColor: 'rgba(255,255,255,0.2)',
+    borderBottomColor: 'rgba(0,0,0,0.2)', // Change border color to match text
   },
   episodeText: {
-    color: '#FFFFFF',
+    color: '#000000', // Change text color to black
     fontSize: 16,
   },
 });

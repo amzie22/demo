@@ -1,37 +1,80 @@
-import React, { useEffect } from 'react';
-import { View, StyleSheet, ImageBackground } from 'react-native';
+import React, { useEffect, useState, useRef } from 'react';
+import { View, StyleSheet, ImageBackground, Animated, Image, Text } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Asset } from 'expo-asset';
 
 const SplashScreen = ({ navigation }) => {
+  const progress = useRef(new Animated.Value(0)).current;
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
+
   useEffect(() => {
-    setTimeout(() => {
-      navigation.navigate('Onboarding');
-    }, 2000);
-  },);
+    const loadImage = async () => {
+      try {
+        await Asset.loadAsync(require('../assets/splash.png'));
+        setIsImageLoaded(true);
+      } catch (error) {
+        setIsImageLoaded(false);
+      }
+    };
+
+    loadImage();
+  }, []);
+
+  useEffect(() => {
+    if (isImageLoaded) {
+      Animated.timing(progress, {
+        toValue: 1,
+        duration: 10000, // Set the duration to 10000 milliseconds (10 seconds)
+        useNativeDriver: false,
+      }).start(() => {
+        navigation.navigate('Onboarding');
+      });
+    }
+  }, [navigation, progress, isImageLoaded]);
 
   return (
-    <ImageBackground source={require('../assets/splash.png')} style={styles.background}>
-      <View style={styles.container}>
-        <View style={styles.cosmicOverlay}>
-          <View style={styles.starsContainer}>
-            {[...Array(20)].map((_, i) => (
-              <View 
-                key={i} 
-                style={[
-                  styles.star, 
-                  { 
-                    top: Math.random() * 200, 
-                    left: Math.random() * 400,
-                    width: Math.random() * 3 + 1,
-                    height: Math.random() * 3 + 1,
-                    opacity: Math.random() * 0.8 + 0.2
-                  }
-                ]} 
-              />
-            ))}
+    isImageLoaded ? (
+      <ImageBackground source={require('../assets/splash.png')} style={styles.background}>
+        <View style={styles.container}>
+          <View style={styles.cosmicOverlay}>
+            <View style={styles.starsContainer}>
+              {[...Array(20)].map((_, i) => (
+                <View 
+                  key={i} 
+                  style={[
+                    styles.star, 
+                    { 
+                      top: Math.random() * 200, 
+                      left: Math.random() * 400,
+                      width: Math.random() * 3 + 1,
+                      height: Math.random() * 3 + 1,
+                      opacity: Math.random() * 0.8 + 0.2
+                    }
+                  ]} 
+                />
+              ))}
+            </View>
+          </View>
+          <View style={styles.progressBarWrapper}>
+            <View style={styles.progressBarContainer}>
+              <Animated.View style={[styles.gradientOverlay, { width: progress.interpolate({
+                inputRange: [0, 1],
+                outputRange: ['0%', '100%']
+              }) }]}>
+                <LinearGradient
+                  colors={['#784C34', '#382318']}
+                  style={styles.gradientOverlay}
+                />
+              </Animated.View>
+            </View>
           </View>
         </View>
+      </ImageBackground>
+    ) : (
+      <View style={styles.loadingContainer}>
+        <Text style={styles.loadingText}>Loading...</Text>
       </View>
-    </ImageBackground>
+    )
   );
 };
 
@@ -61,13 +104,32 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 10,
   },
-  logoInner: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    backgroundColor: 'rgba(0, 110, 127, 0.6)',
-    borderWidth: 2,
-    borderColor: 'rgba(255, 255, 255, 0.3)',
+  progressBarWrapper: {
+    position: 'absolute',
+    bottom: 45,
+    width: '80%',
+    alignItems: 'center',
+  },
+  progressBarContainer: {
+    width: '100%',
+    borderRadius: 5,
+    position: 'relative',
+    overflow: 'hidden',
+    backgroundColor: 'white', 
+    padding: 2, 
+  },
+  gradientOverlay: {
+    height: 6,
+    borderRadius: 5,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    fontSize: 18,
+    color: '#fff',
   },
 });
 

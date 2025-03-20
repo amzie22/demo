@@ -1,101 +1,133 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, TextInput, Text, TouchableOpacity, ImageBackground } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, TextInput, Text, TouchableOpacity, ImageBackground, TouchableWithoutFeedback, Keyboard, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
+
+  useEffect(() => {
+    const imageUri = Image.resolveAssetSource(require('../assets/splash.png')).uri;
+    Image.prefetch(imageUri)
+      .then(() => setIsImageLoaded(true))
+      .catch(() => setIsImageLoaded(false));
+  }, []);
 
   return (
-    <ImageBackground source={require('../assets/splash.png')} style={styles.background}>
-      <View style={styles.container}>
-        <View style={styles.formContainer}>
-          <Text style={styles.title}>LOGIN</Text>
-          
-          <Text style={styles.label}>Email:</Text>
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.input}
-              placeholder="Enter your email"
-              placeholderTextColor="#B3B3B3"
-              value={email}
-              onChangeText={setEmail}
-            />
-          </View>
-          
-          <Text style={styles.label1}>Password:</Text>
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.input}
-              placeholder="Enter your password"
-              placeholderTextColor="#B3B3B3"
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry={!showPassword}
-            />
-            <TouchableOpacity 
-              style={styles.eyeIcon} 
-              onPress={() => setShowPassword(!showPassword)}
-            >
-              <Ionicons 
-                name={showPassword ? "eye-off-outline" : "eye-outline"} 
-                size={20} 
-                color="#B3B3B3" 
-              />
-            </TouchableOpacity>
-          </View>
-          
-          <View style={styles.forgotContainer}>
-            <Text style={styles.forgotText}>Forgot Password?</Text>
-          </View>
-          
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.navigate('Verification')}
-          >
-            <Text style={styles.buttonText}>LOGIN</Text>
-          </TouchableOpacity>
-          
-          <TouchableOpacity
-            style={styles.signupLink}
-            onPress={() => navigation.navigate('Signup')}
-          >
-            <Text style={styles.signupText}>Create account? Sign-up</Text>
-          </TouchableOpacity>
+    isImageLoaded ? (
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.container}>
+          <ImageBackground source={require('../assets/splash.png')} style={styles.imageBackground}>
+            <View style={styles.overlay} />
+            <View style={styles.formContainer}>
+              <Text style={styles.title}>LOGIN</Text>
+              
+              <Text style={styles.label}>Email:</Text>
+              <View style={styles.inputContainer}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Enter your email"
+                  placeholderTextColor="#B3B3B3"
+                  value={email}
+                  onChangeText={setEmail}
+                />
+              </View>
+              
+              <Text style={styles.label1}>Password:</Text>
+              <View style={styles.inputContainer}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Enter your password"
+                  placeholderTextColor="#B3B3B3"
+                  value={password}
+                  onChangeText={setPassword}
+                  secureTextEntry={!showPassword}
+                />
+                <TouchableOpacity 
+                  style={styles.eyeIcon} 
+                  onPress={() => setShowPassword(!showPassword)}
+                >
+                  <Ionicons 
+                    name={showPassword ? "eye-off-outline" : "eye-outline"} 
+                    size={20} 
+                    color="#B3B3B3" 
+                  />
+                </TouchableOpacity>
+              </View>
+              
+              <View style={styles.forgotContainer}>
+                <Text style={styles.forgotText}>Forgot Password?</Text>
+              </View>
+              
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.navigate('Menu')}
+              >
+                <Text style={styles.buttonText}>LOGIN</Text>
+              </TouchableOpacity>
+              
+              <View style={styles.signupLink}>
+                <Text style={styles.signupText}>Create account? </Text>
+                <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
+                  <Text style={styles.signupTextBold}>Sign-up</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </ImageBackground>
         </View>
+      </TouchableWithoutFeedback>
+    ) : (
+      <View style={styles.loadingContainer}>
+        <Text style={styles.loadingText}>Loading...</Text>
       </View>
-    </ImageBackground>
+    )
   );
 };
 
 const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    resizeMode: 'cover',
-  },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  formContainer: {
-    width: '78%',
-    height: '56%',
-    padding: 20,
-    borderRadius: 18,
+  imageBackground: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: 30,
-    borderWidth: 0.3,
-    borderColor: 'white',
+    width: '100%',
+    height: '100%',
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0, 0, 0, 0.25)', 
+  },
+  formContainer: {
+    padding: 30,
+    borderRadius: 10,
+    width: 310,
+    height: 480,
+    backgroundColor: 'rgba(0, 3, 0, 0.34)', 
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.3)',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 4,
+    elevation: 8,
+    justifyContent: 'center',
+    alignContent: 'center',
+    alignItems: 'center',
+    position: 'relative', 
   },
   title: {
-    fontSize: 28,
-    color: 'white',
-    marginTop: '35',
-    marginBottom: 29,
+    fontSize: 32,
     fontWeight: 'bold',
-    letterSpacing: 2,
+    color: 'white',
+    textAlign: 'center',
+    position: 'absolute',
+    top: 60,
   },
   label: {
     alignSelf: 'flex-start',
@@ -124,7 +156,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
     borderRadius: 8,
     paddingHorizontal: 15,
-    color: 'white',
+    color: '#202020',
     fontSize: 15,
   },
   eyeIcon: {
@@ -142,27 +174,49 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
   button: {
-    width: '55%',
-    height: 43,
-    backgroundColor: '#382318',
+    backgroundColor: '#1A5651', 
+    padding: 15,
     borderRadius: 8,
-    justifyContent: 'center',
     alignItems: 'center',
-    marginTop: '25',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 8,
+    position: 'absolute',
+    bottom: 70,
+    width: 150,
+    height: 50,
   },
   buttonText: {
     color: 'white',
-    fontSize: 16,
-    letterSpacing: 1,
+    fontSize: 18,
+    fontWeight: 'bold',
   },
   signupLink: {
-    marginTop: 20,
-    paddingVertical: 5,
+    position: 'absolute',
+    bottom: 35,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   signupText: {
     color: 'rgba(255, 255, 255, 0.8)',
     fontSize: 14,
-    marginTop: '-10',
+  },
+  signupTextBold: {
+    color: 'rgba(255, 255, 255, 0.8)',
+    fontSize: 14,
+    fontWeight: 'bold',
+    textDecorationLine: 'underline',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    fontSize: 18,
+    color: '#fff',
   },
 });
 

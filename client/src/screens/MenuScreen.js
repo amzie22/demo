@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, Image, ImageBackground, Dimensions, Platform } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons'; // Icons for navbar
@@ -6,75 +6,90 @@ import { Ionicons, FontAwesome5 } from '@expo/vector-icons'; // Icons for navbar
 const { width, height } = Dimensions.get('window');
 
 const MenuScreen = ({ navigation }) => {
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
+
+  useEffect(() => {
+    const imageUri = Image.resolveAssetSource(require('../assets/back.png')).uri;
+    Image.prefetch(imageUri)
+      .then(() => setIsImageLoaded(true))
+      .catch(() => setIsImageLoaded(false));
+  }, []);
+
   const maxXP = 10000;
   const currentXP = 500;
   const currentLevel = 10;
-  const progressPercentage = (currentXP / maxXP) * 1000;
+  const progressPercentage = (currentXP / maxXP) * 100;
 
   return (
-    <ImageBackground source={require("../assets/back.png")} style={styles.background}>
-      <SafeAreaView style={styles.safeArea}>
+    isImageLoaded ? (
+      <ImageBackground source={require("../assets/back.png")} style={styles.background}>
+        <SafeAreaView style={styles.safeArea}>
 
-        {/* Profile Headers */}
-        <View style={styles.profileContainer}>
-          <Image source={require('../assets/rizal.png')} style={styles.profileImage} />
-          <View style={styles.profileInfo}>
-            <Text style={styles.username}>Amziee #0000</Text>
+          {/* Profile Headers */}
+          <View style={styles.profileContainer}>
+            <Image source={require('../assets/rizal.png')} style={styles.profileImage} />
+            <View style={styles.profileInfo}>
+              <Text style={styles.username}>Amziee #0000</Text>
 
-            {/* XP Progress Bar */}
-            <View style={styles.levelBarContainer}>
-              <View style={styles.levelBarBackground}>
-                <LinearGradient
-                  colors={['#784C34', '#45251A']}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 0 }}
-                  style={[styles.levelBarFill, { width: `${progressPercentage}%` }]}
-                />
+              {/* XP Progress Bar */}
+              <View style={styles.levelBarContainer}>
+                <View style={styles.levelBarBackground}>
+                  <LinearGradient
+                    colors={['#784C34', '#45251A']}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    style={[styles.levelBarFill, { width: `${progressPercentage}%` }]}
+                  />
+                </View>
+                <Text style={styles.levelText}>Level {currentLevel}: {currentXP}/{maxXP}</Text>
               </View>
-              <Text style={styles.levelText}>Level {currentLevel}: {currentXP}/{maxXP}</Text>
             </View>
           </View>
-        </View>
 
-        {/* Chat Box */}
-        <View style={styles.chatContainer}>
-          <View style={styles.chatBox}>
-            <Text style={styles.botName}>Scribeon:</Text>
-            <Text style={styles.chatMessage}>Hello Amziee! How are you today?</Text>
+          {/* Chat Box */}
+          <View style={styles.chatContainer}>
+            <View style={styles.chatBox}>
+              <Text style={styles.botName}>Scribeon:</Text>
+              <Text style={styles.chatMessage}>Hello Amziee! How are you today?</Text>
+            </View>
           </View>
-        </View>
 
-        {/* Bottom Navigation */}
-        <View style={styles.navbar}>
+          {/* Bottom Navigation */}
+          <View style={styles.navbar}>
 
-          <TouchableOpacity style={[styles.navItem, { marginRight: 15 }]} onPress={() => navigation.navigate('Practice')}>
-            <Image source={require('../assets/practice.png')} style={styles.navIcon} />
-            <Text style={styles.navText}>PRACTICE</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.navItem, { marginRight: 45 }]} onPress={() => navigation.navigate('Chapter')}>
-            <FontAwesome5 name="calendar-alt" size={32} color="white" />
-            <Text style={styles.navText}>CHALLENGES</Text>
-          </TouchableOpacity>
+            <TouchableOpacity style={[styles.navItem, { marginRight: 15 }]} onPress={() => navigation.navigate('Practice')}>
+              <Image source={require('../assets/practice.png')} style={styles.navIcon} />
+              <Text style={styles.navText}>PRACTICE</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.navItem, { marginRight: 45 }]} onPress={() => navigation.navigate('Chapter')}>
+              <FontAwesome5 name="calendar-alt" size={32} color="white" />
+              <Text style={styles.navText}>CHALLENGES</Text>
+            </TouchableOpacity>
 
-          {/* CHAPTER Button - Centered Inside Navbar */}
-          <View style={styles.chapterButtonContainer}>
-            <TouchableOpacity onPress={() => navigation.navigate('Chapter')} style={styles.chapterButton}>
-              <Image source={require('../assets/chapter.png')} style={styles.chapterIcon} />
+            {/* CHAPTER Button - Centered Inside Navbar */}
+            <View style={styles.chapterButtonContainer}>
+              <TouchableOpacity onPress={() => navigation.navigate('Chapter')} style={styles.chapterButton}>
+                <Image source={require('../assets/chapter.png')} style={styles.chapterIcon} />
+              </TouchableOpacity>
+            </View>
+
+            <TouchableOpacity style={[styles.navItem, { marginLeft: 45 }]} onPress={() => navigation.navigate('Shop')}>
+              <Image source={require('../assets/shop.png')} style={styles.navIcon} />
+              <Text style={styles.navText}>SHOP</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.navItem, { marginLeft: 20 }]} onPress={() => navigation.navigate('Profile')}>
+              <Image source={require('../assets/profile.png')} style={styles.navIcon} />
+              <Text style={styles.navText}>PROFILE</Text>
             </TouchableOpacity>
           </View>
 
-          <TouchableOpacity style={[styles.navItem, { marginLeft: 45 }]} onPress={() => navigation.navigate('Shop')}>
-            <Image source={require('../assets/shop.png')} style={styles.navIcon} />
-            <Text style={styles.navText}>SHOP</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.navItem, { marginLeft: 20 }]} onPress={() => navigation.navigate('Profile')}>
-            <Image source={require('../assets/profile.png')} style={styles.navIcon} />
-            <Text style={styles.navText}>PROFILE</Text>
-          </TouchableOpacity>
-        </View>
-
-      </SafeAreaView>
-    </ImageBackground>
+        </SafeAreaView>
+      </ImageBackground>
+    ) : (
+      <View style={styles.loadingContainer}>
+        <Text style={styles.loadingText}>Loading...</Text>
+      </View>
+    )
   );
 };
 
@@ -82,6 +97,7 @@ const styles = StyleSheet.create({
   background: {
     flex: 1,
     resizeMode: 'cover',
+    backgroundColor: "#000"
   },
   safeArea: {
     flex: 1,
@@ -212,6 +228,16 @@ const styles = StyleSheet.create({
     fontSize: 9,
     fontFamily: 'Cardo',
     marginTop: 5,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#000',
+  },
+  loadingText: {
+    color: '#fff',
+    fontSize: 18,
   },
 });
 
