@@ -21,7 +21,7 @@ import TestScreen from './src/screens/TestScreen';
 import ClickableBooksScreen from './src/screens/ClickableBooksScreen';
 import SkipScreen from './src/screens/SkipScreen';
 import SetupScreen from './src/screens/SetupScreen';
-
+import AfterSetupScreen from './src/screens/AfterSetupScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -71,7 +71,12 @@ const App = () => {
         <Stack.Screen name="Test" component={TestScreen} />
         <Stack.Screen name="ClickableBooks" component={ClickableBooksScreen} />
         <Stack.Screen name="Skip" component={SkipScreen} />
-        <Stack.Screen name="Setup" component={SetupScreen} />
+        <Stack.Screen name="SetupScreen" component={SetupScreen} />
+        <Stack.Screen name="AfterSetupScreen" component={AfterSetupScreen} />
+        
+        {/* Add practice screens */}
+        <Stack.Screen name="A" component={PracticeAScreen} />
+        {/* Add other practice screens as needed */}
       </Stack.Navigator>
     </NavigationContainer>
   );

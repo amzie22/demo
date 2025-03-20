@@ -39,7 +39,7 @@ const SetupScreen = ({ navigation }) => {
         {step === 1 ? (
           // First Screen: Name Input
           <View style={styles.container}>
-            <Text style={styles.questionText}>"What would you like me to call you?"</Text>
+            <Text style={styles.questionText}>"What would you like me to call {'\n \t \t \t \t \t \t \t \t \t \t \t \t  '}you?"</Text>
             <TextInput
               style={styles.input}
               placeholder="Enter your name"
@@ -54,7 +54,7 @@ const SetupScreen = ({ navigation }) => {
         ) : step === 2 ? (
           // Second Screen: Avatar Selection
           <View style={styles.avatarContainer}>
-            <Text style={styles.questionText}>"Choose your avatar"</Text>
+            <Text style={styles.questionText1}>"Choose your avatar"</Text>
             <View style={styles.avatarGrid}>
               <Image source={avatars[selectedAvatar]} style={styles.bigAvatar} />
               <View style={styles.smallAvatars}>
@@ -82,7 +82,7 @@ const SetupScreen = ({ navigation }) => {
         ) : (
           // Third Screen: Skill Level Selection
           <View style={styles.container}>
-            <Text style={styles.questionText}>"What's your current skill level in Baybayin?"</Text>
+            <Text style={styles.questionText2}>"What's your current skill level in {'\n \t \t \t \t \t \t \t \t \t '}Baybayin?"</Text>
             <TouchableOpacity style={styles.skillButton} onPress={() => handleSkillSelection('Beginner')}>
               <Text style={styles.skillButtonText}>Beginner</Text>
             </TouchableOpacity>
@@ -110,20 +110,35 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   container: {
-    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    width: '75%',
+    height: '55%',
     padding: 20,
-    borderRadius: 10,
-    width: '80%',
+    borderRadius: 18,
     alignItems: 'center',
+    paddingVertical: 30,
+    borderWidth: 0.3,
+    borderColor: 'white',
   },
   questionText: {
     color: '#fff',
-    fontSize: 18,
-    marginBottom: 15,
-    textAlign: 'center',
+    fontSize: 15,
+    marginTop: 150,
+    marginBottom: 20
+  },
+  questionText1: {
+    color: '#fff',
+    fontSize: 15,
+    marginTop: 30,
+    marginBottom: 20
+  },
+  questionText2: {
+    color: '#fff',
+    fontSize: 15,
+    marginTop: 85,
+    marginBottom: 20
   },
   input: {
-    width: '100%',
+    width: '95%',
     backgroundColor: '#fff',
     padding: 10,
     borderRadius: 5,
@@ -133,20 +148,24 @@ const styles = StyleSheet.create({
   nextButton: {
     backgroundColor: '#8B5E3C',
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 10,
     width: '50%',
     alignItems: 'center',
+    marginTop: 35,
   },
   nextButtonText: {
     color: '#fff',
     fontSize: 16,
   },
   avatarContainer: {
-    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    backgroundColor: 'rgba(79, 79, 79, 0.34)',
     padding: 20,
-    borderRadius: 10,
-    width: '80%',
+    borderRadius: 15, 
+    width: '78%',
     alignItems: 'center',
+    borderColor: 'white',
+    borderWidth: 0.3  ,
+    
   },
   avatarGrid: {
     alignItems: 'center',
@@ -181,10 +200,10 @@ const styles = StyleSheet.create({
   skillButton: {
     backgroundColor: '#8B5E3C',
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 10,
     width: '80%',
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: 15,
   },
   skillButtonText: {
     color: '#fff',
