@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ImageBackground, TouchableOpacity, StyleSheet, Text, Platform } from 'react-native';
+import { View, ImageBackground, TouchableOpacity, StyleSheet, Text } from 'react-native';
 
 const ClickableBooksScreen = ({ navigation }) => {
   const handleBookPress = (bookNumber) => {
@@ -59,18 +59,13 @@ const ClickableBooksScreen = ({ navigation }) => {
       </View>
 
       <View style={styles.book6Container}>
-          <View style={[styles.book, styles.book6]}>
-            <View style={styles.book6Glow} />
-          </View>
           <TouchableOpacity 
-            style={styles.transparentBook} 
+            style={[styles.book, styles.book6]} 
             onPress={() => handleBookPress(6)}
-          />
+          >
+            <View style={styles.book6Glow} />
+          </TouchableOpacity>
         </View>
-
-      <Text style={styles.instructionText}>
-        Tap on a book to select it.
-      </Text>
       
     </ImageBackground>
   );
@@ -80,7 +75,6 @@ const styles = StyleSheet.create({
   background: {
     flex: 1,
     resizeMode: 'cover',
-    transform: [{ scale: 1.5 }], // Adjust the scale value to zoom in
   },
   container: {
     flex: 1,
@@ -115,73 +109,72 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 10,
     elevation: 7,
-    zIndex: 1, // Ensure the glow is below the transparent book
   },
   book1: {
-    top: '59.2%',
-    left: '23%',
+    top: '57.5%',
+    left: '14.2%',
     width: '1.2%',
     height: '1.6%',
   },
   book2: {
-    top: '64.3%',
-    left: '64%',
+    top: '64.9%',
+    left: '69%',
     width: '1.3%',
-    height: '1.9%',
+    height: '1.8%',
   },
   book3: {
-    top: '63.6%',
-    left: '43%',
+    top: '61.7%',
+    left: '39.1%',
     width: '1.2%',
     height: '1.6%',
   },
   book4: {
-    top: '69%',
-    left: '76%',
+    top: '70%',
+    left: '80.2%',
     width: '1.3%',
     height: '1.9%',
   },
   book5: {
-    top: '74.8%',
+    top: '75.1%',
     left: '47.4%',
     width: '1.2%',
-    height: '1.8%',
+    height: '1.5%',
   },
   book6Container: {
     position: 'absolute',
-    top: '77%',
-    left: Platform.OS === 'ios' ? '69%' : '72.3%', 
-    width: '7%', // Adjust width to match other books
-    height: '1.2%', // Adjust height to match other books
-    justifyContent: 'center',
-    alignItems: 'center',
+    top: '80%',
+    left: '46.2%', 
   },
   book6: {
-    width: '100%',
-    height: '100%',
+    width: 11.3,
+    height: 9.2,
   },
   book6Glow: { 
     position: 'absolute',
     width: '100%',
     height: '100%',
     borderRadius: 1,
-    backgroundColor: 'rgba(162, 138, 0, 0.28)',
+    backgroundColor: 'rgba(185, 208, 228, 0.2)',
     shadowColor: '#00FFFF', 
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.8,
     shadowRadius: 10,
     elevation: 0,
-    zIndex: 1, // Ensure the glow is below the transparent book
   },
-  transparentBook: {
+  instructionText: {
     position: 'absolute',
-    width: '100%', // Adjust width to match container
-    height: '100%', // Adjust height to match container
-    backgroundColor: 'rgba(255, 255, 255, 0.1)', // Slightly visible for debugging
-    zIndex: 2, // Ensure the transparent book is on top
+    bottom: 40,
+    alignSelf: 'center',
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '500',
+    textAlign: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 15,
   },
 });
 
 export default ClickableBooksScreen;
-
 
