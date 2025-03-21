@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, TextInput, Text, TouchableOpacity, ImageBackground, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import axios from 'axios';
+import { Alert } from 'react-native';
 
 const SignupScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -102,9 +104,9 @@ const SignupScreen = ({ navigation }) => {
             </View>
             
             <TouchableOpacity
-              style={styles.button}
-              onPress={() => navigation.navigate('Verification')}
-            >
+               style={styles.button}
+               onPress={handleSignup}
+              >
               <Text style={styles.buttonText}>SIGN-UP</Text>
             </TouchableOpacity>
             

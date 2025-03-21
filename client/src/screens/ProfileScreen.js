@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground, ScrollView, Modal } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ProfileDetails = ({ name, id, level }) => {
   return (
@@ -53,9 +54,14 @@ const ProfileScreen = ({ navigation }) => {
     setIsModalVisible(true);
   };
 
-  const confirmLogout = () => {
+  const confirmLogout = async () => {
     setIsModalVisible(false);
-    // Add logout functionality here
+    try {
+      await AsyncStorage.removeItem('userToken');
+      navigation.navigate('Login'); 
+    } catch (error) {
+      console.error('Error removing token:', error);
+    }
   };
 
   const cancelLogout = () => {
