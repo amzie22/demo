@@ -9,6 +9,32 @@ const SignupScreen = ({ navigation }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+
+  const handleSignup = async () => {
+    if (!email || !password || !confirmPassword) {
+      Alert.alert("Signup Failed", "All fields are required");
+      return;
+    }
+    if (password !== confirmPassword) {
+      Alert.alert("Signup Failed", "Passwords do not match");
+      return;
+    }
+    try {
+      const response = await axios.post("https://backend-y4fw.onrender.com/api/auth/signup", {
+        Email: email,
+        Password: password,
+      });
+      if (response.status === 200) {
+        Alert.alert("Signup Successful", "Please log in.");
+        navigation.navigate('Login');
+      } else {
+        Alert.alert("Signup Failed", "An unexpected error occurred");
+      }
+    } catch (error) {
+      Alert.alert("Signup Failed", error.response?.data?.error || "Email is already in use");
+    }
+  }
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
