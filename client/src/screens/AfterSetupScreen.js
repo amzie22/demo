@@ -55,7 +55,7 @@ const AfterSetupScreen = ({ route, navigation }) => {
 
   const handleCloseModal = () => {
     setIsModalVisible(false);
-    navigation.navigate('MainMenu'); // Navigate to Main Menu
+    navigation.navigate('Menu'); // Navigate to MenuScreen
   };
 
   return (
@@ -85,7 +85,7 @@ const AfterSetupScreen = ({ route, navigation }) => {
                     <Text style={{ color: '#fff' }}>Yes</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={[styles.modalButton, styles.modalButtonNo]} onPress={handleCloseModal}>
-                    <Text style={{ color: '#000' }}>No</Text>
+                    <Text style={{ color: '#000' }}>Main Menu</Text>
                   </TouchableOpacity>
                 </View>
               </View>

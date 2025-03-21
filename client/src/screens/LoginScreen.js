@@ -24,17 +24,17 @@ const LoginScreen = ({ navigation }) => {
       Alert.alert("Login Failed", "Email and password are required");
       return;
     }
-    try { //change ip address based on your connection
+    try {
       const response = await axios.post("https://backend-y4fw.onrender.com/api/auth/login", {
         Email: email,
         Password: password,
       });
-      console.log('Login response:', response.data); // Log the entire response
+      console.log('Login response:', response.data);
       if (response.status === 200) {
         const { token, User_ID } = response.data;
         await AsyncStorage.setItem('userData', JSON.stringify({ token, User_ID }));
         console.log('User data stored successfully:', { token, User_ID });
-        navigation.replace("Menu");
+        navigation.replace("Intro"); // Navigate to IntroScreen
       } else {
         Alert.alert("Login Failed", "Invalid email or password");
       }

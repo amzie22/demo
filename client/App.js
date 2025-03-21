@@ -22,6 +22,7 @@ import ClickableBooksScreen from './src/screens/ClickableBooksScreen';
 import SkipScreen from './src/screens/SkipScreen';
 import SetupScreen from './src/screens/SetupScreen';
 import AfterSetupScreen from './src/screens/AfterSetupScreen';
+import IntroScreen from './src/screens/IntroScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -73,7 +74,7 @@ const App = () => {
         <Stack.Screen name="Skip" component={SkipScreen} />
         <Stack.Screen name="Setup" component={SetupScreen} />
         <Stack.Screen name="AfterSetupScreen" component={AfterSetupScreen} />
-        
+        <Stack.Screen name="Intro" component={IntroScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
