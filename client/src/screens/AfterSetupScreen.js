@@ -1,7 +1,14 @@
+<<<<<<< Updated upstream
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, ImageBackground, TouchableOpacity, Animated, Image, Platform, Modal } from 'react-native';
 
 const AfterSetupScreen = ({ route, navigation }) => {
+=======
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, SafeAreaView, ImageBackground, TouchableOpacity, Image} from 'react-native';
+
+const AfterSetupScreen = ({ route, navigation}) => {
+>>>>>>> Stashed changes
   const { userName } = route.params;
   const [dialogueStep, setDialogueStep] = useState(0);
   const backgroundColor = useRef(new Animated.Value(0)).current;
@@ -62,6 +69,7 @@ const AfterSetupScreen = ({ route, navigation }) => {
     <ImageBackground source={require('../assets/back.png')} style={styles.background}>
       <View style={styles.overlay} />
       <SafeAreaView style={styles.safeArea}>
+<<<<<<< Updated upstream
         {dialogueStep < 3 && (
           <View style={styles.dialogueContainer}>
             {renderDialogue()}
@@ -88,6 +96,57 @@ const AfterSetupScreen = ({ route, navigation }) => {
                     <Text style={{ color: '#000' }}>No</Text>
                   </TouchableOpacity>
                 </View>
+=======
+        <View style={styles.dialogueContainer}>
+          {dialogueStep === 0 && (
+            <TouchableOpacity onPress={handleNextDialogue}>
+              <View style={styles.characterContainer}>
+                <Text style={styles.characterName}>Scribeon/Scrib:</Text>
+              </View>
+              <Text style={styles.dialogueText}>
+                “Oh no! {userName}! The book is fading away from {'\n'}the Archives! If we don’t act quickly, it will be lost forever!”
+              </Text>
+            </TouchableOpacity>
+          )}
+
+          {dialogueStep === 1 && (
+            <TouchableOpacity onPress={handleNextDialogue}>
+              <View style={styles.characterContainer}>
+                <Text style={styles.characterName}>Scribeon/Scrib:</Text>
+              </View>
+              <Text style={styles.dialogueText}>
+                “You must journey through the Isles of Memory to rediscover its stories.”
+              </Text>
+            </TouchableOpacity>
+          )}
+
+          {dialogueStep === 2 && (
+            <TouchableOpacity onPress={handleNextDialogue}>
+              <View style={styles.characterContainer}>
+                <Text style={styles.characterName}>Scribeon/Scrib:</Text>
+              </View>
+              <Text style={styles.dialogueText}>
+                “Only then can we restore its light and place among the world’s greatest writing systems.”
+              </Text>
+            </TouchableOpacity>
+          )}
+
+          {dialogueStep === 3 && (
+            <View style={styles.questContainer}>
+              {/* Background Image for the exact size */}
+              <Image source={require('../assets/lastquest.jpg')} style={styles.questImage} />
+
+              {/* Content Over Image */}
+              <Text style={styles.dialogueText3}>Accept Quest?</Text>
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity style={styles.choiceButton}>
+                  <Text style={styles.choiceText}>Yes</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.choiceButton1}  onPress={() => navigation.navigate('Menu')}>
+                  <Text style={styles.choiceText}>Main Menu</Text>
+                 
+                </TouchableOpacity>
+>>>>>>> Stashed changes
               </View>
             </View>
           </View>

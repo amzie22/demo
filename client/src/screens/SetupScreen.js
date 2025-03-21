@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
+<<<<<<< Updated upstream
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, ImageBackground, SafeAreaView, Image, Platform } from 'react-native';
+=======
+import { View, Text, StyleSheet, ImageBackground, SafeAreaView } from 'react-native';
+import HandleUserIgn from '../components/handleUserIgn';
+import HandleUserAvatar from '../components/handleUserAvatar';
+import HandleUserSkillLevel from '../components/handleUserSkillLevel';
+>>>>>>> Stashed changes
 
 const SetupScreen = ({ navigation }) => {
   const [name, setName] = useState('');
@@ -17,9 +24,10 @@ const SetupScreen = ({ navigation }) => {
     require('../assets/avatars/6.png'),
   ];
 
-  const handleNext = () => {
+  const handleNext = (userName) => {
     if (step === 1) {
-      if (name.trim() !== '') {
+      if (userName.trim() !== '') {
+        setName(userName);
         setStep(2); // Move to avatar selection step
       } else {
         alert('Please enter your name');
@@ -27,6 +35,11 @@ const SetupScreen = ({ navigation }) => {
     } else if (step === 2 && selectedAvatar !== null) {
       setStep(3); // Move to skill level selection step
     }
+  };
+
+  const handleAvatarSelection = (avatarId) => {
+    setSelectedAvatar(avatarId);
+    setStep(3); // Move to skill level selection step
   };
 
   const handleSkillSelection = (level) => {
@@ -39,6 +52,7 @@ const SetupScreen = ({ navigation }) => {
       <View style={styles.overlay} />
       <SafeAreaView style={styles.safeArea}>
         {step === 1 ? (
+<<<<<<< Updated upstream
           // First Screen: Name Input
           <View style={styles.content}>
             <Text style={styles.questionText}>"What would you like me to call you?"</Text>
@@ -97,6 +111,13 @@ const SetupScreen = ({ navigation }) => {
               <Text style={styles.skillButtonText}>Advanced</Text>
             </TouchableOpacity>
           </View>
+=======
+          <HandleUserIgn onNext={handleNext} />
+        ) : step === 2 ? (
+          <HandleUserAvatar avatars={avatars} onNext={handleAvatarSelection} />
+        ) : (
+          <HandleUserSkillLevel onNext={handleSkillSelection} />
+>>>>>>> Stashed changes
         )}
       </SafeAreaView>
     </ImageBackground>
@@ -137,8 +158,13 @@ const styles = StyleSheet.create({
   questionText: {
     color: '#fff',
     fontSize: 15,
+<<<<<<< Updated upstream
     marginBottom: 20,
     textAlign: 'center', // Added this line to center the text
+=======
+    marginTop: 150,
+    marginBottom: 20,
+>>>>>>> Stashed changes
   },
   questionText1: {
     color: '#fff',
@@ -149,9 +175,14 @@ const styles = StyleSheet.create({
   questionText2: {
     color: '#fff',
     fontSize: 15,
+<<<<<<< Updated upstream
     marginTop: 25,
     marginBottom: 20,
     textAlign: 'center', // Added this line to center the text
+=======
+    marginTop: 85,
+    marginBottom: 20,
+>>>>>>> Stashed changes
   },
   input: {
     width: '95%',
@@ -179,6 +210,18 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
   },
+<<<<<<< Updated upstream
+=======
+  avatarContainer: {
+    backgroundColor: 'rgba(79, 79, 79, 0.34)',
+    padding: 20,
+    borderRadius: 15,
+    width: '78%',
+    alignItems: 'center',
+    borderColor: 'white',
+    borderWidth: 0.3,
+  },
+>>>>>>> Stashed changes
   avatarGrid: {
     alignItems: 'center',
     marginBottom: 20,

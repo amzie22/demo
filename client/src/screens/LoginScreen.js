@@ -3,7 +3,9 @@ import { StyleSheet, View, TextInput, Text, TouchableOpacity, ImageBackground, T
 import { Ionicons } from '@expo/vector-icons';
 
 const LoginScreen = ({ navigation }) => {
+  //const [email, setEmail] = useState('mahebres@gbox.ncf.edu.ph');
   const [email, setEmail] = useState('');
+  //const [password, setPassword] = useState('123456789');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
@@ -61,12 +63,18 @@ const LoginScreen = ({ navigation }) => {
                 <Text style={styles.forgotText}>Forgot Password?</Text>
               </View>
               
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={styles.button}
                 onPress={() => navigation.navigate('Menu')}
               >
                 <Text style={styles.buttonText}>LOGIN</Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
+               <TouchableOpacity
+            style={styles.button}
+            onPress={handleLogin}
+          >
+            <Text style={styles.buttonText}>LOGIN</Text>
+          </TouchableOpacity>
               
               <View style={styles.signupLink}>
                 <Text style={styles.signupText}>Create account? </Text>
@@ -84,7 +92,7 @@ const LoginScreen = ({ navigation }) => {
       </View>
     )
   );
-};
+}; 
 
 const styles = StyleSheet.create({
   container: {
