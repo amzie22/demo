@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, ImageBackground, SafeAreaView, Image, Platform } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, SafeAreaView } from 'react-native';
+import HandleUserIgn from '../components/handleUserIgn';
+import HandleUserAvatar from '../components/handleUserAvatar';
+import HandleUserSkillLevel from '../components/handleUserSkillLevel';
 
 const SetupScreen = ({ navigation }) => {
   const [name, setName] = useState('');
@@ -17,9 +20,10 @@ const SetupScreen = ({ navigation }) => {
     require('../assets/avatars/6.png'),
   ];
 
-  const handleNext = () => {
+  const handleNext = (userName) => {
     if (step === 1) {
-      if (name.trim() !== '') {
+      if (userName.trim() !== '') {
+        setName(userName);
         setStep(2); // Move to avatar selection step
       } else {
         alert('Please enter your name');
@@ -27,6 +31,11 @@ const SetupScreen = ({ navigation }) => {
     } else if (step === 2 && selectedAvatar !== null) {
       setStep(3); // Move to skill level selection step
     }
+  };
+
+  const handleAvatarSelection = (avatarId) => {
+    setSelectedAvatar(avatarId);
+    setStep(3); // Move to skill level selection step
   };
 
   const handleSkillSelection = (level) => {
@@ -39,64 +48,11 @@ const SetupScreen = ({ navigation }) => {
       <View style={styles.overlay} />
       <SafeAreaView style={styles.safeArea}>
         {step === 1 ? (
-          // First Screen: Name Input
-          <View style={styles.content}>
-            <Text style={styles.questionText}>"What would you like me to call you?"</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Enter your name"
-              placeholderTextColor="#ccc"
-              value={name}
-              onChangeText={setName}
-            />
-            <TouchableOpacity style={styles.nextButton} onPress={handleNext}>
-              <Text style={styles.nextButtonText}>Next</Text>
-            </TouchableOpacity>
-          </View>
+          <HandleUserIgn onNext={handleNext} />
         ) : step === 2 ? (
-          // Second Screen: Avatar Selection
-          <View style={styles.content}>
-            <Text style={styles.questionText1}>"Choose your avatar"</Text>
-            <View style={styles.avatarGrid}>
-              {selectedAvatar !== null && (
-                <Image source={avatars[selectedAvatar]} style={styles.bigAvatar} />
-              )}
-              <View style={styles.smallAvatars}>
-                {avatars.map((avatar, index) => (
-                  <TouchableOpacity key={index} onPress={() => setSelectedAvatar(index)}>
-                    <Image
-                      source={avatar}
-                      style={[
-                        styles.avatar,
-                        selectedAvatar === index && styles.selectedAvatar,
-                      ]}
-                    />
-                  </TouchableOpacity>
-                ))}
-              </View>
-            </View>
-            <TouchableOpacity
-              style={[styles.nextButton, selectedAvatar === null && { backgroundColor: '#555' }]}
-              onPress={handleNext}
-              disabled={selectedAvatar === null}
-            >
-              <Text style={styles.nextButtonText}>Next</Text>
-            </TouchableOpacity>
-          </View>
+          <HandleUserAvatar avatars={avatars} onNext={handleAvatarSelection} />
         ) : (
-          // Third Screen: Skill Level Selection
-          <View style={styles.content}>
-            <Text style={styles.questionText2}>"What's your current skill level in Baybayin?"</Text>
-            <TouchableOpacity style={styles.skillButton} onPress={() => handleSkillSelection('Beginner')}>
-              <Text style={styles.skillButtonText}>Beginner</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.skillButton} onPress={() => handleSkillSelection('Intermediate')}>
-              <Text style={styles.skillButtonText}>Intermediate</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.skillButton} onPress={() => handleSkillSelection('Advanced')}>
-              <Text style={styles.skillButtonText}>Advanced</Text>
-            </TouchableOpacity>
-          </View>
+          <HandleUserSkillLevel onNext={handleSkillSelection} />
         )}
       </SafeAreaView>
     </ImageBackground>
@@ -137,8 +93,8 @@ const styles = StyleSheet.create({
   questionText: {
     color: '#fff',
     fontSize: 15,
+    marginTop: 150,
     marginBottom: 20,
-    textAlign: 'center', // Added this line to center the text
   },
   questionText1: {
     color: '#fff',
@@ -149,9 +105,8 @@ const styles = StyleSheet.create({
   questionText2: {
     color: '#fff',
     fontSize: 15,
-    marginTop: 25,
+    marginTop: 85,
     marginBottom: 20,
-    textAlign: 'center', // Added this line to center the text
   },
   input: {
     width: '95%',
@@ -178,6 +133,15 @@ const styles = StyleSheet.create({
   nextButtonText: {
     color: '#fff',
     fontSize: 16,
+  },
+  avatarContainer: {
+    backgroundColor: 'rgba(79, 79, 79, 0.34)',
+    padding: 20,
+    borderRadius: 15,
+    width: '78%',
+    alignItems: 'center',
+    borderColor: 'white',
+    borderWidth: 0.3,
   },
   avatarGrid: {
     alignItems: 'center',
