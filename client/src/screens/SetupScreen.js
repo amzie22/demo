@@ -1,30 +1,41 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, ImageBackground, SafeAreaView, Image } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, SafeAreaView } from 'react-native';
+import HandleUserIgn from '../components/handleUserIgn';
+import HandleUserAvatar from '../components/handleUserAvatar';
+import HandleUserSkillLevel from '../components/handleUserSkillLevel';
 
 const SetupScreen = ({ navigation }) => {
   const [name, setName] = useState('');
   const [step, setStep] = useState(1);
-  const [selectedAvatar, setSelectedAvatar] = useState(null);
+  const [selectedAvatar, setSelectedAvatar] = useState(0); // Set the first avatar as the default selection
   const [skillLevel, setSkillLevel] = useState('');
 
   // Avatar images
   const avatars = [
-    require('../assets/whiteavatar.png'),
-    require('../assets/whiteavatar.png'),
-    require('../assets/whiteavatar.png'),
-    require('../assets/whiteavatar.png'),
-    require('../assets/whiteavatar.png'),
-    require('../assets/whiteavatar.png'),
+    require('../assets/avatars/1.jpg'),
+    require('../assets/avatars/2.jpg'),
+    require('../assets/avatars/3.jpg'),
+    require('../assets/avatars/4.jpg'),
+    require('../assets/avatars/5.jpg'),
+    require('../assets/avatars/6.png'),
   ];
 
-  const handleNext = () => {
+  const handleNext = (userName) => {
     if (step === 1) {
-      if (name.trim() !== '') {
+      if (userName.trim() !== '') {
+        setName(userName);
         setStep(2); // Move to avatar selection step
+      } else {
+        alert('Please enter your name');
       }
     } else if (step === 2 && selectedAvatar !== null) {
       setStep(3); // Move to skill level selection step
     }
+  };
+
+  const handleAvatarSelection = (avatarId) => {
+    setSelectedAvatar(avatarId);
+    setStep(3); // Move to skill level selection step
   };
 
   const handleSkillSelection = (level) => {
@@ -33,66 +44,15 @@ const SetupScreen = ({ navigation }) => {
   };
 
   return (
-
     <ImageBackground source={require('../assets/back.png')} style={styles.background}>
+      <View style={styles.overlay} />
       <SafeAreaView style={styles.safeArea}>
         {step === 1 ? (
-          // First Screen: Name Input
-          <View style={styles.container}>
-            <Text style={styles.questionText}>"What would you like me to call {'\n \t \t \t \t \t \t \t \t \t \t \t \t  '}you?"</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Enter your name"
-              placeholderTextColor="#ccc"
-              value={name}
-              onChangeText={setName}
-            />
-            <TouchableOpacity style={styles.nextButton} onPress={handleNext}>
-              <Text style={styles.nextButtonText}>Next</Text>
-            </TouchableOpacity>
-          </View>
+          <HandleUserIgn onNext={handleNext} />
         ) : step === 2 ? (
-          // Second Screen: Avatar Selection
-          <View style={styles.avatarContainer}>
-            <Text style={styles.questionText1}>"Choose your avatar"</Text>
-            <View style={styles.avatarGrid}>
-              <Image source={avatars[selectedAvatar]} style={styles.bigAvatar} />
-              <View style={styles.smallAvatars}>
-                {avatars.map((avatar, index) => (
-                  <TouchableOpacity key={index} onPress={() => setSelectedAvatar(index)}>
-                    <Image
-                      source={avatar}
-                      style={[
-                        styles.avatar,
-                        selectedAvatar === index && styles.selectedAvatar,
-                      ]}
-                    />
-                  </TouchableOpacity>
-                ))}
-              </View>
-            </View>
-            <TouchableOpacity
-              style={[styles.nextButton, selectedAvatar === null && { backgroundColor: '#555' }]}
-              onPress={handleNext}
-              disabled={selectedAvatar === null}
-            >
-              <Text style={styles.nextButtonText}>Next</Text>
-            </TouchableOpacity>
-          </View>
+          <HandleUserAvatar avatars={avatars} onNext={handleAvatarSelection} />
         ) : (
-          // Third Screen: Skill Level Selection
-          <View style={styles.container}>
-            <Text style={styles.questionText2}>"What's your current skill level in {'\n \t \t \t \t \t \t \t \t \t '}Baybayin?"</Text>
-            <TouchableOpacity style={styles.skillButton} onPress={() => handleSkillSelection('Beginner')}>
-              <Text style={styles.skillButtonText}>Beginner</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.skillButton} onPress={() => handleSkillSelection('Intermediate')}>
-              <Text style={styles.skillButtonText}>Intermediate</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.skillButton} onPress={() => handleSkillSelection('Advanced')}>
-              <Text style={styles.skillButtonText}>Advanced</Text>
-            </TouchableOpacity>
-          </View>
+          <HandleUserSkillLevel onNext={handleSkillSelection} />
         )}
       </SafeAreaView>
     </ImageBackground>
@@ -104,38 +64,49 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: 'cover',
   },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0, 0, 0, 0.25)', 
+  },
   safeArea: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  container: {
-    width: '75%',
-    height: '55%',
-    padding: 20,
-    borderRadius: 18,
+  content: {
+    paddingLeft: 30,
+    paddingRight: 30,
+    borderRadius: 10,
+    width: 310,
+    height: 400,
+    backgroundColor: 'rgba(41, 41, 41, 0.2)', 
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.3)',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 8,
+    justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: 30,
-    borderWidth: 0.3,
-    borderColor: 'white',
   },
   questionText: {
     color: '#fff',
     fontSize: 15,
     marginTop: 150,
-    marginBottom: 20
+    marginBottom: 20,
   },
   questionText1: {
     color: '#fff',
     fontSize: 15,
     marginTop: 30,
-    marginBottom: 20
+    marginBottom: 20,
   },
   questionText2: {
     color: '#fff',
     fontSize: 15,
     marginTop: 85,
-    marginBottom: 20
+    marginBottom: 20,
   },
   input: {
     width: '95%',
@@ -151,7 +122,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: '50%',
     alignItems: 'center',
-    marginTop: 35,
+    borderWidth: 1,
+    borderColor: 'rgba(43, 4, 4, 0.3)',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 8,
   },
   nextButtonText: {
     color: '#fff',
@@ -160,12 +137,11 @@ const styles = StyleSheet.create({
   avatarContainer: {
     backgroundColor: 'rgba(79, 79, 79, 0.34)',
     padding: 20,
-    borderRadius: 15, 
+    borderRadius: 15,
     width: '78%',
     alignItems: 'center',
     borderColor: 'white',
-    borderWidth: 0.3  ,
-    
+    borderWidth: 0.3,
   },
   avatarGrid: {
     alignItems: 'center',
@@ -175,13 +151,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    marginTop: 10,
   },
   bigAvatar: {
     width: 80,
     height: 80,
     borderRadius: 40,
-    marginBottom: 20,
+    marginBottom: 10,
     borderWidth: 2,
     borderColor: '#FFD700',
   },
@@ -204,6 +179,15 @@ const styles = StyleSheet.create({
     width: '80%',
     alignItems: 'center',
     marginBottom: 15,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.3)',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   skillButtonText: {
     color: '#fff',

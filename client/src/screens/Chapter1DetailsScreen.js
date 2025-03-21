@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ImageBackground, TouchableOpacity, Animated } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, ImageBackground, TouchableOpacity, Animated, Platform } from 'react-native';
+
 
 const Chapter1DetailsScreen = ({ navigation }) => {
   const [dialogueStep, setDialogueStep] = useState(0);
@@ -151,7 +152,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     width: '90%',
     height: 220, // Fixed height
-    marginBottom: 20,
+    marginBottom: Platform.OS === 'ios' ? 20 : -25,
     backdropFilter: 'blur(10px)', // Add blur effect
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.3)', // Optional: Add a border for better visibility
