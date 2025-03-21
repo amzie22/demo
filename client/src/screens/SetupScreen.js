@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
-<<<<<<< Updated upstream
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, ImageBackground, SafeAreaView, Image, Platform } from 'react-native';
-=======
 import { View, Text, StyleSheet, ImageBackground, SafeAreaView } from 'react-native';
 import HandleUserIgn from '../components/handleUserIgn';
 import HandleUserAvatar from '../components/handleUserAvatar';
 import HandleUserSkillLevel from '../components/handleUserSkillLevel';
->>>>>>> Stashed changes
 
 const SetupScreen = ({ navigation }) => {
   const [name, setName] = useState('');
@@ -52,72 +48,11 @@ const SetupScreen = ({ navigation }) => {
       <View style={styles.overlay} />
       <SafeAreaView style={styles.safeArea}>
         {step === 1 ? (
-<<<<<<< Updated upstream
-          // First Screen: Name Input
-          <View style={styles.content}>
-            <Text style={styles.questionText}>"What would you like me to call you?"</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Enter your name"
-              placeholderTextColor="#ccc"
-              value={name}
-              onChangeText={setName}
-            />
-            <TouchableOpacity style={styles.nextButton} onPress={handleNext}>
-              <Text style={styles.nextButtonText}>Next</Text>
-            </TouchableOpacity>
-          </View>
-        ) : step === 2 ? (
-          // Second Screen: Avatar Selection
-          <View style={styles.content}>
-            <Text style={styles.questionText1}>"Choose your avatar"</Text>
-            <View style={styles.avatarGrid}>
-              {selectedAvatar !== null && (
-                <Image source={avatars[selectedAvatar]} style={styles.bigAvatar} />
-              )}
-              <View style={styles.smallAvatars}>
-                {avatars.map((avatar, index) => (
-                  <TouchableOpacity key={index} onPress={() => setSelectedAvatar(index)}>
-                    <Image
-                      source={avatar}
-                      style={[
-                        styles.avatar,
-                        selectedAvatar === index && styles.selectedAvatar,
-                      ]}
-                    />
-                  </TouchableOpacity>
-                ))}
-              </View>
-            </View>
-            <TouchableOpacity
-              style={[styles.nextButton, selectedAvatar === null && { backgroundColor: '#555' }]}
-              onPress={handleNext}
-              disabled={selectedAvatar === null}
-            >
-              <Text style={styles.nextButtonText}>Next</Text>
-            </TouchableOpacity>
-          </View>
-        ) : (
-          // Third Screen: Skill Level Selection
-          <View style={styles.content}>
-            <Text style={styles.questionText2}>"What's your current skill level in Baybayin?"</Text>
-            <TouchableOpacity style={styles.skillButton} onPress={() => handleSkillSelection('Beginner')}>
-              <Text style={styles.skillButtonText}>Beginner</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.skillButton} onPress={() => handleSkillSelection('Intermediate')}>
-              <Text style={styles.skillButtonText}>Intermediate</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.skillButton} onPress={() => handleSkillSelection('Advanced')}>
-              <Text style={styles.skillButtonText}>Advanced</Text>
-            </TouchableOpacity>
-          </View>
-=======
           <HandleUserIgn onNext={handleNext} />
         ) : step === 2 ? (
           <HandleUserAvatar avatars={avatars} onNext={handleAvatarSelection} />
         ) : (
           <HandleUserSkillLevel onNext={handleSkillSelection} />
->>>>>>> Stashed changes
         )}
       </SafeAreaView>
     </ImageBackground>
@@ -158,13 +93,8 @@ const styles = StyleSheet.create({
   questionText: {
     color: '#fff',
     fontSize: 15,
-<<<<<<< Updated upstream
-    marginBottom: 20,
-    textAlign: 'center', // Added this line to center the text
-=======
     marginTop: 150,
     marginBottom: 20,
->>>>>>> Stashed changes
   },
   questionText1: {
     color: '#fff',
@@ -175,14 +105,8 @@ const styles = StyleSheet.create({
   questionText2: {
     color: '#fff',
     fontSize: 15,
-<<<<<<< Updated upstream
-    marginTop: 25,
-    marginBottom: 20,
-    textAlign: 'center', // Added this line to center the text
-=======
     marginTop: 85,
     marginBottom: 20,
->>>>>>> Stashed changes
   },
   input: {
     width: '95%',
@@ -210,8 +134,6 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
   },
-<<<<<<< Updated upstream
-=======
   avatarContainer: {
     backgroundColor: 'rgba(79, 79, 79, 0.34)',
     padding: 20,
@@ -221,7 +143,6 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     borderWidth: 0.3,
   },
->>>>>>> Stashed changes
   avatarGrid: {
     alignItems: 'center',
     marginBottom: 20,
