@@ -3,8 +3,8 @@
     "name": "mobile",
     "slug": "mobile",
     "version": "1.0.0",
-    "plugins": [
-      "expo-font"
-    ]
+    "sdkVersion": "52.0.0",
+    "platforms": ["ios", "android", "web"],
+    "assetBundlePatterns": ["**/*"]
   }
 }

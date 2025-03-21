@@ -71,12 +71,9 @@ const App = () => {
         <Stack.Screen name="Test" component={TestScreen} />
         <Stack.Screen name="ClickableBooks" component={ClickableBooksScreen} />
         <Stack.Screen name="Skip" component={SkipScreen} />
-        <Stack.Screen name="SetupScreen" component={SetupScreen} />
+        <Stack.Screen name="Setup" component={SetupScreen} />
         <Stack.Screen name="AfterSetupScreen" component={AfterSetupScreen} />
         
-        {/* Add practice screens */}
-        <Stack.Screen name="A" component={PracticeAScreen} />
-        {/* Add other practice screens as needed */}
       </Stack.Navigator>
     </NavigationContainer>
   );
