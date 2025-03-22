@@ -1,48 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, Alert } from 'react-native';
-import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const HandleUserAvatar = ({ avatars, onNext }) => {
-  const [selectedAvatarKey, setSelectedAvatarKey] = useState(null);
-  const [token, setToken] = useState('');
-  const [userId, setUserId] = useState('');
+const HandleUserAvatar = ({ avatars, selectedAvatarKey, onNext }) => {
+  const [selectedKey, setSelectedKey] = useState(selectedAvatarKey);
 
-  useEffect(() => {
-    const getUserData = async () => {
-      try {
-        const userData = await AsyncStorage.getItem('userData');
-        if (userData) {
-          const { token, User_ID } = JSON.parse(userData);
-          setToken(token);
-          setUserId(User_ID);
-        }
-      } catch (error) {
-        console.error('Error retrieving user data:', error);
-      }
-    };
-
-    getUserData();
-  }, []);
-
-  const handleNext = async () => {
-    if (selectedAvatarKey !== null) {
-      try {
-        const response = await axios.patch(`https://backend-y4fw.onrender.com/api/users/avatar/${userId}`, {
-          Avatar: selectedAvatarKey,
-        }, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        if (response.status === 200) {
-          onNext(selectedAvatarKey);
-          // Alert.alert('Success', response.data.message);
-        }
-      } catch (error) {
-        console.error('Error saving avatar:', error);
-        Alert.alert('Error', 'Failed to save avatar. Please try again.');
-      }
+  const handleNext = () => {
+    if (selectedKey !== null) {
+      onNext(selectedKey);
     } else {
       Alert.alert('Error', 'Please select an avatar.');
     }
@@ -51,23 +15,26 @@ const HandleUserAvatar = ({ avatars, onNext }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.questionText}>"Choose your avatar"</Text>
+      {selectedKey !== null && (
+        <Image source={avatars[selectedKey]} style={styles.bigAvatar} />
+      )}
       <View style={styles.avatarGrid}>
         {Object.keys(avatars).map((key) => (
-          <TouchableOpacity key={key} onPress={() => setSelectedAvatarKey(key)}>
+          <TouchableOpacity key={key} onPress={() => setSelectedKey(key)}>
             <Image
               source={avatars[key]}
               style={[
                 styles.avatar,
-                selectedAvatarKey === key && styles.selectedAvatar,
+                selectedKey === key && styles.selectedAvatar,
               ]}
             />
           </TouchableOpacity>
         ))}
       </View>
       <TouchableOpacity
-        style={[styles.nextButton, selectedAvatarKey === null && { backgroundColor: '#555' }]}
+        style={[styles.nextButton, selectedKey === null && { backgroundColor: '#555' }]}
         onPress={handleNext}
-        disabled={selectedAvatarKey === null}
+        disabled={selectedKey === null}
       >
         <Text style={styles.nextButtonText}>Next</Text>
       </TouchableOpacity>
@@ -78,7 +45,7 @@ const HandleUserAvatar = ({ avatars, onNext }) => {
 const styles = StyleSheet.create({
   container: {
     width: '75%',
-    height: '55%',
+    height: '65%',
     padding: 20,
     borderRadius: 18,
     alignItems: 'center',
@@ -89,7 +56,7 @@ const styles = StyleSheet.create({
   questionText: {
     color: '#fff',
     fontSize: 15,
-    marginTop: 150,
+    marginTop: 10,
     marginBottom: 20,
   },
   avatarGrid: {
@@ -111,6 +78,14 @@ const styles = StyleSheet.create({
   selectedAvatar: {
     borderColor: '#FFD700',
     borderWidth: 3,
+  },
+  bigAvatar: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    marginBottom: 20,
+    borderWidth: 2,
+    borderColor: '#FFD700',
   },
   nextButton: {
     backgroundColor: '#8B5E3C',
