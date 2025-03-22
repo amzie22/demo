@@ -31,13 +31,14 @@ const LoginScreen = ({ navigation }) => {
       });
       console.log('Login response:', response.data);
       if (response.status === 200) {
-        const { token, User_ID } = response.data;
-        await AsyncStorage.setItem('userData', JSON.stringify({ token, User_ID }));
-        console.log('User data stored successfully:', { token, User_ID });
-        if (response.data.Ingame_name === null) {
-          navigation.replace("Menu");
+        const { token, User_ID, Ingame_name } = response.data;
+        await AsyncStorage.setItem('userData', JSON.stringify({ token, User_ID, Ingame_name }));
+        console.log('User data stored successfully:', { token, User_ID, Ingame_name });
+        if (!Ingame_name) {
+          navigation.replace("Intro"); 
+        } else {
+          navigation.replace("Menu");  
         }
-        navigation.replace("Intro"); // Navigate to IntroScreen
       } else {
         Alert.alert("Login Failed", "Invalid email or password");
       }
