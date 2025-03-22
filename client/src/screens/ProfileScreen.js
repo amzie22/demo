@@ -1,13 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground, ScrollView, Modal } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+<<<<<<< Updated upstream
+=======
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+>>>>>>> Stashed changes
 
-const ProfileDetails = ({ name, id, level }) => {
+const avatars = {
+  '1': require('../assets/avatars/1.jpg'),
+  '2': require('../assets/avatars/2.jpg'),
+  '3': require('../assets/avatars/3.jpg'),
+  '4': require('../assets/avatars/4.jpg'),
+  '5': require('../assets/avatars/5.jpg'),
+  '6': require('../assets/avatars/6.png'),
+};
+
+const ProfileDetails = ({ userName, userID, skill }) => {
   return (
     <View style={styles.profileDetails}>
-      <Text style={styles.profileName}>{name} {id}</Text>
-      <Text style={styles.profileLevel}>{level}</Text>
+      <Text style={styles.profileName}>{userName} #{userID}</Text>
+      <Text style={styles.profileLevel}>{skill}</Text>
       <TouchableOpacity style={styles.editButton}>
         <FontAwesome name="edit" size={16} color="black" />
         <Text style={styles.editText}>Edit Profile</Text>
@@ -35,12 +49,13 @@ const ProgressBar = ({ currentXP, maxXP, currentLevel }) => {
 };
 
 const ProfileScreen = ({ navigation }) => {
-  const [name, setName] = useState('Amziee');
-  const [id, setId] = useState('#0000');
-  const [level, setLevel] = useState('Beginner');
-  const maxXP = 10000;
-  const currentXP = 500;
-  const currentLevel = 10;
+  const [avatarKey, setAvatarKey] = useState('1'); // Default avatar key
+  const [userName, setUserName] = useState('User');
+  const [skill, setSkill] = useState('Beginner');
+  const [userID, setUserID] = useState('');
+  const [currentXP, setCurrentXP] = useState(500);
+  const [maxXP] = useState(10000);
+  const [currentLevel] = useState(10);
   const [streak, setStreak] = useState(0);
   const [badge, setBadge] = useState(0);
   const [chapter, setChapter] = useState(1);
@@ -49,13 +64,48 @@ const ProfileScreen = ({ navigation }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [achievements, setAchievements] = useState([]); // Add state for achievements
 
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const userData = await AsyncStorage.getItem('userData');
+        if (userData) {
+          const { token, User_ID } = JSON.parse(userData);
+          const response = await axios.get(`https://backend-y4fw.onrender.com/api/users/${User_ID}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          if (response.status === 200) {
+            setUserID(response.data.User_ID);
+            setAvatarKey(response.data.Avatar);
+            setUserName(response.data.Ingame_name);
+            setSkill(response.data.skill_level);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
   const handleLogout = () => {
     setIsModalVisible(true);
   };
 
   const confirmLogout = () => {
     setIsModalVisible(false);
+<<<<<<< Updated upstream
     // Add logout functionality here
+=======
+    try {
+      await AsyncStorage.removeItem('userToken');
+      navigation.navigate('Login');
+    } catch (error) {
+      console.error('Error removing token:', error);
+    }
+>>>>>>> Stashed changes
   };
 
   const cancelLogout = () => {
@@ -72,11 +122,11 @@ const ProfileScreen = ({ navigation }) => {
           <View style={styles.profileContainer}>
             <View style={styles.profileImageContainer}>
               <Image
-                source={require('../assets/rizal.png')} // Replace with your profile image URL
+                source={avatars[avatarKey]} // Use the avatar key to fetch the correct image
                 style={styles.profileImage}
               />
             </View>
-            <ProfileDetails name={name} id={id} level={level} />
+            <ProfileDetails userName={userName} userID={userID} skill={skill} />
           </View>
           <ProgressBar currentXP={currentXP} maxXP={maxXP} currentLevel={currentLevel} />
           <View style={styles.divider} />

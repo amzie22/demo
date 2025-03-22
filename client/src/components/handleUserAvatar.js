@@ -4,7 +4,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HandleUserAvatar = ({ avatars, onNext }) => {
-  const [selectedAvatar, setSelectedAvatar] = useState(null);
+  const [selectedAvatarKey, setSelectedAvatarKey] = useState(null);
   const [token, setToken] = useState('');
   const [userId, setUserId] = useState('');
 
@@ -26,17 +26,17 @@ const HandleUserAvatar = ({ avatars, onNext }) => {
   }, []);
 
   const handleNext = async () => {
-    if (selectedAvatar !== null) {
+    if (selectedAvatarKey !== null) {
       try {
         const response = await axios.patch(`https://backend-y4fw.onrender.com/api/users/avatar/${userId}`, {
-          avatar_id: selectedAvatar,
+          Avatar: selectedAvatarKey,
         }, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
         if (response.status === 200) {
-          onNext(selectedAvatar);
+          onNext(selectedAvatarKey);
           Alert.alert('Success', response.data.message);
         }
       } catch (error) {
@@ -49,28 +49,25 @@ const HandleUserAvatar = ({ avatars, onNext }) => {
   };
 
   return (
-    <View style={styles.content}>
+    <View style={styles.container}>
       <Text style={styles.questionText}>"Choose your avatar"</Text>
       <View style={styles.avatarGrid}>
-      {selectedAvatar !== null && ( <Image source={avatars[selectedAvatar]} style={styles.bigAvatar} />)}
-              <View style={styles.smallAvatars}>
-        {avatars.map((avatar, index) => (
-          <TouchableOpacity key={index} onPress={() => setSelectedAvatar(index)}>
+        {Object.keys(avatars).map((key) => (
+          <TouchableOpacity key={key} onPress={() => setSelectedAvatarKey(key)}>
             <Image
-              source={avatar}
+              source={avatars[key]}
               style={[
                 styles.avatar,
-                selectedAvatar === index && styles.selectedAvatar,
+                selectedAvatarKey === key && styles.selectedAvatar,
               ]}
             />
           </TouchableOpacity>
         ))}
       </View>
-      </View>
       <TouchableOpacity
-        style={[styles.nextButton, selectedAvatar === null && { backgroundColor: '#555' }]}
+        style={[styles.nextButton, selectedAvatarKey === null && { backgroundColor: '#555' }]}
         onPress={handleNext}
-        disabled={selectedAvatar === null}
+        disabled={selectedAvatarKey === null}
       >
         <Text style={styles.nextButtonText}>Next</Text>
       </TouchableOpacity>
@@ -79,37 +76,29 @@ const HandleUserAvatar = ({ avatars, onNext }) => {
 };
 
 const styles = StyleSheet.create({
-  content: {
-    paddingLeft: 30,
-    paddingRight: 30,
-    borderRadius: 10,
-    width: 310,
-    height: 400,
-    backgroundColor: 'rgba(41, 41, 41, 0.2)', 
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.3)',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    elevation: 8,
-    justifyContent: 'center',
+  container: {
+    width: '75%',
+    height: '55%',
+    padding: 20,
+    borderRadius: 18,
     alignItems: 'center',
+    paddingVertical: 30,
+    borderWidth: 0.3,
+    borderColor: 'white',
   },
   questionText: {
     color: '#fff',
     fontSize: 15,
-    marginTop: 30,
+    marginTop: 150,
     marginBottom: 20,
   },
   avatarGrid: {
     alignItems: 'center',
     marginBottom: 20,
-  },
-  smallAvatars: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
+    marginTop: 10,
   },
   avatar: {
     width: 50,
@@ -118,14 +107,6 @@ const styles = StyleSheet.create({
     margin: 10,
     borderWidth: 2,
     borderColor: 'transparent',
-  },
-  bigAvatar: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    marginBottom: 10,
-    borderWidth: 2,
-    borderColor: '#FFD700',
   },
   selectedAvatar: {
     borderColor: '#FFD700',
@@ -137,13 +118,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: '50%',
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: 'rgba(43, 4, 4, 0.3)',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    elevation: 8,
+    marginTop: 35,
   },
   nextButtonText: {
     color: '#fff',
