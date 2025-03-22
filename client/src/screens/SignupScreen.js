@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, TextInput, Text, TouchableOpacity, ImageBackground, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import axios from 'axios';
+import { Alert } from 'react-native';
 
 const SignupScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -8,6 +10,32 @@ const SignupScreen = ({ navigation }) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+
+  const handleSignup = async () => {
+    if (!email || !password || !confirmPassword) {
+      Alert.alert("Signup Failed", "All fields are required");
+      return;
+    }
+    if (password !== confirmPassword) {
+      Alert.alert("Signup Failed", "Passwords do not match");
+      return;
+    }
+    try {
+      const response = await axios.post("https://backend-y4fw.onrender.com/api/auth/signup", {
+        Email: email,
+        Password: password,
+      });
+      if (response.status === 200) {
+        Alert.alert("Signup Successful", "Please log in.");
+        navigation.navigate('Login');
+      } else {
+        Alert.alert("Signup Failed", "An unexpected error occurred");
+      }
+    } catch (error) {
+      Alert.alert("Signup Failed", error.response?.data?.error || "Email is already in use");
+    }
+  }
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -76,9 +104,9 @@ const SignupScreen = ({ navigation }) => {
             </View>
             
             <TouchableOpacity
-              style={styles.button}
-              onPress={() => navigation.navigate('Verification')}
-            >
+               style={styles.button}
+               onPress={handleSignup}
+              >
               <Text style={styles.buttonText}>SIGN-UP</Text>
             </TouchableOpacity>
             

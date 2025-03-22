@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, TextInput, Text, TouchableOpacity, ImageBackground, TouchableWithoutFeedback, Keyboard, Image } from 'react-native';
+import { StyleSheet, View, TextInput, Text, TouchableOpacity, ImageBackground, TouchableWithoutFeedback, Keyboard, Image, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('mahebres@gbox.ncf.edu.ph');
@@ -16,6 +18,30 @@ const LoginScreen = ({ navigation }) => {
       .then(() => setIsImageLoaded(true))
       .catch(() => setIsImageLoaded(false));
   }, []);
+
+  const handleLogin = async () => {
+    if (!email || !password) {
+      Alert.alert("Login Failed", "Email and password are required");
+      return;
+    }
+    try {
+      const response = await axios.post("https://backend-y4fw.onrender.com/api/auth/login", {
+        Email: email,
+        Password: password,
+      });
+      console.log('Login response:', response.data);
+      if (response.status === 200) {
+        const { token, User_ID } = response.data;
+        await AsyncStorage.setItem('userData', JSON.stringify({ token, User_ID }));
+        console.log('User data stored successfully:', { token, User_ID });
+        navigation.replace("Intro"); // Navigate to IntroScreen
+      } else {
+        Alert.alert("Login Failed", "Invalid email or password");
+      }
+    } catch (error) {
+      Alert.alert("Login Failed", error.response?.data?.error || "An unexpected error occurred");
+    }
+  };
 
   return (
     isImageLoaded ? (

@@ -5,6 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
+
 const avatars = {
   '1': require('../assets/avatars/1.jpg'),
   '2': require('../assets/avatars/2.jpg'),
@@ -91,18 +92,15 @@ const ProfileScreen = ({ navigation }) => {
     setIsModalVisible(true);
   };
 
-  const confirmLogout = () => {
+  const confirmLogout = async () => {
     setIsModalVisible(false);
-<<<<<<< Updated upstream
-    // Add logout functionality here
-=======
     try {
       await AsyncStorage.removeItem('userToken');
       navigation.navigate('Login');
     } catch (error) {
       console.error('Error removing token:', error);
     }
->>>>>>> Stashed changes
+
   };
 
   const cancelLogout = () => {
