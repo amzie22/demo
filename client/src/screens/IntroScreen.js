@@ -1,16 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ImageBackground, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, SafeAreaView, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import * as Font from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
 
 const IntroScreen = () => {
     const navigation = useNavigation();
-    
-    const dialogueText1 = "Chapter 1\nThe Forgotten Glyph";
-    const dialogueText2 = "𐑿𐑩𐑯𐑏 1\n𐑾𐑚 𐑩𐑤𐑣𐑡𐑩𐑯 𐑚𐑨𐑤𐑙";
-
+    const [fontsLoaded, setFontsLoaded] = useState(false);
     const [showSecondText, setShowSecondText] = useState(false);
 
+    const dialogueText1 = "Chapter 1\nThe Forgotten Glyph";
+    const dialogueText2 = "Kabanata 1\nAng Nakalimutang Sagisag";
+
     useEffect(() => {
+        SplashScreen.preventAutoHideAsync();
+        const loadFonts = async () => {
+            await Font.loadAsync({
+                'DoctrinaChristianaBold': require('../assets/fonts/DoctrinaChristianaBold.otf'),
+            });
+            setFontsLoaded(true);
+            SplashScreen.hideAsync();
+        };
+
+        loadFonts();
+
         const timer1 = setTimeout(() => {
             setShowSecondText(true);
         }, 1000); // Delay before showing second text
@@ -25,6 +38,14 @@ const IntroScreen = () => {
         };
     }, [navigation]);
 
+    if (!fontsLoaded) {
+        return (
+            <View style={styles.loadingContainer}>
+                <ActivityIndicator size="large" color="#3D261C" />
+            </View>
+        ); // Render a loading spinner while waiting for fonts to load
+    }
+
     return (
         <ImageBackground source={require('../assets/MainBG.png')} style={styles.background}>
             <SafeAreaView style={styles.container}>
@@ -38,6 +59,11 @@ const IntroScreen = () => {
 };
 
 const styles = StyleSheet.create({
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     background: {
         flex: 1,
         resizeMode: 'cover',
@@ -62,14 +88,13 @@ const styles = StyleSheet.create({
         color: '#000', // Black text like old paper
         textAlign: 'center',
         fontWeight: 'bold',
-        fontFamily: 'serif',
     },
     dialogueTextAlt: {
         fontSize: 32,
         color: '#000',
         textAlign: 'center',
         fontWeight: 'bold',
-        fontFamily: 'serif',
+        fontFamily: 'DoctrinaChristianaBold', // Ensure the font is set here
     },
 });
 

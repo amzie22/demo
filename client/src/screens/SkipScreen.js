@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ImageBackground, TouchableOpacity, Animated, Platform } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, ImageBackground, TouchableOpacity, Animated, Platform, Image } from 'react-native';
 
 const SkipScreen = ({ navigation }) => {
   const [dialogueStep, setDialogueStep] = useState(0);
@@ -35,6 +35,13 @@ const SkipScreen = ({ navigation }) => {
     inputRange: [0, 1],
     outputRange: ['#2E242499', '#291711CC']
   });
+
+  const getCharacterImageBrightness = () => {
+    if (dialogueStep === 2) {
+      return 1; // User choice appears
+    }
+    return 2; // Scribeon text appears
+  };
 
   const renderDialogue = () => {
     const dialogues = [
@@ -98,6 +105,12 @@ const SkipScreen = ({ navigation }) => {
       <View style={styles.overlay} />
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.dialogueContainer}>
+          <View style={styles.characterImageContainer}>
+            <Image
+              source={require('../assets/characters/Scribeon.png')}
+              style={[styles.characterImage, { filter: `brightness(${getCharacterImageBrightness()})` }]}
+            />
+          </View>
           {renderChoices()}
           {renderDialogue()}
         </View>
@@ -181,6 +194,21 @@ const styles = StyleSheet.create({
     color: '#d9d9d9',
     fontSize: 14,
     textAlign: 'center', 
+  },
+  characterImage: {
+    width: 300, // Ensure the image takes full width of the container
+    height: 300, // Ensure the image takes full height of the container
+    resizeMode: 'contain',
+    filter: 'brightness(1.5)', // Adjusted brightness
+  },
+  characterImageContainer: {
+    position: 'absolute', // Position the image absolutely
+    left: -70, // Align to the left
+    bottom: 200, // Align to the top
+    width: 100, // Adjust width as needed
+    height: '100%', // Take full height of the container
+    justifyContent: 'center', // Center the image vertically
+    zIndex: 0, // Ensure character image is below the dialogue box but above the background
   },
 });
 

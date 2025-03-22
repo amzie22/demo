@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ImageBackground, TouchableOpacity, Animated, Platform } from 'react-native';
-
+import { View, Text, StyleSheet, SafeAreaView, ImageBackground, TouchableOpacity, Animated, Platform, Image } from 'react-native';
 
 const Chapter1DetailsScreen = ({ navigation }) => {
   const [dialogueStep, setDialogueStep] = useState(0);
@@ -33,6 +32,13 @@ const Chapter1DetailsScreen = ({ navigation }) => {
     outputRange: ['#2E242499', '#291711CC']
   });
 
+  const getCharacterImageBrightness = () => {
+    if (dialogueStep === 0 || dialogueStep === 3) {
+      return 1; // User choice appears
+    }
+    return 2; // Scribeon text appears
+  };
+
   const renderDialogue = () => {
     const dialogues = [
       { step: 1, text: 'Welcome, Traveler, to the Archives of the Written World. I am Scribeon, or you may call me Scrib.' },
@@ -63,11 +69,13 @@ const Chapter1DetailsScreen = ({ navigation }) => {
       return (
         <TouchableOpacity onPress={handleNextDialogue}>
           <View style={styles.dialogueTextContainer}>
-            <View style={styles.characterNameContainer}>
-              <Text style={styles.characterName}>Scribeon/Scrib:</Text>
-            </View>
-            <View style={styles.dialogueTextWrapper}>
-              <Text style={styles.dialogueText}>{currentDialogue.text}</Text>
+            <View style={styles.dialogueBox}>
+              <View style={styles.characterNameContainer}>
+                <Text style={styles.characterName}>Scribeon/Scrib:</Text>
+              </View>
+              <View style={styles.dialogueTextWrapper}>
+                <Text style={styles.dialogueText}>{currentDialogue.text}</Text>
+              </View>
             </View>
           </View>
         </TouchableOpacity>
@@ -122,6 +130,12 @@ const Chapter1DetailsScreen = ({ navigation }) => {
       <View style={styles.overlay} />
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.dialogueContainer}>
+          <View style={styles.characterImageContainer}>
+            <Image
+              source={require('../assets/characters/Scribeon.png')}
+              style={[styles.characterImage, { filter: `brightness(${getCharacterImageBrightness()})` }]}
+            />
+          </View>
           {renderChoices()}
           {renderDialogue()}
         </View>
@@ -157,6 +171,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.3)', // Optional: Add a border for better visibility
     alignItems: 'flex-start', // Ensure container aligns items to the left
+    position: 'relative', // Add relative positioning
+    zIndex: 2, // Ensure dialogue box is above the character image
   },
   dialogueTextContainer: {
     paddingLeft: 20,
@@ -210,6 +226,25 @@ const styles = StyleSheet.create({
     color: '#d9d9d9',
     fontSize: 14,
     textAlign: 'center', 
+  },
+  characterImage: {
+    width: 300, // Ensure the image takes full width of the container
+    height: 300, // Ensure the image takes full height of the container
+    resizeMode: 'contain',
+    filter: 'brightness(1.5)', // Adjusted brightness
+  },
+  characterImageContainer: {
+    position: 'absolute', // Position the image absolutely
+    left: -70, // Align to the left
+    bottom: 200, // Align to the top
+    width: 100, // Adjust width as needed
+    height: '100%', // Take full height of the container
+    justifyContent: 'center', // Center the image vertically
+    zIndex: 0, // Ensure character image is below the dialogue box but above the background
+  },
+  dialogueBox: {
+    width: '100%',
+    alignItems: 'flex-start',
   },
 });
 

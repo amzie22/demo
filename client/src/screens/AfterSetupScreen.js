@@ -28,6 +28,13 @@ const AfterSetupScreen = ({ route, navigation }) => {
     outputRange: ['#2E242499', '#291711CC']
   });
 
+  const getCharacterImageBrightness = () => {
+    if (dialogueStep === 0 || dialogueStep === 1) {
+      return 1; // User choice appears
+    }
+    return 2; // Scribeon text appears
+  };
+
   const renderDialogue = () => {
     const dialogues = [
       { step: 0, text: `“Oh no! ${userName}! The book is fading away from the Archives! If we don’t act quickly, it will be lost forever!”` },
@@ -64,6 +71,12 @@ const AfterSetupScreen = ({ route, navigation }) => {
       <SafeAreaView style={styles.safeArea}>
         {dialogueStep < 3 && (
           <View style={styles.dialogueContainer}>
+            <View style={styles.characterImageContainer}>
+              <Image
+                source={require('../assets/characters/Scribeon.png')}
+                style={[styles.characterImage, { filter: `brightness(${getCharacterImageBrightness()})` }]}
+              />
+            </View>
             {renderDialogue()}
           </View>
         )}
@@ -124,6 +137,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.3)',
     alignItems: 'flex-start',
+    position: 'relative', // Add relative positioning
+    zIndex: 2, // Ensure dialogue box is above the character image
   },
   dialogueTextContainer: {
     paddingLeft: 20,
@@ -155,6 +170,21 @@ const styles = StyleSheet.create({
   characterNameContainer: {
     width: '100%',
     alignItems: 'flex-start',
+  },
+  characterImage: {
+    width: 300, // Ensure the image takes full width of the container
+    height: 300, // Ensure the image takes full height of the container
+    resizeMode: 'contain',
+    filter: 'brightness(1.5)', // Adjusted brightness
+  },
+  characterImageContainer: {
+    position: 'absolute', // Position the image absolutely
+    left: -70, // Align to the left
+    bottom: 200, // Align to the top
+    width: 100, // Adjust width as needed
+    height: '100%', // Take full height of the container
+    justifyContent: 'center', // Center the image vertically
+    zIndex: 0, // Ensure character image is below the dialogue box but above the background
   },
   openModalText: {
     color: '#FFFFFF',
