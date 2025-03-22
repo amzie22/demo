@@ -37,7 +37,7 @@ const HandleUserAvatar = ({ avatars, onNext }) => {
         });
         if (response.status === 200) {
           onNext(selectedAvatarKey);
-          Alert.alert('Success', response.data.message);
+          // Alert.alert('Success', response.data.message);
         }
       } catch (error) {
         console.error('Error saving avatar:', error);

@@ -37,7 +37,7 @@ const HandleUserSkillLevel = ({ onNext }) => {
       });
       if (response.status === 200) {
         onNext(level);
-        Alert.alert('Success', response.data.message);
+        // Alert.alert('Success', response.data.message);
       }
     } catch (error) {
       console.error('Error saving skill level:', error);

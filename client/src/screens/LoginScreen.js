@@ -34,6 +34,9 @@ const LoginScreen = ({ navigation }) => {
         const { token, User_ID } = response.data;
         await AsyncStorage.setItem('userData', JSON.stringify({ token, User_ID }));
         console.log('User data stored successfully:', { token, User_ID });
+        if (response.data.Ingame_name === null) {
+          navigation.replace("Menu");
+        }
         navigation.replace("Intro"); // Navigate to IntroScreen
       } else {
         Alert.alert("Login Failed", "Invalid email or password");
