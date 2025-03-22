@@ -7,18 +7,18 @@ import HandleUserSkillLevel from '../components/handleUserSkillLevel';
 const SetupScreen = ({ navigation }) => {
   const [name, setName] = useState('');
   const [step, setStep] = useState(1);
-  const [selectedAvatar, setSelectedAvatar] = useState(0); // Set the first avatar as the default selection
+  const [selectedAvatarKey, setSelectedAvatarKey] = useState('1'); // Set the first avatar as the default selection
   const [skillLevel, setSkillLevel] = useState('');
 
-  // Avatar images
-  const avatars = [
-    require('../assets/avatars/1.jpg'),
-    require('../assets/avatars/2.jpg'),
-    require('../assets/avatars/3.jpg'),
-    require('../assets/avatars/4.jpg'),
-    require('../assets/avatars/5.jpg'),
-    require('../assets/avatars/6.png'),
-  ];
+  // Avatar images dictionary
+  const avatars = {
+    '1': require('../assets/avatars/1.jpg'),
+    '2': require('../assets/avatars/2.jpg'),
+    '3': require('../assets/avatars/3.jpg'),
+    '4': require('../assets/avatars/4.jpg'),
+    '5': require('../assets/avatars/5.jpg'),
+    '6': require('../assets/avatars/6.png'),
+  };
 
   const handleNext = (userName) => {
     if (step === 1) {
@@ -28,19 +28,19 @@ const SetupScreen = ({ navigation }) => {
       } else {
         alert('Please enter your name');
       }
-    } else if (step === 2 && selectedAvatar !== null) {
+    } else if (step === 2 && selectedAvatarKey !== null) {
       setStep(3); // Move to skill level selection step
     }
   };
 
-  const handleAvatarSelection = (avatarId) => {
-    setSelectedAvatar(avatarId);
+  const handleAvatarSelection = (avatarKey) => {
+    setSelectedAvatarKey(avatarKey);
     setStep(3); // Move to skill level selection step
   };
 
   const handleSkillSelection = (level) => {
     setSkillLevel(level);
-    navigation.navigate('AfterSetupScreen', { userName: name, avatar: selectedAvatar, skillLevel: level });
+    navigation.navigate('AfterSetupScreen', { userName: name, avatarKey: selectedAvatarKey, skillLevel: level });
   };
 
   return (

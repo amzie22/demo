@@ -5,10 +5,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
 const LoginScreen = ({ navigation }) => {
-  //const [email, setEmail] = useState('mahebres@gbox.ncf.edu.ph');
-  const [email, setEmail] = useState('');
-  //const [password, setPassword] = useState('123456789');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('mahebres@gbox.ncf.edu.ph');
+  // const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('123456789');
+  // const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
 

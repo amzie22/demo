@@ -2,13 +2,48 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, Image, ImageBackground, Dimensions, Platform } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons'; // Icons for navbar
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 const { width, height } = Dimensions.get('window');
 
+const avatars = {
+  '1': require('../assets/avatars/1.jpg'),
+  '2': require('../assets/avatars/2.jpg'),
+  '3': require('../assets/avatars/3.jpg'),
+  '4': require('../assets/avatars/4.jpg'),
+  '5': require('../assets/avatars/5.jpg'),
+  '6': require('../assets/avatars/6.png'),
+};
+
 const MenuScreen = ({ navigation }) => {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const [avatarKey, setAvatarKey] = useState('1'); // Default avatar key
+  const [userName, setUserName] = useState('User');
 
   useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const userData = await AsyncStorage.getItem('userData');
+        if (userData) {
+          const { token, User_ID } = JSON.parse(userData);
+          const response = await axios.get(`https://backend-y4fw.onrender.com/api/users/${User_ID}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          if (response.status === 200) {
+            setAvatarKey(response.data.Avatar);
+            setUserName(response.data.Ingame_name);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    fetchUserData();
+
     const imageUri = Image.resolveAssetSource(require('../assets/back.png')).uri;
     Image.prefetch(imageUri)
       .then(() => setIsImageLoaded(true))
@@ -27,9 +62,9 @@ const MenuScreen = ({ navigation }) => {
 
           {/* Profile Headers */}
           <View style={styles.profileContainer}>
-            <Image source={require('../assets/rizal.png')} style={styles.profileImage} />
+            <Image source={avatars[avatarKey]} style={styles.profileImage} />
             <View style={styles.profileInfo}>
-              <Text style={styles.username}>Amziee #0000</Text>
+              <Text style={styles.username}>{userName}</Text>
 
               {/* XP Progress Bar */}
               <View style={styles.levelBarContainer}>
@@ -50,7 +85,7 @@ const MenuScreen = ({ navigation }) => {
           <View style={styles.chatContainer}>
             <View style={styles.chatBox}>
               <Text style={styles.botName}>Scribeon:</Text>
-              <Text style={styles.chatMessage}>Hello Amziee! How are you today?</Text>
+              <Text style={styles.chatMessage}>Hello {userName}! How are you today?</Text>
             </View>
           </View>
 
