@@ -37,7 +37,7 @@ const HandleUserIgn = ({ onNext }) => {
         });
         if (response.status === 200) {
           onNext(name);
-          Alert.alert('Success', response.data.message);
+          // Alert.alert('Success', response.data.message);
         }
       } catch (error) {
         console.error('Error saving name:', error);
