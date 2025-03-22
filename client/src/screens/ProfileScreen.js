@@ -2,11 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground, ScrollView, Modal } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-<<<<<<< Updated upstream
-=======
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
->>>>>>> Stashed changes
 
 const avatars = {
   '1': require('../assets/avatars/1.jpg'),
