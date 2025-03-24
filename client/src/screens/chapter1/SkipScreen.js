@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, ImageBackground, TouchableOpacity, Animated, Platform, Image } from 'react-native';
 
-const Chapter1DetailsScreen = ({ navigation }) => {
+const SkipScreen = ({ navigation }) => {
   const [dialogueStep, setDialogueStep] = useState(0);
   const [selectedChoice, setSelectedChoice] = useState(null);
   const backgroundColor = useRef(new Animated.Value(0)).current;
@@ -16,14 +16,18 @@ const Chapter1DetailsScreen = ({ navigation }) => {
 
   const handleChoiceSelection = (choice) => {
     setSelectedChoice(choice);
-    setDialogueStep(4); // Move to next step
+    setDialogueStep(dialogueStep + 1); // Move to next step
   };
 
   const handleNextDialogue = () => {
-    if (dialogueStep === 9 && ['archives', 'why', 'who'].includes(selectedChoice)) {
-      navigation.navigate('ClickableBooks');
+    // Navigate to SetupScreen for specific conditions
+    if ((dialogueStep === 5 && selectedChoice === 'never') || 
+        (dialogueStep === 5 && selectedChoice === 'know') || 
+        (dialogueStep === 4 && selectedChoice === 'seen')) {
+      navigation.navigate('Setup'); // Correct screen name
       return;
     }
+    
     setDialogueStep(dialogueStep + 1);
   };
 
@@ -33,7 +37,7 @@ const Chapter1DetailsScreen = ({ navigation }) => {
   });
 
   const getCharacterImageBrightness = () => {
-    if (dialogueStep === 0 || dialogueStep === 3) {
+    if (dialogueStep === 2) {
       return 1; // User choice appears
     }
     return 2; // Scribeon text appears
@@ -41,27 +45,16 @@ const Chapter1DetailsScreen = ({ navigation }) => {
 
   const renderDialogue = () => {
     const dialogues = [
-      { step: 1, text: 'Welcome, Traveler, to the Archives of the Written World. I am Scribeon, or you may call me Scrib.' },
-      { step: 2, text: 'These halls contain the voices of countless generations, whispering their stories across time.' },
-      { step: 4, choice: 'archives', text: 'This archive is the heart of all written knowledge, a living repository of words, stories, and wisdom from countless civilizations.' },
-      { step: 4, choice: 'why', text: 'You were chosen by the words themselves. Few are called, and even fewer arrive.' },
-      { step: 4, choice: 'who', text: 'You were chosen by the words themselves. Few are called, and even fewer arrive.' },
-      { step: 5, choice: 'archives', text: 'Every language, every inscription, every thought ever recorded finds refuge here.' },
-      { step: 5, choice: 'why', text: 'Perhaps there is a tale within you that must be written, or a secret within these walls meant only for you to uncover.' },
-      { step: 5, choice: 'who', text: 'Perhaps there is a tale within you that must be written, or a secret within these walls meant only for you to uncover.' },
-      { step: 6, choice: 'archives', text: 'Can I read these writings? Who created this place?' },
-      { step: 6, choice: 'why', text: 'The Archives do not bring visitors without reason.' },
-      { step: 6, choice: 'who', text: 'What really is this place? Can I read these writings?' },
-      { step: 7, choice: 'why', text: 'A tale within me? What do you mean? How do I leave?' },
-      { step: 7, choice: 'archives', text: 'Enough talk, Traveler. The words call to you. Look around, let the whispers of history guide your steps.' },
-      { step: 8, choice: 'why', text: 'Enough talk, Traveler. The words call to you. Look around, let the whispers of history guide your steps.' },
-      { step: 7, choice: 'who', text: 'Enough talk, Traveler. The words call to you. Look around, let the whispers of history guide your steps.' },
-      { step: 8, choice: 'archives', text: 'There is much to uncover, and only you can decide where your journey begins.' },
-      { step: 9, choice: 'why', text: 'There is much to uncover, and only you can decide where your journey begins.' },
-      { step: 8, choice: 'who', text: 'There is much to uncover, and only you can decide where your journey begins.' },
-      { step: 9, choice: 'archives', text: 'Feel free to look around...' },
-      { step: 10, choice: 'why', text: 'Feel free to look around...' },
-      { step: 9, choice: 'who', text: 'Feel free to look around...' },
+      { step: 0, text: 'Ah... this one. It seems you have stumbled upon something rare.' },
+      { step: 1, text: 'This is Baybayin - the ancient writing system of the Philippines. Have you heard it before?' },
+      { step: 3, choice: 'never', text: 'No? That\'s not surprising. It has been forgotten by many.' },
+      { step: 4, choice: 'never', text: 'But perhaps, with your help, it can shine and be known again...' },
+      { step: 5, choice: 'never', text: 'Before we proceed, I need you to answer these questions first...' },
+      { step: 3, choice: 'know', text: 'Ah, you\'re familiar with Baybayin! That\'s wonderful. Then you may know just how precious and unique it is.' },
+      { step: 4, choice: 'know', text: 'With your knowledge, we can help bring it back to the forefront.' },
+      { step: 5, choice: 'know', text: 'Before we proceed, I need you to answer these questions first...' },
+      { step: 3, choice: 'seen', text: 'Then you\'re in the perfect place. Let us uncover its forgotten stories, and perhaps, you\'ll find a piece of yourself in its symbols.' },
+      { step: 4, choice: 'seen', text: 'Before we proceed, I need you to answer these questions first...' },
     ];
 
     const currentDialogue = dialogues.find(d => d.step === dialogueStep && (!d.choice || d.choice === selectedChoice));
@@ -69,13 +62,11 @@ const Chapter1DetailsScreen = ({ navigation }) => {
       return (
         <TouchableOpacity onPress={handleNextDialogue}>
           <View style={styles.dialogueTextContainer}>
-            <View style={styles.dialogueBox}>
-              <View style={styles.characterNameContainer}>
-                <Text style={styles.characterName}>Scribeon/Scrib:</Text>
-              </View>
-              <View style={styles.dialogueTextWrapper}>
-                <Text style={styles.dialogueText}>{currentDialogue.text}</Text>
-              </View>
+            <View style={styles.characterNameContainer}>
+              <Text style={styles.characterName}>Scribeon/Scrib:</Text>
+            </View>
+            <View style={styles.dialogueTextWrapper}>
+              <Text style={styles.dialogueText}>{currentDialogue.text}</Text>
             </View>
           </View>
         </TouchableOpacity>
@@ -85,38 +76,22 @@ const Chapter1DetailsScreen = ({ navigation }) => {
   };
 
   const renderChoices = () => {
-    if (dialogueStep === 0) {
+    if (dialogueStep === 2) {
       return (
         <View style={styles.choicesContainer}>
-          <TouchableOpacity onPress={handleNextDialogue}>
+          <TouchableOpacity onPress={() => handleChoiceSelection('never')}>
             <Animated.View style={[styles.choiceButton, { backgroundColor: interpolatedColor }]}>
-              <Text style={styles.choiceText}>"Hello? Where am I?"</Text>
+              <Text style={styles.choiceText}>"No, I've never heard of it."</Text>
             </Animated.View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={handleNextDialogue}>
+          <TouchableOpacity onPress={() => handleChoiceSelection('know')}>
             <Animated.View style={[styles.choiceButton, { backgroundColor: interpolatedColor }]}>
-              <Text style={styles.choiceText}>(Remain silent and observe.)</Text>
+              <Text style={styles.choiceText}>"Yes, I know Baybayin."</Text>
             </Animated.View>
           </TouchableOpacity>
-        </View>
-      );
-    }
-    if (dialogueStep === 3) {
-      return (
-        <View style={styles.choicesContainer}>
-          <TouchableOpacity onPress={() => handleChoiceSelection('archives')}>
+          <TouchableOpacity onPress={() => handleChoiceSelection('seen')}>
             <Animated.View style={[styles.choiceButton, { backgroundColor: interpolatedColor }]}>
-              <Text style={styles.choiceText}>"The Archives of the Written World?"</Text>
-            </Animated.View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => handleChoiceSelection('why')}>
-            <Animated.View style={[styles.choiceButton, { backgroundColor: interpolatedColor }]}>
-              <Text style={styles.choiceText}>"Why am I here?"</Text>
-            </Animated.View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => handleChoiceSelection('who')}>
-            <Animated.View style={[styles.choiceButton, { backgroundColor: interpolatedColor }]}>
-              <Text style={styles.choiceText}>"Who are you?"</Text>
+              <Text style={styles.choiceText}>"I've seen it, but I don't know much."</Text>
             </Animated.View>
           </TouchableOpacity>
         </View>
@@ -126,13 +101,13 @@ const Chapter1DetailsScreen = ({ navigation }) => {
   };
 
   return (
-    <ImageBackground source={require('../assets/back.png')} style={styles.background}>
+    <ImageBackground source={require('../../assets/back.png')} style={styles.background}>
       <View style={styles.overlay} />
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.dialogueContainer}>
           <View style={styles.characterImageContainer}>
             <Image
-              source={require('../assets/characters/Scribeon.png')}
+              source={require('../../assets/characters/Scribeon.png')}
               style={[styles.characterImage, { filter: `brightness(${getCharacterImageBrightness()})` }]}
             />
           </View>
@@ -171,8 +146,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.3)', // Optional: Add a border for better visibility
     alignItems: 'flex-start', // Ensure container aligns items to the left
-    position: 'relative', // Add relative positioning
-    zIndex: 2, // Ensure dialogue box is above the character image
   },
   dialogueTextContainer: {
     paddingLeft: 20,
@@ -204,11 +177,6 @@ const styles = StyleSheet.create({
   characterNameContainer: {
     width: '100%', // Ensure it takes full width
     alignItems: 'flex-start', // Ensure character name aligns to the left
-  },
-  characterContainer: {
-    marginBottom: 10,
-    width: '100%', // Ensure it takes full width
-    alignItems: 'flex-start', // Ensure character container aligns items to the left
   },
   choicesContainer: {
     marginTop: 70, 
@@ -242,10 +210,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center', // Center the image vertically
     zIndex: 0, // Ensure character image is below the dialogue box but above the background
   },
-  dialogueBox: {
-    width: '100%',
-    alignItems: 'flex-start',
-  },
 });
 
-export default Chapter1DetailsScreen;
+export default SkipScreen;

@@ -14,7 +14,7 @@ const ClickableBooksScreen = ({ navigation }) => {
 
   return (
     <ImageBackground 
-      source={require('../assets/clickablebooks.png')} 
+      source={require('../../assets/clickablebooks.png')} 
       style={styles.background}
     >
       <View style={styles.container}>

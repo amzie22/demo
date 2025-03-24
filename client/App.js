@@ -4,30 +4,30 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 
-import SplashScreenComponent from './src/screens/SplashScreen';
-import OnboardingScreen from './src/screens/OnboardingScreen';
-import LoginScreen from './src/screens/LoginScreen';
-import SignupScreen from './src/screens/SignupScreen';
-import VerificationScreen from './src/screens/VerificationScreen';
-import MenuScreen from './src/screens/MenuScreen';
-import ChapterScreen from './src/screens/ChapterScreen';
-import ChapterDetailsScreen from './src/screens/ChapterDetailsScreen';
-import Chapter1DetailsScreen from './src/screens/Chapter1DetailsScreen';
-import ProfileScreen from './src/screens/ProfileScreen';
-import ShopScreen from './src/screens/ShopScreen';
-import PracticeScreen from './src/screens/PracticeScreen';
-import Practices from './src/screens/Practices';
-import TestScreen from './src/screens/TestScreen';
-import ClickableBooksScreen from './src/screens/ClickableBooksScreen';
-import SkipScreen from './src/screens/SkipScreen';
-import SetupScreen from './src/screens/SetupScreen';
-import AfterSetupScreen from './src/screens/AfterSetupScreen';
-import IntroScreen from './src/screens/IntroScreen';
+import SplashScreenComponent from './src/screens/LoginSignup/SplashScreen';
+import OnboardingScreen from './src/screens/LoginSignup/OnboardingScreen';
+import LoginScreen from './src/screens/LoginSignup/LoginScreen';
+import SignupScreen from './src/screens/LoginSignup/SignupScreen';
+import VerificationScreen from './src/screens/LoginSignup/VerificationScreen';
+import MenuScreen from './src/screens/Dashboard/MenuScreen';
+import ChapterScreen from './src/screens/chapter1/ChapterScreen';
+import ChapterDetailsScreen from './src/screens/chapter1/ChapterDetailsScreen';
+import Chapter1DetailsScreen from './src/screens/chapter1/Chapter1DetailsScreen';
+import ProfileScreen from './src/screens/Dashboard/ProfileScreen';
+import ShopScreen from './src/screens/Dashboard/ShopScreen';
+import PracticeScreen from './src/screens/Dashboard/PracticeScreen';
+import Practices from './src/screens/Dashboard/Practices';
+import TestScreen from './src/screens/Dashboard/TestScreen';
+import ClickableBooksScreen from './src/screens/chapter1/ClickableBooksScreen';
+import SkipScreen from './src/screens/chapter1/SkipScreen';
+import SetupScreen from './src/screens/chapter1/SetupScreen';
+import AfterSetupScreen from './src/screens/chapter1/AfterSetupScreen';
+import IntroScreen from './src/screens/LoginSignup/IntroScreen';
 
 const Stack = createNativeStackNavigator();
 
-const loadFonts = () => {
-  return Font.loadAsync({
+const loadFonts = async () => {
+  await Font.loadAsync({
     'DoctrinaChristianaBold': require('./src/assets/fonts/DoctrinaChristianaBold.otf'),
   });
 };
@@ -36,11 +36,19 @@ const App = () => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
   useEffect(() => {
-    SplashScreen.preventAutoHideAsync();
-    loadFonts().then(() => {
-      setFontsLoaded(true);
-      SplashScreen.hideAsync();
-    });
+    const prepare = async () => {
+      try {
+        await SplashScreen.preventAutoHideAsync();
+        await loadFonts();
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        setFontsLoaded(true);
+        await SplashScreen.hideAsync();
+      }
+    };
+
+    prepare();
   }, []);
 
   if (!fontsLoaded) {

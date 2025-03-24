@@ -41,7 +41,7 @@ const SignupScreen = ({ navigation }) => {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
         <ImageBackground
-          source={require('../assets/splash.png')}
+          source={require('../../assets/splash.png')}
           style={styles.imageBackground}
         >
           <View style={styles.overlay} />

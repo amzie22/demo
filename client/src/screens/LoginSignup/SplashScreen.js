@@ -10,7 +10,7 @@ const SplashScreen = ({ navigation }) => {
   useEffect(() => {
     const loadImage = async () => {
       try {
-        await Asset.loadAsync(require('../assets/splash.png'));
+        await Asset.loadAsync(require('../../assets/splash.png'));
         setIsImageLoaded(true);
       } catch (error) {
         setIsImageLoaded(false);
@@ -34,7 +34,7 @@ const SplashScreen = ({ navigation }) => {
 
   return (
     isImageLoaded ? (
-      <ImageBackground source={require('../assets/splash.png')} style={styles.background}>
+      <ImageBackground source={require('../../assets/splash.png')} style={styles.background}>
         <View style={styles.container}>
           <View style={styles.cosmicOverlay}>
             <View style={styles.starsContainer}>

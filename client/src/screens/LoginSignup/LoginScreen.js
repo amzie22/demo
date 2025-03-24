@@ -13,7 +13,7 @@ const LoginScreen = ({ navigation }) => {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   useEffect(() => {
-    const imageUri = Image.resolveAssetSource(require('../assets/splash.png')).uri;
+    const imageUri = Image.resolveAssetSource(require('../../assets/splash.png')).uri;
     Image.prefetch(imageUri)
       .then(() => setIsImageLoaded(true))
       .catch(() => setIsImageLoaded(false));
@@ -51,7 +51,7 @@ const LoginScreen = ({ navigation }) => {
     isImageLoaded ? (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
-          <ImageBackground source={require('../assets/splash.png')} style={styles.imageBackground}>
+          <ImageBackground source={require('../../assets/splash.png')} style={styles.imageBackground}>
             <View style={styles.overlay} />
             <View style={styles.formContainer}>
               <Text style={styles.title}>LOGIN</Text>

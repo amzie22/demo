@@ -7,12 +7,12 @@ import axios from 'axios';
 
 
 const avatars = {
-  '1': require('../assets/avatars/1.jpg'),
-  '2': require('../assets/avatars/2.jpg'),
-  '3': require('../assets/avatars/3.jpg'),
-  '4': require('../assets/avatars/4.jpg'),
-  '5': require('../assets/avatars/5.jpg'),
-  '6': require('../assets/avatars/6.png'),
+  '1': require('../../assets/avatars/1.jpg'),
+  '2': require('../../assets/avatars/2.jpg'),
+  '3': require('../../assets/avatars/3.jpg'),
+  '4': require('../../assets/avatars/4.jpg'),
+  '5': require('../../assets/avatars/5.jpg'),
+  '6': require('../../assets/avatars/6.png'),
 };
 
 const ProfileDetails = ({ userName, userID, skill }) => {
@@ -109,7 +109,7 @@ const ProfileScreen = ({ navigation }) => {
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
-      <ImageBackground source={require('../assets/MainBG.png')} style={styles.background}>
+      <ImageBackground source={require('../../assets/MainBG.png')} style={styles.background}>
         <View style={styles.container}>
           <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
             <Text style={styles.backButtonText}>&lt;&lt; Main Menu</Text>

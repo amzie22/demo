@@ -6,7 +6,7 @@ const VerificationScreen = ({ navigation }) => {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   useEffect(() => {
-    const imageUri = Image.resolveAssetSource(require('../assets/splash.png')).uri;
+    const imageUri = Image.resolveAssetSource(require('../../assets/splash.png')).uri;
     Image.prefetch(imageUri)
       .then(() => setIsImageLoaded(true))
       .catch(() => setIsImageLoaded(false));
@@ -34,7 +34,7 @@ const VerificationScreen = ({ navigation }) => {
   return (
     isImageLoaded ? (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <ImageBackground source={require('../assets/splash.png')} style={styles.background}>
+        <ImageBackground source={require('../../assets/splash.png')} style={styles.background}>
           <View style={styles.overlay} />
           <View style={styles.container}>
             <View style={styles.formContainer}>

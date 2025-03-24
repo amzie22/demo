@@ -8,7 +8,7 @@ const ShopScreen = () => {
 
   return (
     <ImageBackground 
-      source={require('../assets/MainBG.png')} 
+      source={require('../../assets/MainBG.png')} 
       style={styles.background}
       resizeMode="cover"
     >

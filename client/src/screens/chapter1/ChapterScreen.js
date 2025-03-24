@@ -4,7 +4,7 @@ import { Text, StyleSheet, TouchableOpacity, ScrollView, ImageBackground, View }
 const ChapterScreen = ({ navigation }) => {
   return (
     <ImageBackground 
-      source={require('../assets/MainBG.png')} 
+      source={require('../../assets/MainBG.png')} 
       style={styles.container}
     >
       <ScrollView contentContainerStyle={styles.content}>
@@ -12,7 +12,7 @@ const ChapterScreen = ({ navigation }) => {
           <TouchableOpacity style={styles.chapterCard}
             onPress={() => navigation.navigate('Chapter1Details')}>
             <ImageBackground 
-              source={require('../assets/chapter_choices.png')} 
+              source={require('../../assets/chapter_choices.png')} 
               style={styles.chapterImage}
             >
               <Text style={styles.chapterText}>Chapter 1</Text>
@@ -21,7 +21,7 @@ const ChapterScreen = ({ navigation }) => {
           <TouchableOpacity style={styles.chapterCard}  
             onPress={() => navigation.navigate('Chapter2Details')}>
             <ImageBackground 
-              source={require('../assets/chapter_choices.png')} 
+              source={require('../../assets/chapter_choices.png')} 
               style={styles.chapterImage}
             >
               <Text style={styles.chapterText}>Chapter 2</Text>
@@ -32,7 +32,7 @@ const ChapterScreen = ({ navigation }) => {
           <TouchableOpacity style={styles.chapterCard}  
             onPress={() => navigation.navigate('Chapter3Details')}>
             <ImageBackground 
-              source={require('../assets/chapter_choices.png')} 
+              source={require('../../assets/chapter_choices.png')} 
               style={styles.chapterImage}
             >
               <Text style={styles.chapterText}>Chapter 3</Text>
@@ -41,7 +41,7 @@ const ChapterScreen = ({ navigation }) => {
           <TouchableOpacity style={styles.chapterCard}  
             onPress={() => navigation.navigate('Chapter4Details')}>
             <ImageBackground 
-              source={require('../assets/chapter_choices.png')} 
+              source={require('../../assets/chapter_choices.png')} 
               style={styles.chapterImage}
             >
               <Text style={styles.chapterText}>Chapter 4</Text>

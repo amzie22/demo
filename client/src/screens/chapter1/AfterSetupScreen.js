@@ -66,14 +66,14 @@ const AfterSetupScreen = ({ route, navigation }) => {
   };
 
   return (
-    <ImageBackground source={require('../assets/back.png')} style={styles.background}>
+    <ImageBackground source={require('../../assets/back.png')} style={styles.background}>
       <View style={styles.overlay} />
       <SafeAreaView style={styles.safeArea}>
         {dialogueStep < 3 && (
           <View style={styles.dialogueContainer}>
             <View style={styles.characterImageContainer}>
               <Image
-                source={require('../assets/characters/Scribeon.png')}
+                source={require('../../assets/characters/Scribeon.png')}
                 style={[styles.characterImage, { filter: `brightness(${getCharacterImageBrightness()})` }]}
               />
             </View>

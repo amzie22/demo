@@ -8,7 +8,7 @@ const { width, height } = Dimensions.get('window');
 
 const loadFonts = () => {
   return Font.loadAsync({
-    'DoctrinaChristianaBold': require('../assets/fonts/DoctrinaChristianaBold.otf'),
+    'DoctrinaChristianaBold': require('../../assets/fonts/DoctrinaChristianaBold.otf'),
   });
 };
 
@@ -87,7 +87,7 @@ const PracticeScreen = () => {
 
   return (
     <ImageBackground 
-      source={require('../assets/MainBG.png')} 
+      source={require('../../assets/MainBG.png')} 
       style={styles.background}
       resizeMode="cover"
     >

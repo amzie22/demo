@@ -8,7 +8,7 @@ const OnboardingScreen = ({ navigation }) => {
     const [isImageLoaded, setIsImageLoaded] = useState(false);
 
     useEffect(() => {
-        const imageUri = Image.resolveAssetSource(require('../assets/loginback.png')).uri;
+        const imageUri = Image.resolveAssetSource(require('../../assets/loginback.png')).uri;
         Image.prefetch(imageUri)
             .then(() => setIsImageLoaded(true))
             .catch(() => setIsImageLoaded(false));
@@ -60,7 +60,7 @@ const OnboardingScreen = ({ navigation }) => {
 
     return (
         isImageLoaded ? (
-            <ImageBackground source={require('../assets/loginback.png')} style={styles.background}>
+            <ImageBackground source={require('../../assets/loginback.png')} style={styles.background}>
                 <View style={styles.overlay} />
                 <View style={styles.screen}>
                     <View style={styles.content}>

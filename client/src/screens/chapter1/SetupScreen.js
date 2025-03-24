@@ -1,23 +1,24 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ImageBackground, SafeAreaView } from 'react-native';
-import HandleUserIgn from '../components/handleUserIgn';
-import HandleUserAvatar from '../components/handleUserAvatar';
-import HandleUserSkillLevel from '../components/handleUserSkillLevel';
+import { View, StyleSheet, ImageBackground, SafeAreaView } from 'react-native';
+import HandleUserIgn from '../../components/handleUserIgn';
+// Fix the incorrect path
+import HandleUserAvatar from '../../components/handleUserAvatar';
+import HandleUserSkillLevel from '../../components/handleUserSkillLevel';
 
 const SetupScreen = ({ navigation }) => {
   const [name, setName] = useState('');
   const [step, setStep] = useState(1);
   const [selectedAvatarKey, setSelectedAvatarKey] = useState('1'); // Set the first avatar as the default selection
-  const [skillLevel, setSkillLevel] = useState('');
+  const [, setSkillLevel] = useState('');
 
   // Avatar images dictionary
   const avatars = {
-    '1': require('../assets/avatars/1.jpg'),
-    '2': require('../assets/avatars/2.jpg'),
-    '3': require('../assets/avatars/3.jpg'),
-    '4': require('../assets/avatars/4.jpg'),
-    '5': require('../assets/avatars/5.jpg'),
-    '6': require('../assets/avatars/6.png'),
+    '1': require('../../assets/avatars/1.jpg'),
+    '2': require('../../assets/avatars/2.jpg'),
+    '3': require('../../assets/avatars/3.jpg'),
+    '4': require('../../assets/avatars/4.jpg'),
+    '5': require('../../assets/avatars/5.jpg'),
+    '6': require('../../assets/avatars/6.png'),
   };
 
   const handleNext = (userName) => {
@@ -44,13 +45,13 @@ const SetupScreen = ({ navigation }) => {
   };
 
   return (
-    <ImageBackground source={require('../assets/back.png')} style={styles.background}>
+    <ImageBackground source={require('../../assets/back.png')} style={styles.background}>
       <View style={styles.overlay} />
       <SafeAreaView style={styles.safeArea}>
         {step === 1 ? (
           <HandleUserIgn onNext={handleNext} />
         ) : step === 2 ? (
-          <HandleUserAvatar avatars={avatars} onNext={handleAvatarSelection} />
+          <HandleUserAvatar avatars={avatars} selectedAvatarKey={selectedAvatarKey} onNext={handleAvatarSelection} />
         ) : (
           <HandleUserSkillLevel onNext={handleSkillSelection} />
         )}

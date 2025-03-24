@@ -4,13 +4,13 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ImageBackground }
 const ChapterDetailsScreen = () => {
   return (
     <ImageBackground 
-      source={require('../assets/MainBG.png')} 
+      source={require('../../assets/MainBG.png')} 
       style={styles.background}
       resizeMode="cover"
     >
       <ScrollView contentContainerStyle={styles.content}>
         <ImageBackground 
-          source={require('../assets/chapter_choices.png')} 
+          source={require('../../assets/chapter_choices.png')} 
           style={styles.chapterCard}
           imageStyle={{ borderRadius: 10 }} // Ensure the image respects the border radius
         >

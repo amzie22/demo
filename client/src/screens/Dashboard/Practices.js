@@ -4,11 +4,11 @@ import { FontAwesome } from '@expo/vector-icons';
 import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useRoute } from '@react-navigation/native';
-import Sketch from '../components/Sketch';
+import Sketch from '../../components/Sketch';
 
 const loadFonts = () => {
   return Font.loadAsync({
-    'DoctrinaChristianaBold': require('../assets/fonts/DoctrinaChristianaBold.otf'),
+    'DoctrinaChristianaBold': require('../../assets/fonts/DoctrinaChristianaBold.otf'),
   });
 };
 
@@ -37,7 +37,7 @@ const PracticeComponent = ({ smallText, largeText, handleClear, handlePlay, hand
 
   return (
     <ImageBackground 
-      source={require('../assets/MainBG.png')} 
+      source={require('../../assets/MainBG.png')} 
       style={styles.background}
       resizeMode="cover"
       onError={() => setImageError(true)}

@@ -16,7 +16,7 @@ const IntroScreen = () => {
         SplashScreen.preventAutoHideAsync();
         const loadFonts = async () => {
             await Font.loadAsync({
-                'DoctrinaChristianaBold': require('../assets/fonts/DoctrinaChristianaBold.otf'),
+                'DoctrinaChristianaBold': require('../../assets/fonts/DoctrinaChristianaBold.otf'),
             });
             setFontsLoaded(true);
             SplashScreen.hideAsync();
@@ -47,7 +47,7 @@ const IntroScreen = () => {
     }
 
     return (
-        <ImageBackground source={require('../assets/MainBG.png')} style={styles.background}>
+        <ImageBackground source={require('../../assets/MainBG.png')} style={styles.background}>
             <SafeAreaView style={styles.container}>
                 <View style={styles.textContainer}>
                     {!showSecondText && <Text style={styles.dialogueText}>{dialogueText1}</Text>}

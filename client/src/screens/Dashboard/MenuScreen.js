@@ -8,12 +8,12 @@ import axios from 'axios';
 const { width, height } = Dimensions.get('window');
 
 const avatars = {
-  '1': require('../assets/avatars/1.jpg'),
-  '2': require('../assets/avatars/2.jpg'),
-  '3': require('../assets/avatars/3.jpg'),
-  '4': require('../assets/avatars/4.jpg'),
-  '5': require('../assets/avatars/5.jpg'),
-  '6': require('../assets/avatars/6.png'),
+  '1': require('../../assets/avatars/1.jpg'),
+  '2': require('../../assets/avatars/2.jpg'),
+  '3': require('../../assets/avatars/3.jpg'),
+  '4': require('../../assets/avatars/4.jpg'),
+  '5': require('../../assets/avatars/5.jpg'),
+  '6': require('../../assets/avatars/6.png'),
 };
 
 const MenuScreen = ({ navigation }) => {
@@ -44,7 +44,7 @@ const MenuScreen = ({ navigation }) => {
 
     fetchUserData();
 
-    const imageUri = Image.resolveAssetSource(require('../assets/back.png')).uri;
+    const imageUri = Image.resolveAssetSource(require('../../assets/back.png')).uri;
     Image.prefetch(imageUri)
       .then(() => setIsImageLoaded(true))
       .catch(() => setIsImageLoaded(false));
@@ -57,7 +57,7 @@ const MenuScreen = ({ navigation }) => {
 
   return (
     isImageLoaded ? (
-      <ImageBackground source={require("../assets/back.png")} style={styles.background}>
+      <ImageBackground source={require("../../assets/back.png")} style={styles.background}>
         <SafeAreaView style={styles.safeArea}>
 
           {/* Profile Headers */}
@@ -93,7 +93,7 @@ const MenuScreen = ({ navigation }) => {
           <View style={styles.navbar}>
 
             <TouchableOpacity style={[styles.navItem, { marginRight: 15 }]} onPress={() => navigation.navigate('Practice')}>
-              <Image source={require('../assets/practice.png')} style={styles.navIcon} />
+              <Image source={require('../../assets/practice.png')} style={styles.navIcon} />
               <Text style={styles.navText}>PRACTICE</Text>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.navItem, { marginRight: 45 }]} onPress={() => navigation.navigate('Chapter')}>
@@ -104,16 +104,16 @@ const MenuScreen = ({ navigation }) => {
             {/* CHAPTER Button - Centered Inside Navbar */}
             <View style={styles.chapterButtonContainer}>
               <TouchableOpacity onPress={() => navigation.navigate('Chapter')} style={styles.chapterButton}>
-                <Image source={require('../assets/chapter.png')} style={styles.chapterIcon} />
+                <Image source={require('../../assets/chapter.png')} style={styles.chapterIcon} />
               </TouchableOpacity>
             </View>
 
             <TouchableOpacity style={[styles.navItem, { marginLeft: 45 }]} onPress={() => navigation.navigate('Shop')}>
-              <Image source={require('../assets/shop.png')} style={styles.navIcon} />
+              <Image source={require('../../assets/shop.png')} style={styles.navIcon} />
               <Text style={styles.navText}>SHOP</Text>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.navItem, { marginLeft: 20 }]} onPress={() => navigation.navigate('Profile')}>
-              <Image source={require('../assets/profile.png')} style={styles.navIcon} />
+              <Image source={require('../../assets/profile.png')} style={styles.navIcon} />
               <Text style={styles.navText}>PROFILE</Text>
             </TouchableOpacity>
           </View>
