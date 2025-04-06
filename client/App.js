@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import * as Font from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
-
+import { View, ActivityIndicator } from 'react-native';
 import SplashScreenComponent from './src/screens/LoginSignup/SplashScreen';
 import OnboardingScreen from './src/screens/LoginSignup/OnboardingScreen';
 import LoginScreen from './src/screens/LoginSignup/LoginScreen';
@@ -23,45 +21,44 @@ import SkipScreen from './src/screens/chapter1/SkipScreen';
 import SetupScreen from './src/screens/chapter1/SetupScreen';
 import AfterSetupScreen from './src/screens/chapter1/AfterSetupScreen';
 import IntroScreen from './src/screens/LoginSignup/IntroScreen';
+import Chap2Screen from './src/screens/chapter2/Chap2Screen';
+import Chapter2DetailsScreen from './src/screens/chapter2/Chapter2DetailsScreen';
+import AfterChapScreen from './src/screens/chapter2/AfterChapScreen';
+import LastChap2Screen from './src/screens/chapter2/LastChap2Screen';
+
 
 const Stack = createNativeStackNavigator();
-
-const loadFonts = async () => {
-  await Font.loadAsync({
-    'DoctrinaChristianaBold': require('./src/assets/fonts/DoctrinaChristianaBold.otf'),
-  });
-};
 
 const App = () => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
   useEffect(() => {
-    const prepare = async () => {
+    const loadFonts = async () => {
       try {
-        await SplashScreen.preventAutoHideAsync();
-        await loadFonts();
-      } catch (e) {
-        console.warn(e);
-      } finally {
-        setFontsLoaded(true);
-        await SplashScreen.hideAsync();
+        setFontsLoaded(true); // Simulating font load success
+      } catch (error) {
+        console.warn('Error loading fonts:', error);
       }
     };
 
-    prepare();
+    loadFonts();
   }, []);
 
   if (!fontsLoaded) {
-    return null; // Render nothing while waiting for fonts to load
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
   }
 
   return (
     <NavigationContainer>
-      <Stack.Navigator 
+      <Stack.Navigator
         initialRouteName="Splash"
         screenOptions={{
           headerShown: false,
-          animation: 'fade'
+          animation: 'fade',
         }}
       >
         <Stack.Screen name="Splash" component={SplashScreenComponent} />
@@ -76,13 +73,17 @@ const App = () => {
         <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="Shop" component={ShopScreen} />
         <Stack.Screen name="Practice" component={PracticeScreen} />
-        <Stack.Screen name="Practices" component={Practices} /> 
+        <Stack.Screen name="Practices" component={Practices} />
         <Stack.Screen name="Test" component={TestScreen} />
         <Stack.Screen name="ClickableBooks" component={ClickableBooksScreen} />
         <Stack.Screen name="Skip" component={SkipScreen} />
         <Stack.Screen name="Setup" component={SetupScreen} />
         <Stack.Screen name="AfterSetupScreen" component={AfterSetupScreen} />
         <Stack.Screen name="Intro" component={IntroScreen} />
+        <Stack.Screen name="Chap2" component={Chap2Screen} />
+        <Stack.Screen name="Chapter2Details" component={Chapter2DetailsScreen} />
+        <Stack.Screen name="AfterChap" component={AfterChapScreen} />
+        <Stack.Screen name="LastChap2" component={LastChap2Screen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
