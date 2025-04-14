@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, ImageBackground, TouchableOpacity, Animated, Image, Platform } from 'react-native';
 
-const LastChap2Screen = ({ navigation }) => {
+const LastEp2Screen = ({ navigation }) => {
   const [dialogueStep, setDialogueStep] = useState(0);
   const backgroundColor = useRef(new Animated.Value(0)).current;
 
@@ -14,19 +14,13 @@ const LastChap2Screen = ({ navigation }) => {
   }, []);
 
   const lines = [
-    `Ah, you both have done well! You’ve taken the first steps into understanding the essence of Baybayin.`,
-    `Now, remember, each sound holds its own significance. These simple sounds will unlock the rest of the script’s essence.`,
-    `You’ve made great progress! But this is just the beginning. Now, we must practice and solidify our understanding before we can move on.`,
-    `Now, we must make sure these sounds are part of us. Because it will guide us to read the stories of the past.`,
-    `Remember, this is no ordinary learning—what you learn now will protect you future.`,
+    `You’ve made great progress, Bukah! But this is just the beginning. Practice will make these strokes second nature.`,
+    `Indeed. Now, remember, these foundational characters will guide us to the more complex syllables. Rest for now, my children—we begin anew tomorrow.`,
   ];
 
+  // Function to handle dialogue progression
   const handleNextDialogue = () => {
-    if (dialogueStep === lines.length - 1) {
-      navigation.navigate('Ep2Details'); // Navigate to Ep3DetailsScreen
-    } else {
-      setDialogueStep(prev => prev + 1);
-    }
+    setDialogueStep((prevStep) => (prevStep + 1 < lines.length ? prevStep + 1 : prevStep));
   };
 
   const interpolatedBackgroundColor = backgroundColor.interpolate({
@@ -52,13 +46,13 @@ const LastChap2Screen = ({ navigation }) => {
   };
 
   return (
-    <ImageBackground source={require('../../assets/image.png')} style={styles.background}>
+    <ImageBackground source={require('../../../assets/image.png')} style={styles.background}>
       <View style={styles.overlay} />
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.dialogueContainer}>
           <View style={styles.characterImageContainer}>
             <Image
-              source={require('../../assets/characters/Scribeon.png')}
+              source={require('../../../assets/characters/Scribeon.png')}
               style={[styles.characterImage]}
             />
           </View>
@@ -71,7 +65,7 @@ const LastChap2Screen = ({ navigation }) => {
   );
 };
 
-export default LastChap2Screen;
+export default LastEp2Screen;
 
 const styles = StyleSheet.create({
   background: {

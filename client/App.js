@@ -25,7 +25,9 @@ import Chap2Screen from './src/screens/chapter2/Chap2Screen';
 import Chapter2DetailsScreen from './src/screens/chapter2/Chapter2DetailsScreen';
 import AfterChapScreen from './src/screens/chapter2/AfterChapScreen';
 import LastChap2Screen from './src/screens/chapter2/LastChap2Screen';
-
+import Ep2DetailsScreen from './src/screens/chapter2/episode2/Ep2DetailsScreen';
+import Ep2Screen from './src/screens/chapter2/episode2/Ep2Screen';
+import LastEp2Screen from './src/screens/chapter2/episode2/LastEp2Screen';
 
 const Stack = createNativeStackNavigator();
 
@@ -84,6 +86,9 @@ const App = () => {
         <Stack.Screen name="Chapter2Details" component={Chapter2DetailsScreen} />
         <Stack.Screen name="AfterChap" component={AfterChapScreen} />
         <Stack.Screen name="LastChap2" component={LastChap2Screen} />
+        <Stack.Screen name="Ep2Details" component={Ep2DetailsScreen} />
+        <Stack.Screen name="Ep2" component={Ep2Screen} />
+        <Stack.Screen name="LastEp2" component={LastEp2Screen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
