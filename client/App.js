@@ -28,6 +28,13 @@ import LastChap2Screen from './src/screens/chapter2/LastChap2Screen';
 import Ep2DetailsScreen from './src/screens/chapter2/episode2/Ep2DetailsScreen';
 import Ep2Screen from './src/screens/chapter2/episode2/Ep2Screen';
 import LastEp2Screen from './src/screens/chapter2/episode2/LastEp2Screen';
+import Ep3DetailsScreen from './src/screens/chapter2/episode3/Ep3DetailsScreen';
+import Ep3Screen from './src/screens/chapter2/episode3/Ep3Screen';
+import LastEp3Screen from './src/screens/chapter2/episode3/LastEp3Screen';
+import Ep4DetailsScreen from './src/screens/chapter2/episode4/Ep4DetailsScreen';
+import Ep4Screen from './src/screens/chapter2/episode4/Ep4Screen';
+import LastEp4Screen from './src/screens/chapter2/episode4/LastEp4Screen';
+import ClosingScreen from './src/screens/chapter2/episode4/ClosingScreen';
 
 import challenges from './src/screens/Dashboard/challenges';
 
@@ -97,14 +104,19 @@ const App = () => {
         <Stack.Screen name="Ep2Details" component={Ep2DetailsScreen} />
         <Stack.Screen name="Ep2" component={Ep2Screen} />
         <Stack.Screen name="LastEp2" component={LastEp2Screen} />
-      
+        <Stack.Screen name="Ep3Details" component={Ep3DetailsScreen} />
+        <Stack.Screen name="Ep3" component={Ep3Screen} />
+        <Stack.Screen name="LastEp3" component={LastEp3Screen} />
+        <Stack.Screen name="Ep4Details" component={Ep4DetailsScreen} />
+        <Stack.Screen name="Ep4" component={Ep4Screen} />
+        <Stack.Screen name="LastEp4" component={LastEp4Screen} />
+        <Stack.Screen name="Closing" component={ClosingScreen} />
         <Stack.Screen name="Challenges" component={challenges} />
-
         <Stack.Screen name="Lesson1" component={lesson1} />
         <Stack.Screen name="Act1" component={act1} />
         <Stack.Screen name="Lesson3" component={lesson3} />
         <Stack.Screen name="Act3" component={act3} />
-      
+
       </Stack.Navigator>
     </NavigationContainer>
   );

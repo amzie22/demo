@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, ImageBackground, TouchableOpacity, Animated, Image, Platform } from 'react-native';
 
-const LastEp2Screen = ({ navigation }) => {
+const LastEp4Screen = ({ navigation }) => {
   const [dialogueStep, setDialogueStep] = useState(0);
   const backgroundColor = useRef(new Animated.Value(0)).current;
 
@@ -14,8 +14,11 @@ const LastEp2Screen = ({ navigation }) => {
   }, []);
 
   const lines = [
-    `You've made great progress, Bukah! But this is just the beginning. Practice will make these strokes second nature.`,
-    `Indeed. Now, remember, these foundational characters will guide us to the more complex syllables. Rest for now, my children—we begin anew tomorrow.`,
+    `You have done well, my children. The syllables are alive in your hands. With each mark, you honor our ancestors and safeguard their legacy.`,
+    `Look at what you've created, Bukah—it's beautiful! The connection you've built with Baybayin is becoming stronger every day.`,
+    `But our mission is far from over.`,
+    `Remember, Baybayin is not just for today—it is for tomorrow. Carry it with you always, and it will guide you in times of uncertainty.`,
+    `Now, wait here I need to tell this news to others, the news that my children are learning baybayin.`,
   ];
 
   // Function to handle dialogue progression
@@ -23,8 +26,8 @@ const LastEp2Screen = ({ navigation }) => {
     if (dialogueStep + 1 < lines.length) {
       setDialogueStep(prevStep => prevStep + 1);
     } else {
-      // Navigate to Ep3Details when we reach the last dialogue
-      navigation.navigate('Ep3Details');
+      // Navigate to Closing when we reach the last dialogue
+      navigation.navigate('Closing');
     }
   };
 
@@ -70,7 +73,7 @@ const LastEp2Screen = ({ navigation }) => {
   );
 };
 
-export default LastEp2Screen;
+export default LastEp4Screen;
 
 const styles = StyleSheet.create({
   background: {
