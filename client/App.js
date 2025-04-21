@@ -43,6 +43,11 @@ import lesson1 from './src/screens/chapter2/Lessons/lesson1';
 import act1 from './src/screens/chapter2/Lessons/act1'
 import lesson3 from './src/screens/chapter2/Lessons/lesson3';
 import act3 from './src/screens/chapter2/Lessons/act3'
+import lesson2 from './src/screens/chapter2/Lessons/lesson2';
+import act2 from './src/screens/chapter2/Lessons/act2'
+import lesson4 from './src/screens/chapter2/Lessons/lesson4';
+import act4 from './src/screens/chapter2/Lessons/act4'
+
 
 const Stack = createNativeStackNavigator();
 
@@ -112,10 +117,15 @@ const App = () => {
         <Stack.Screen name="LastEp4" component={LastEp4Screen} />
         <Stack.Screen name="Closing" component={ClosingScreen} />
         <Stack.Screen name="Challenges" component={challenges} />
+
         <Stack.Screen name="Lesson1" component={lesson1} />
         <Stack.Screen name="Act1" component={act1} />
         <Stack.Screen name="Lesson3" component={lesson3} />
         <Stack.Screen name="Act3" component={act3} />
+        <Stack.Screen name="Lesson2" component={lesson2} />
+        <Stack.Screen name="Act2" component={act2} />
+        <Stack.Screen name="Lesson4" component={lesson4} />
+        <Stack.Screen name="Act4" component={act4} />
 
       </Stack.Navigator>
     </NavigationContainer>
