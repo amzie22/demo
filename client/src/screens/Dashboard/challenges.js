@@ -11,13 +11,13 @@ const Challenges = () => {
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Lesson1')}>
           <Text style={styles.buttonText}>Lesson 1</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('')}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Lesson2')}>
           <Text style={styles.buttonText}>Lesson 2</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Lesson3')}>
           <Text style={styles.buttonText}>Lesson 3</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('')}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Lesson4')}>
           <Text style={styles.buttonText}>Lesson 4</Text>
         </TouchableOpacity>
       </View>
