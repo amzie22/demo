@@ -20,6 +20,7 @@ const MenuScreen = ({ navigation }) => {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [avatarKey, setAvatarKey] = useState('1'); // Default avatar key
   const [userName, setUserName] = useState('User');
+  const [showUnlockPrompt, setShowUnlockPrompt] = useState(false); // State to control the prompt visibility
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -54,6 +55,11 @@ const MenuScreen = ({ navigation }) => {
   const currentXP = 500;
   const currentLevel = 10;
   const progressPercentage = (currentXP / maxXP) * 100;
+
+  const handleShopPress = () => {
+    setShowUnlockPrompt(true); // Show the "Unlock in Chapter 3" prompt
+    setTimeout(() => setShowUnlockPrompt(false), 2000); // Hide the prompt after 2 seconds
+  };
 
   return (
     isImageLoaded ? (
@@ -92,9 +98,9 @@ const MenuScreen = ({ navigation }) => {
           {/* Bottom Navigation */}
           <View style={styles.navbar}>
 
-            <TouchableOpacity style={[styles.navItem, { marginRight: 15 }]} onPress={() => navigation.navigate('Practice')}>
+            <TouchableOpacity style={[styles.navItem, { marginRight: 15 }]} onPress={() => navigation.navigate('Learn')}>
               <Image source={require('../../assets/practice.png')} style={styles.navIcon} />
-              <Text style={styles.navText}>PRACTICE</Text>
+              <Text style={styles.navText} font>LEARN</Text>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.navItem, { marginRight: 45 }]} onPress={() => navigation.navigate('Challenges')}>
               <FontAwesome5 name="calendar-alt" size={32} color="white" />
@@ -108,15 +114,25 @@ const MenuScreen = ({ navigation }) => {
               </TouchableOpacity>
             </View>
 
-            <TouchableOpacity style={[styles.navItem, { marginLeft: 45 }]} onPress={() => navigation.navigate('Shop')}>
-              <Image source={require('../../assets/shop.png')} style={styles.navIcon} />
-              <Text style={styles.navText}>SHOP</Text>
+            {/* Shop Button */}
+            <TouchableOpacity style={[styles.navItem, { marginLeft: 45}]} onPress={handleShopPress}>
+              <View style={styles.lockContainer}>
+                <Ionicons name="lock-closed" size={32} color="gray" />
+              </View>
+              <Text style={[styles.navText, { marginTop: 0}]}>SHOP</Text>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.navItem, { marginLeft: 20 }]} onPress={() => navigation.navigate('Profile')}>
               <Image source={require('../../assets/profile.png')} style={styles.navIcon} />
               <Text style={styles.navText}>PROFILE</Text>
             </TouchableOpacity>
           </View>
+
+          {/* Unlock Prompt */}
+          {showUnlockPrompt && (
+            <View style={styles.unlockPrompt}>
+              <Text style={styles.unlockPromptText}>Unlock in Chapter 3</Text>
+            </View>
+          )}
 
         </SafeAreaView>
       </ImageBackground>
@@ -264,6 +280,16 @@ const styles = StyleSheet.create({
     fontFamily: 'Cardo',
     marginTop: 5,
   },
+  lockContainer: {
+    alignItems: 'center',
+    marginBottom: 5,
+  },
+  lockText: {
+    color: 'white',
+    fontSize: 10,
+    fontFamily: 'Cardo',
+    marginTop: 2,
+  },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -273,6 +299,19 @@ const styles = StyleSheet.create({
   loadingText: {
     color: '#fff',
     fontSize: 18,
+  },
+  unlockPrompt: {
+    position: 'absolute',
+    bottom: '15%',
+    alignSelf: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    padding: 10,
+    borderRadius: 8,
+  },
+  unlockPromptText: {
+    color: 'white',
+    fontSize: 14,
+    fontFamily: 'Cardo',
   },
 });
 

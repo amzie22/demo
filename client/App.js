@@ -37,6 +37,8 @@ import LastEp4Screen from './src/screens/chapter2/episode4/LastEp4Screen';
 import ClosingScreen from './src/screens/chapter2/episode4/ClosingScreen';
 
 import challenges from './src/screens/Dashboard/challenges';
+import learn from './src/screens/Dashboard/LearnScreen';
+import pagbasa from './src/screens/Dashboard/Pagbasa';
 
 // //chapter 2
 import lesson1 from './src/screens/chapter2/Lessons/lesson1';
@@ -117,6 +119,7 @@ const App = () => {
         <Stack.Screen name="LastEp4" component={LastEp4Screen} />
         <Stack.Screen name="Closing" component={ClosingScreen} />
         <Stack.Screen name="Challenges" component={challenges} />
+        <Stack.Screen name="Learn" component={learn} />
 
         <Stack.Screen name="Lesson1" component={lesson1} />
         <Stack.Screen name="Act1" component={act1} />
@@ -126,6 +129,8 @@ const App = () => {
         <Stack.Screen name="Act2" component={act2} />
         <Stack.Screen name="Lesson4" component={lesson4} />
         <Stack.Screen name="Act4" component={act4} />
+
+        <Stack.Screen name="Pagbasa" component={pagbasa} />
 
       </Stack.Navigator>
     </NavigationContainer>
