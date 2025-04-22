@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ImageBackground, TouchableOpacity, Animated, Image, Platform } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, ImageBackground, TouchableOpacity, Animated, Platform } from 'react-native';
 
 const LastChap2Screen = ({ navigation }) => {
   const [dialogueStep, setDialogueStep] = useState(0);
@@ -23,7 +23,7 @@ const LastChap2Screen = ({ navigation }) => {
 
   const handleNextDialogue = () => {
     if (dialogueStep === lines.length - 1) {
-      navigation.navigate('Ep2Details'); // Navigate to Ep3DetailsScreen
+      navigation.navigate(''); // Navigate to Ep3DetailsScreen
     } else {
       setDialogueStep(prev => prev + 1);
     }
@@ -56,12 +56,6 @@ const LastChap2Screen = ({ navigation }) => {
       <View style={styles.overlay} />
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.dialogueContainer}>
-          <View style={styles.characterImageContainer}>
-            <Image
-              source={require('../../assets/characters/Scribeon.png')}
-              style={[styles.characterImage]}
-            />
-          </View>
           <View style={styles.dialogueTextContainer}>
             {renderMainDialogue()}
           </View>
@@ -80,7 +74,7 @@ const styles = StyleSheet.create({
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    backgroundColor: 'rgba(20, 20, 20, 0.5)', // Increased opacity to 50% for a darker overlay
   },
   safeArea: {
     flex: 1,
@@ -121,7 +115,7 @@ const styles = StyleSheet.create({
   characterName: {
     fontWeight: 'bold',
     fontSize: 20,
-    color: '#FFFFFF',
+    color: '#d9d9d9',
     marginBottom: 10,
     textAlign: 'left',
     alignSelf: 'flex-start',
@@ -137,19 +131,5 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     marginTop: 10,
     alignSelf: 'flex-start',
-  },
-  characterImageContainer: {
-    position: 'absolute',
-    left: -70,
-    bottom: 200,
-    width: 100,
-    height: '100%',
-    justifyContent: 'center',
-    zIndex: 0,
-  },
-  characterImage: {
-    width: 300,
-    height: 300,
-    resizeMode: 'contain',
   },
 });

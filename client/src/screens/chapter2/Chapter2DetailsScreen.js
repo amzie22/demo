@@ -41,17 +41,23 @@ const Chapter2DetailsScreen = ({ navigation }) => {
   };
 
   const handleNextDialogue = () => {
-    const lines = [
-      `Year of Siyaka 822, month of Waisaka.\nThe fourth day of the wailing moon.`,
-      `This is the world where the first artifact\nrelated to Baybayin was created. The\nLaguna Copperplate 900 CE.`,
-      `It seems I have transmigrated as\nAngkatan, the daughter of Namwaran.`,
-      `Ah, Bukah, Angkatan, come here! Look\nat this! A scribe from the Commander-\nin-Chief of Tundun and Lord Minister of\nPailah`,
-      `We have been pardoned of all our\ndebts. This is a joyous day for our\nfamily!`,
+    // Separate lines by character
+    const dialogue = [
+      { character: 'Scribeon', text: `Year of Siyaka 822, month of Waisaka.\nThe fourth day of the wailing moon.` },
+      { character: 'Scribeon', text: `This is the world where the first artifact\nrelated to Baybayin was created. The\nLaguna Copperplate 900 CE.` },
+      { character: 'Scribeon', text: `It seems I have transmigrated as\nAngkatan, the daughter of Namwaran.` },
+      { character: 'Namwaran', text: `Ah, Bukah, Angkan, come here! Look\nat this! A scribe from the Commander-\nin-Chief of Tundun and Lord Minister of\nPailah` },
+      { character: 'Namwaran', text: `We have been pardoned of all our\ndebts. This is a joyous day for our\nfamily!` },
     ];
 
-    if (dialogueStep === lines.length) {
+    if (dialogueStep === dialogue.length) {
       navigation.navigate('NextScene');
     } else {
+      // Update characterName based on the current dialogue step
+      const currentDialogue = dialogue[dialogueStep];
+      setCharacterName(currentDialogue.character);
+
+      // Increment dialogueStep
       setDialogueStep(prev => prev + 1);
     }
   };
@@ -98,22 +104,24 @@ const Chapter2DetailsScreen = ({ navigation }) => {
   };
 
   const renderMainDialogue = () => {
-    const lines = [
-      `Year of Siyaka 822, month of Waisaka.\nThe fourth day of the wailing moon.`,
-      `This is the world where the first artifact\nrelated to Baybayin was created. The\nLaguna Copperplate 900 CE.`,
-      `It seems I have transmigrated as\nAngkatan, the daughter of Namwaran.`,
-      `Ah, Bukah, Angkatan, come here! Look\nat this! A scribe from the Commander-\nin-Chief of Tundun and Lord Minister of\nPailah`,
-      `We have been pardoned of all our\ndebts. This is a joyous day for our\nfamily!`,
+    const dialogue = [
+      { character: 'Scribeon', text: `Year of Siyaka 822, month of Waisaka. The fourth day of the wailing moon.` },
+      { character: 'Scribeon', text: `This is the world where the first artifact related to Baybayin was created. The Laguna Copperplate 900 CE.` },
+      { character: 'Scribeon', text: `It seems I have transmigrated as\nAngkatan, the daughter of Namwaran.` },
+      { character: 'Namwaran', text: `Ah, Bukah, Angkatan, come here! Look at this! A scribe from the Commander-in-Chief of Tundun and Lord Minister of Pailah` },
+      { character: 'Namwaran', text: `We have been pardoned of all our\ndebts. This is a joyous day for our family!` },
     ];
+
+    const currentDialogue = dialogue[dialogueStep];
 
     return (
       <TouchableOpacity onPress={handleNextDialogue}>
         <View style={styles.dialogueBox}>
           <View style={styles.characterNameContainer}>
-            <Text style={styles.characterName}>{characterName}:</Text>
+            <Text style={styles.characterName}>{currentDialogue.character}:</Text>
           </View>
           <View style={styles.dialogueTextWrapper}>
-            <Text style={styles.dialogueText}>{lines[dialogueStep]}</Text>
+            <Text style={styles.dialogueText}>{currentDialogue.text}</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -125,14 +133,12 @@ const Chapter2DetailsScreen = ({ navigation }) => {
       <View style={styles.overlay} />
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.dialogueContainer}>
-          <View style={styles.characterImageContainer}>
-            <Image
-              source={require('../../assets/characters/Scribeon.png')}
-              style={[styles.characterImage]}
-            />
-          </View>
-
-          <View style={styles.dialogueTextContainer}>
+          <View
+            style={[
+              styles.dialogueTextContainer,
+              (selectedChoice || dialogueStep === 5) && styles.centeredDialogueTextContainer, // Apply centered style conditionally
+            ]}
+          >
             {selectedChoice ? renderChoiceDialogue() : (
               dialogueStep === 5 ? (
                 <View style={styles.choicesContainer}>
@@ -165,7 +171,7 @@ const styles = StyleSheet.create({
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.3)', // Dark overlay with 30% opacity, consistent with Chapter 1
+    backgroundColor: 'rgba(20, 20, 20, 0.5)', // Increased opacity to 50% for a darker overlay
   },
   safeArea: {
     flex: 1,
@@ -174,15 +180,15 @@ const styles = StyleSheet.create({
     paddingBottom: 50,
   },
   dialogueContainer: {
-    backgroundColor: 'rgba(252, 250, 250, 0.11)', // More transparent background like Chapter 1
+    backgroundColor: 'rgba(252, 250, 250, 0.11)',
     paddingLeft: 10,
     paddingRight: 10,
     borderRadius: 15,
     width: '90%',
-    height: 220, // Fixed height, matching Chapter 1
+    height: 220,
     marginBottom: Platform.OS === 'ios' ? 20 : -25,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.3)', // Optional: Add a border for better visibility
+    borderColor: 'rgba(255, 255, 255, 0.3)',
     alignItems: 'flex-start',
     position: 'relative',
     zIndex: 2,
@@ -193,6 +199,10 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'flex-start',
     paddingTop: 40,
+  },
+  centeredDialogueTextContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   dialogueBox: {
     width: '100%',
@@ -206,7 +216,7 @@ const styles = StyleSheet.create({
   characterName: {
     fontWeight: 'bold',
     fontSize: 20,
-    color: '#FFFFFF',
+    color: '#d9d9d9',
     marginBottom: 10,
     textAlign: 'left',
     alignSelf: 'flex-start',
@@ -226,6 +236,7 @@ const styles = StyleSheet.create({
   choicesContainer: {
     marginTop: 10,
     alignItems: 'center',
+    justifyContent: 'center', // Added to center the buttons vertically
     width: '100%',
   },
   choiceButton: {
@@ -253,5 +264,5 @@ const styles = StyleSheet.create({
     width: 300,
     height: 300,
     resizeMode: 'contain',
-  },  
+  },
 });
