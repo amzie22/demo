@@ -13,7 +13,6 @@ import ChapterDetailsScreen from './src/screens/chapter1/ChapterDetailsScreen';
 import Chapter1DetailsScreen from './src/screens/chapter1/Chapter1DetailsScreen';
 import ProfileScreen from './src/screens/Dashboard/ProfileScreen';
 import ShopScreen from './src/screens/Dashboard/ShopScreen';
-import PracticeScreen from './src/screens/Dashboard/PracticeScreen';
 import Practices from './src/screens/Dashboard/Practices';
 import TestScreen from './src/screens/Dashboard/TestScreen';
 import ClickableBooksScreen from './src/screens/chapter1/ClickableBooksScreen';
@@ -21,7 +20,6 @@ import SkipScreen from './src/screens/chapter1/SkipScreen';
 import SetupScreen from './src/screens/chapter1/SetupScreen';
 import AfterSetupScreen from './src/screens/chapter1/AfterSetupScreen';
 import IntroScreen from './src/screens/LoginSignup/IntroScreen';
-import Chap2Screen from './src/screens/chapter2/Chap2Screen';
 import Chapter2DetailsScreen from './src/screens/chapter2/Chapter2DetailsScreen';
 import AfterChapScreen from './src/screens/chapter2/AfterChapScreen';
 import LastChap2Screen from './src/screens/chapter2/LastChap2Screen';
@@ -39,6 +37,7 @@ import ClosingScreen from './src/screens/chapter2/episode4/ClosingScreen';
 import challenges from './src/screens/Dashboard/challenges';
 import learn from './src/screens/Dashboard/LearnScreen';
 import pagbasa from './src/screens/Dashboard/Pagbasa';
+import Pagsulat from './src/screens/Dashboard/Pagsulat';
 
 // //chapter 2
 import lesson1 from './src/screens/chapter2/Lessons/lesson1';
@@ -49,6 +48,9 @@ import lesson2 from './src/screens/chapter2/Lessons/lesson2';
 import act2 from './src/screens/chapter2/Lessons/act2'
 import lesson4 from './src/screens/chapter2/Lessons/lesson4';
 import act4 from './src/screens/chapter2/Lessons/act4'
+
+// Introductions for each episode
+import Chap2Intro from './src/screens/chapter2/Chap2Intro';
 
 
 const Stack = createNativeStackNavigator();
@@ -96,7 +98,6 @@ const App = () => {
         <Stack.Screen name="Chapter1Details" component={Chapter1DetailsScreen} />
         <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="Shop" component={ShopScreen} />
-        <Stack.Screen name="Practice" component={PracticeScreen} />
         <Stack.Screen name="Practices" component={Practices} />
         <Stack.Screen name="Test" component={TestScreen} />
         <Stack.Screen name="ClickableBooks" component={ClickableBooksScreen} />
@@ -104,7 +105,6 @@ const App = () => {
         <Stack.Screen name="Setup" component={SetupScreen} />
         <Stack.Screen name="AfterSetupScreen" component={AfterSetupScreen} />
         <Stack.Screen name="Intro" component={IntroScreen} />
-        <Stack.Screen name="Chap2" component={Chap2Screen} />
         <Stack.Screen name="Chapter2Details" component={Chapter2DetailsScreen} />
         <Stack.Screen name="AfterChap" component={AfterChapScreen} />
         <Stack.Screen name="LastChap2" component={LastChap2Screen} />
@@ -131,6 +131,9 @@ const App = () => {
         <Stack.Screen name="Act4" component={act4} />
 
         <Stack.Screen name="Pagbasa" component={pagbasa} />
+        <Stack.Screen name="Pagsulat" component={Pagsulat} />
+
+        <Stack.Screen name="Chap2Intro" component={Chap2Intro} />
 
       </Stack.Navigator>
     </NavigationContainer>

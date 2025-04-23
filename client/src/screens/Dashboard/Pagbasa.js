@@ -33,7 +33,7 @@ const Pagbasa = () => {
         <View style={styles.header}>
           <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
             <Ionicons name="arrow-back" size={24} color="#3D261C" />
-            <Text style={styles.headerText}>Pagbasa</Text>
+            <Text style={styles.headerText}>Pagbasa ng Baybayin</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.line} />
@@ -65,13 +65,15 @@ const Pagbasa = () => {
           );
         })}
 
-        {/* Kudlit Title */}
-        <View style={[styles.titleContainer, { marginTop: 50 }]}>
+        <View style={[styles.line, { marginTop: 30, width: '75%', alignSelf: 'center' }]} />
+
+        {/* Kudlit */}
+        <View style={[styles.titleContainer, { marginTop: 20 }]}>
           <Text style={styles.title}>Kudlit</Text>
         </View>
 
         {/* New grouped text */}
-        <View style={[styles.groupedTextRow, { marginTop: 30, paddingHorizontal: 70, marginBottom: 70 }]}>
+        <View style={[styles.groupedTextRow, { marginTop: 30, paddingHorizontal: 70, marginBottom: 10 }]}>
           <View style={styles.groupedTextContainer}>
             <Text style={[styles.textTop, { fontFamily: 'DoctrinaChristianaBold' }]}>B</Text>
             <Text style={styles.textBottom}>Ba</Text>
@@ -85,11 +87,36 @@ const Pagbasa = () => {
             <Text style={styles.textBottom}>Bo/Bu</Text>
           </View>
         </View>
-        <Text style={[styles.textBottom, { textAlign: 'center', paddingHorizontal: 20 }]}>
-          Add a Kudlit at the top to change a syllable into vowel E/I and add a kudlit at the bottom to change into vowel O/U
+        <Text style={[styles.textBottom, { textAlign: 'center', paddingHorizontal: 20}]}>
+            Add a <Text style={{ fontWeight: 'bold' }}>Kudlit</Text> at the top to change a syllable into vowel E/I.{'\n\n'}Add a <Text style={{ fontWeight: 'bold' }}>Kudlit</Text> at the bottom to change a syllable into vowel O/U.
+        </Text>
+
+      <View style={[styles.line, { marginTop: 30, width: '75%', alignSelf: 'center' }]} />
+
+      {/* Vowel Killer  */}
+        <View style={[styles.titleContainer, { marginTop: 20 }]}>
+          <Text style={styles.title}>Vowel Killer</Text>
+        </View>
+
+        {/* New grouped text */}
+        <View style={[styles.groupedTextRow, { marginTop: 30, paddingHorizontal: 110, marginBottom: 10 }]}>
+          <View style={styles.groupedTextContainer}>
+            <Text style={[styles.textTop, { fontFamily: 'DoctrinaChristianaBold' }]}>B</Text>
+            <Text style={styles.textBottom}>Ba</Text>
+          </View>
+          <View style={styles.groupedTextContainer}>
+            <Text style={[styles.textTop, { fontFamily: 'DoctrinaChristianaBold' }]}>Bx</Text>
+            <Text style={styles.textBottom}>B</Text>
+          </View>
+        </View>
+        <Text style={[styles.textBottom, { textAlign: 'center', paddingHorizontal: 20, marginBottom: 70 }]}>
+            Add a <Text style={{ fontWeight: 'bold' }}>x or +</Text> at the bottom of a syllable to make it a standalone letter.
         </Text>
       </ScrollView>
+
     </ImageBackground>
+
+    
   );
 };
 
@@ -133,6 +160,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     color: '#3D261C',
+    fontStyle: 'italic',
   },
   groupedTextRow: {
     flexDirection: 'row',

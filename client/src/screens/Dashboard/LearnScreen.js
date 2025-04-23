@@ -32,14 +32,14 @@ const LearnScreen = () => {
           <Text style={styles.subText}>Pagbabasa</Text>
         </View>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.box} onPress={() => console.log('Box clicked')}>
+      <TouchableOpacity style={styles.box} onPress={() => navigation.navigate('Pagsulat')}>
         <Ionicons name="pencil" size={40} color="#D9D9D9" style={styles.icon} /> 
         <View style={styles.textContainer}>
           <Text style={styles.text}>Pgxsusultx</Text>
           <Text style={styles.subText}>Pagsusulat</Text>
         </View>
       </TouchableOpacity>
-      <TouchableOpacity style={[styles.box, { marginTop: 50 }]} onPress={() => console.log('Box clicked')}>
+      {/* <TouchableOpacity style={[styles.box, { marginTop: 50 }]} onPress={() => console.log('Box clicked')}>
         <Ionicons name="time" size={40} color="#D9D9D9" style={styles.icon} /> 
         <View style={styles.textContainer}>
           <Text style={styles.text}>Ksyxsynx</Text>
@@ -52,7 +52,7 @@ const LearnScreen = () => {
           <Text style={styles.text}>Mxg Akxltx</Text>
           <Text style={styles.subText}>Mga Aklat</Text>
         </View>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </ImageBackground>
   );
 };

@@ -1,38 +1,43 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ImageBackground, ActivityIndicator, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, ImageBackground, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 
 const AfterChapScreen = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setTimeout(() => {
+    const loadingTimeout = setTimeout(() => {
       setIsLoading(false);
-    }, 1000); // Simulate loading time
+    }, 10000); // Simulate loading time
+
+    return () => clearTimeout(loadingTimeout); // Cleanup timeout
   }, []);
 
-  const handlePress = () => {
-    navigation.navigate('LastChap2'); // Replace with your route name if different
-  };
+  useEffect(() => {
+    if (!isLoading) {
+      const navigateTimeout = setTimeout(() => {
+        navigation.navigate('LastChap2'); // CHANGE INTO LESSON 1
+      }, 15000);
+
+      return () => clearTimeout(navigateTimeout); // Cleanup timeout
+    }
+  }, [isLoading]);
 
   return (
-    <TouchableOpacity style={{ flex: 1 }} onPress={handlePress} activeOpacity={1}>
+    <TouchableOpacity style={{ flex: 1 }} activeOpacity={1}>
       <ImageBackground 
         source={require('../../assets/MainBG.png')} // Parchment background
         style={styles.background}
       >
         {isLoading ? (
           <View style={styles.loadingContainer}>
-            <ActivityIndicator size="large" color="black" />
+            <ActivityIndicator size="large" color="black" style={styles.loadingIcon} />
             <Text style={styles.loadingText}>Loading...</Text>
           </View>
         ) : (
           <View style={styles.contentContainer}>
             <Text style={styles.dialogue}>
-              "Before you read this inscription, you must understand its bones—the three pure sound: 'A', 'E/I', 'O/U'. They are the roots of our script."
+              "Before you read this inscription, you {'\n'} must understand its bones—the three {'\n'}pure sound: 'A', 'E/I', 'O/U'. {'\n'}They are the roots of our script."
             </Text>
-            <View style={styles.silhouetteContainer}>
-              <View style={styles.silhouette} />
-            </View>
           </View>
         )}
       </ImageBackground>
@@ -48,13 +53,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#e6d2a9',
   },
   loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
+    position: 'absolute',
+    bottom: 30,
+    left: 30,
+    flexDirection: 'row',
     alignItems: 'center',
   },
+  loadingIcon: {
+    marginRight: 12,
+  },
   loadingText: {
-    marginTop: 10,
-    fontSize: 18,
+    fontSize: 20,
     color: 'black',
   },
   contentContainer: {
@@ -69,19 +78,6 @@ const styles = StyleSheet.create({
     color: '#333',
     lineHeight: 25,
     paddingTop: 50,
-  },
-  silhouetteContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 20,
-  },
-  silhouette: {
-    width: 160,
-    height: 320,
-    backgroundColor: 'white',
-    borderTopLeftRadius: 80,
-    borderTopRightRadius: 80,
   },
 });
 

@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ImageBackground, ScrollView, Dimensions, Toucha
 import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useNavigation } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons';
 
 const { width, height } = Dimensions.get('window');
 
@@ -12,7 +13,7 @@ const loadFonts = () => {
   });
 };
 
-const PracticeScreen = () => {
+const Pagsulat = () => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const navigation = useNavigation();
 
@@ -29,7 +30,7 @@ const PracticeScreen = () => {
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color="#3D261C" />
       </View>
-    ); // Render a loading spinner while waiting for fonts to load
+    );
   }
 
   const smallTexts = [
@@ -48,7 +49,7 @@ const PracticeScreen = () => {
     ['M', 'n', 'N'],
     ['P', 'S', 'T'],
     ['W', 'Y']
-  ]; 
+  ];
 
   const handleBoxPress = (smallText, largeText) => {
     navigation.navigate('Practices', { smallText, largeText });
@@ -92,16 +93,14 @@ const PracticeScreen = () => {
       resizeMode="cover"
     >
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <View style={styles.container}>
-          <View style={styles.header}>
-            <Text style={styles.headerText}>PRACTICE</Text>
-            <TouchableOpacity style={styles.exitButton} onPress={() => navigation.navigate('Menu')}>
-              <Text style={styles.exitButtonText}>{'<<'}</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.line} />
-          {renderBoxes()}
+        <View style={styles.header}>
+          <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+            <Ionicons name="arrow-back" size={24} color="#3D261C" />
+            <Text style={styles.headerText}>Pagsulat ng Baybayin</Text>
+          </TouchableOpacity>
         </View>
+        <View style={styles.line} />
+        {renderBoxes()}
       </ScrollView>
     </ImageBackground>
   );
@@ -133,39 +132,31 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: 'row',
-    justifyContent: 'center',
     alignItems: 'center',
-    width: '90%',
-    marginTop: 70,
+    paddingVertical: 20,
+    paddingHorizontal: 10, // Adjust padding for proper alignment
+    marginTop: 20,
     marginLeft: 20,
-    marginRight: 20,
-    paddingHorizontal: 20, 
+  },
+  backButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   headerText: {
-    fontSize: 32,
+    fontSize: 18,
     fontWeight: 'bold',
     color: '#3D261C',
-    flex: 1,
-    textAlign: 'center',
-  },
-  exitButton: {
-    position: 'absolute',
-    left: 20,
-    top: -3,
-    borderRadius: 16,
-    padding: 10,
-  },
-  exitButtonText: {
-    color: '#000',
-    fontSize: 20,
-    fontWeight: 'bold',
+    marginLeft: 10,
+    flex: 1, // Ensure the text takes up available space
+    textAlign: 'left', // Align the text to the left
+    marginLeft: 10,
   },
   line: {
-    width: '80%',
-    height: 1,
+    height: 1.5,
     backgroundColor: '#3D261C',
-    marginTop: 5,
-    alignSelf: 'center',
+    marginHorizontal: 20,
+    marginBottom: 10,
+    width: '90%',
   },
   boxContainer: {
     flexDirection: 'row',
@@ -185,7 +176,7 @@ const styles = StyleSheet.create({
     width: 90,
     height: 90,
     borderRadius: 16,
-    backgroundColor: '#3D261C',
+    backgroundColor: '#784C34',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -213,4 +204,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PracticeScreen;
+export default Pagsulat;

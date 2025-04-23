@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground, ScrollView, Modal } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons'; // Import Ionicons for the back button
 import { LinearGradient } from 'expo-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-
 
 const avatars = {
   '1': require('../../assets/avatars/1.jpg'),
@@ -100,7 +100,6 @@ const ProfileScreen = ({ navigation }) => {
     } catch (error) {
       console.error('Error removing token:', error);
     }
-
   };
 
   const cancelLogout = () => {
@@ -108,12 +107,16 @@ const ProfileScreen = ({ navigation }) => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.scrollContainer}>
-      <ImageBackground source={require('../../assets/MainBG.png')} style={styles.background}>
+    <ImageBackground source={require('../../assets/MainBG.png')} style={styles.background}>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <View style={styles.header}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+          <Ionicons name="arrow-back" size={24} color="#3D261C" />
+          <Text style={styles.headerText}>Pagbasa ng Baybayin</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.divider2} />
         <View style={styles.container}>
-          <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-            <Text style={styles.backButtonText}>&lt;&lt; Main Menu</Text>
-          </TouchableOpacity>
           <View style={styles.profileContainer}>
             <View style={styles.profileImageContainer}>
               <Image
@@ -151,7 +154,7 @@ const ProfileScreen = ({ navigation }) => {
 
           <View style={styles.currencyContainer}>
             <Text style={styles.currencyText}>{currency} Orchivium</Text>
-            <TouchableOpacity style={styles.shopButton} onPress={() => navigation.navigate('Shop')}>
+            <TouchableOpacity style={styles.shopButton} >
               <Text style={styles.shopButtonText}>Shop</Text>
             </TouchableOpacity>
           </View>
@@ -189,7 +192,7 @@ const ProfileScreen = ({ navigation }) => {
             <Text style={styles.logoutButtonText}>Log-out</Text>
           </TouchableOpacity>
         </View>
-      </ImageBackground>
+      </ScrollView>
       <Modal
         transparent={true}
         animationType="slide"
@@ -215,38 +218,46 @@ const ProfileScreen = ({ navigation }) => {
           </View>
         </View>
       </Modal>
-    </ScrollView>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
-  scrollContainer: {
-    flexGrow: 1,
-  },
   background: {
     flex: 1,
     resizeMode: 'cover',
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 20,
+    marginTop: 20,
+    marginLeft: 10,
+  },
+  backButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  headerText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#3D261C',
+    marginLeft: 10,
+  },
+  scrollContainer: {
+    flexGrow: 1,
+    paddingBottom: 20,
   },
   container: {
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: 'transparent',
-    paddingTop: 50, // Adjust this value as needed
-  },
-  backButton: {
-    position: 'absolute',
-    top: 40,
-    left: 50,
-  },
-  backButtonText: {
-    fontSize: 16,
-    color: '#000',
   },
   profileContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 30, 
+    marginTop: 30,
   },
   profileImageContainer: {
     width: 120,
@@ -312,6 +323,12 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: '#000',
     marginVertical: 20,
+  },
+  divider2: {
+    height: 1.5,
+    backgroundColor: '#3D261C',
+    marginHorizontal: 20,
+    width: '90%',
   },
   infoBoxesContainer: {
     flexDirection: 'row',
@@ -440,11 +457,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
-  },
-  noAchievementsText: {
-    fontSize: 16,
-    color: '#202020',
-    alignSelf: 'center',
   },
   logoutButton: {
     justifyContent: 'center',
