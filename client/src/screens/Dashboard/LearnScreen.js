@@ -21,7 +21,7 @@ const LearnScreen = () => {
       <View style={styles.header}>
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back" size={24} color="#3D261C" />
-          <Text style={styles.headerText}>Learn About Baybayin</Text>
+          <Text style={styles.headerText}>Matuto Tungkol sa Baybayin</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.line} /> 

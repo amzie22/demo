@@ -48,10 +48,10 @@ const Ep2DetailsScreen = ({ navigation }) => {
 
   const handleNextDialogue = () => {
     const lines = [
-      `Before you can write, you must first learn to feel the characters in your hands`,
-      `The symbols of Baybayin are not just lines—they are expressions of sound , motion, and meaning. Now, let us begin with the foundational sounds.`,
-      `The first characters you both have learned are 'A,' 'E/I,' and 'O/U.' Each one is unique, yet they form the base of our writing.`,
-      `Feel each character as it comes to life in your hand.`,
+      { character: 'Namwaran', text: `Bago ka makasulat, kailangan mo munang matutuhang damhin ang mga karakter sa iyong mga kamay` },
+      { character: 'Namwaran', text: `Ang mga simbolo ng Baybayin ay hindi lamang mga linya—sila ay pagpapahayag ng tunog, galaw, at kahulugan. Ngayon, simulan natin sa mga pangunahing tunog.` },
+      { character: 'Namwaran', text: `Ang unang mga karakter na natutuhan ninyong dalawa ay 'A,' 'E/I,' at 'O/U.' Bawat isa ay natatangi, ngunit sila ang bumubuo sa basehan ng ating pagsulat.` },
+      { character: 'Namwaran', text: `Damhin ang bawat karakter habang ito ay nabubuhay sa iyong kamay.` },
     ];
 
     if (dialogueStep === lines.length - 1) {
@@ -71,16 +71,16 @@ const Ep2DetailsScreen = ({ navigation }) => {
   const renderChoiceDialogue = () => {
     const dialogueLines = {
       'Option 1': [
-        `"Writing is not only a physical act but also a connection to our spirits and ancestors."`,
-        `"Feeling the characters means you will truly understand their meaning and power. Without this, Baybayin will remain lifeless."`,
+        `"Ang pagsulat ay hindi lamang pisikal na gawain kundi isang koneksyon din sa ating mga espiritu at ninuno."`,
+        `"Ang pagdama sa mga karakter ay nangangahulugan na tunay mong mauunawaan ang kanilang kahulugan at kapangyarihan. Kung wala ito, ang Baybayin ay mananatiling walang buhay."`,
       ],
       'Option 2': [
-        `"Patience, my child. Mastery comes from practice, from making the characters part of your daily rhythm."`,
-        `" Each line, each curve should flow as naturally as the river outside. "`,
+        `"Pasensya, anak ko. Ang kahusayan ay nagmumula sa pagsasanay, sa paggawa ng mga karakter na bahagi ng iyong pang-araw-araw na ritmo."`,
+        `"Bawat linya, bawat kurba ay dapat dumaloy nang natural tulad ng ilog sa labas."`,
       ],
       'Option 3': [
-        `"I've studied Baybayin extensively in the Library of Languages."`,
-        `"But this is different—this is living it. Don't worry, Bukah, I'll guide you through every step. Just follow my lead."`,
+        `"Pinag-aralan ko nang mabuti ang Baybayin sa Aklatan ng mga Wika."`,
+        `"Ngunit iba ito—ito ay pagbuhay nito. Huwag kang mag-alala, Bukah, gagabayan kita sa bawat hakbang. Sundin mo lamang ako."`,
       ],
     };
 
@@ -107,20 +107,22 @@ const Ep2DetailsScreen = ({ navigation }) => {
 
   const renderMainDialogue = () => {
     const lines = [
-      `Before you can write, you must first learn to feel the characters in your hands`,
-      `The symbols of Baybayin are not just lines—they are expressions of sound , motion, and meaning. Now, let us begin with the foundational sounds.`,
-      `The first characters you both have learned are 'A,' 'E/I,' and 'O/U.' Each one is unique, yet they form the base of our writing.`,
-      `Feel each character as it comes to life in your hand.`,
+      { character: 'Namwaran', text: `Bago ka makasulat, kailangan mo munang matutuhang damhin ang mga karakter sa iyong mga kamay` },
+      { character: 'Namwaran', text: `Ang mga simbolo ng Baybayin ay hindi lamang mga linya—sila ay pagpapahayag ng tunog, galaw, at kahulugan. Ngayon, simulan natin sa mga pangunahing tunog.` },
+      { character: 'Namwaran', text: `Ang unang mga karakter na natutuhan ninyong dalawa ay 'A,' 'E/I,' at 'O/U.' Bawat isa ay natatangi, ngunit sila ang bumubuo sa basehan ng ating pagsulat.` },
+      { character: 'Namwaran', text: `Damhin ang bawat karakter habang ito ay nabubuhay sa iyong kamay.` },
     ];
+
+    const currentDialogue = lines[dialogueStep];
 
     return (
       <TouchableOpacity onPress={handleNextDialogue}>
         <View style={styles.dialogueBox}>
           <View style={styles.characterNameContainer}>
-            <Text style={styles.characterName}>{characterName}:</Text>
+            <Text style={styles.characterName}>{currentDialogue.character}:</Text>
           </View>
           <View style={styles.dialogueTextWrapper}>
-            <Text style={styles.dialogueText}>{lines[dialogueStep]}</Text>
+            <Text style={styles.dialogueText}>{currentDialogue.text}</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -132,13 +134,6 @@ const Ep2DetailsScreen = ({ navigation }) => {
       <View style={styles.overlay} />
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.dialogueContainer}>
-          <View style={styles.characterImageContainer}>
-            <Image
-              source={require('../../../assets/characters/Scribeon.png')}
-              style={[styles.characterImage]}
-            />
-          </View>
-
           <View style={styles.dialogueTextContainer}>
             {selectedChoice ? (
               renderChoiceDialogue()
@@ -148,21 +143,21 @@ const Ep2DetailsScreen = ({ navigation }) => {
                   <Animated.View
                     style={[styles.choiceButton, { backgroundColor: interpolatedBackgroundColor }]}
                   >
-                    <Text style={styles.choiceText}>Why do we need to feel the characters?</Text>
+                    <Text style={styles.choiceText}>Bakit kailangan nating damhin ang mga karakter?</Text>
                   </Animated.View>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => handleChoice('Option 2')}>
                   <Animated.View
                     style={[styles.choiceButton, { backgroundColor: interpolatedBackgroundColor }]}
                   >
-                    <Text style={styles.choiceText}>How can I master Baybayin?</Text>
+                    <Text style={styles.choiceText}>Paano ko masasanay ang Baybayin?</Text>
                   </Animated.View>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => handleChoice('Option 3')}>
                   <Animated.View
                     style={[styles.choiceButton, { backgroundColor: interpolatedBackgroundColor }]}
                   >
-                    <Text style={styles.choiceText}>Angkatan, do you know how to do this?</Text>
+                    <Text style={styles.choiceText}>Angkatan, alam mo ba kung paano ito gawin?</Text>
                   </Animated.View>
                 </TouchableOpacity>
               </View>
@@ -185,7 +180,7 @@ const styles = StyleSheet.create({
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    backgroundColor: 'rgba(20, 20, 20, 0.5)', // Increased opacity to 50% for a darker overlay
   },
   safeArea: {
     flex: 1,
@@ -244,7 +239,6 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   choicesContainer: {
-    marginTop: 10,
     alignItems: 'center',
     width: '100%',
   },
@@ -259,19 +253,5 @@ const styles = StyleSheet.create({
     color: '#d9d9d9',
     fontSize: 14,
     textAlign: 'center',
-  },
-  characterImageContainer: {
-    position: 'absolute',
-    left: -70,
-    bottom: 200,
-    width: 100,
-    height: '100%',
-    justifyContent: 'center',
-    zIndex: 0,
-  },
-  characterImage: {
-    width: 300,
-    height: 300,
-    resizeMode: 'contain',
   },
 });

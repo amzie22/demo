@@ -20,18 +20,19 @@ const Chap2Intro = ({ route, navigation }) => {
             setShowEpisodeText(true);
         }, 10000);
 
-        // Navigate to Chapter2Details after 5 seconds if Episode 1 is displayed
-        if (episode === 1) {
-            const navigateTimer = setTimeout(() => {
-                navigation.navigate('Chapter2Details');
-            }, 15000); // 5 seconds after "Episode 1" is displayed
-
-            return () => clearTimeout(navigateTimer); // Cleanup navigate timer
-        }
+        // Navigate to the appropriate screen based on the episode
+        const navigateTimer = setTimeout(() => {
+            if (episode === 1) {
+                navigation.navigate('Chapter2Details'); // Navigate to Chapter2Details for Episode 1
+            } else if (episode === 2) {
+                navigation.navigate('Ep2Details'); // Navigate to a different screen for Episode 2
+            }
+        }, 15000); // 5 seconds after "Episode X" is displayed
 
         return () => {
             clearTimeout(timer1);
             clearTimeout(timer2);
+            clearTimeout(navigateTimer); // Cleanup navigate timer
         };
     }, [episode, navigation]);
 

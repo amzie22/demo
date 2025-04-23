@@ -3,11 +3,24 @@ import { View, Text, ImageBackground, ActivityIndicator, StyleSheet, TouchableOp
 
 const Ep2Screen = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
+  const [showDialogue, setShowDialogue] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => {
+    // Show loading for 5 seconds
+    const loadingTimer = setTimeout(() => {
       setIsLoading(false);
-    }, 1000); // Simulate loading time
+      setShowDialogue(true);
+    }, 5000);
+
+    // Show dialogue for 10 seconds, then navigate
+    const dialogueTimer = setTimeout(() => {
+      navigation.navigate('LastEp2'); // Replace with your route name if different
+    }, 15000); // 5 seconds (loading) + 10 seconds (dialogue)
+
+    return () => {
+      clearTimeout(loadingTimer);
+      clearTimeout(dialogueTimer);
+    };
   }, []);
 
   const handlePress = () => {
@@ -25,16 +38,13 @@ const Ep2Screen = ({ navigation }) => {
             <ActivityIndicator size="large" color="black" />
             <Text style={styles.loadingText}>Loading...</Text>
           </View>
-        ) : (
+        ) : showDialogue ? (
           <View style={styles.contentContainer}>
             <Text style={styles.dialogue}>
-              "When you trace, focus not just on the direction, but on the fluidity. The character should almost feel like it's alive, dancing from your hand.."
+              "Kapag sinusubaybayan mo, huwag lamang magpokus sa direksyon, kundi sa daloy. Ang karakter ay dapat parang buhay, sumasayaw mula sa iyong kamay.."
             </Text>
-            <View style={styles.silhouetteContainer}>
-              <View style={styles.silhouette} />
-            </View>
           </View>
-        )}
+        ) : null}
       </ImageBackground>
     </TouchableOpacity>
   );
@@ -48,14 +58,19 @@ const styles = StyleSheet.create({
     backgroundColor: '#e6d2a9',
   },
   loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
+    position: 'absolute',
+    bottom: 30,
+    left: 30,
+    flexDirection: 'row',
     alignItems: 'center',
   },
+  loadingIcon: {
+    marginRight: 12,
+  },
   loadingText: {
-    marginTop: 10,
-    fontSize: 18,
+    fontSize: 20,
     color: 'black',
+    marginLeft: 12,
   },
   contentContainer: {
     flex: 1,
@@ -69,19 +84,6 @@ const styles = StyleSheet.create({
     color: '#333',
     lineHeight: 25,
     paddingTop: 50,
-  },
-  silhouetteContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 20,
-  },
-  silhouette: {
-    width: 160,
-    height: 320,
-    backgroundColor: 'white',
-    borderTopLeftRadius: 80,
-    borderTopRightRadius: 80,
   },
 });
 

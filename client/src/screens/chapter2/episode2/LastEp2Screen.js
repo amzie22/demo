@@ -14,8 +14,8 @@ const LastEp2Screen = ({ navigation }) => {
   }, []);
 
   const lines = [
-    `You've made great progress, Bukah! But this is just the beginning. Practice will make these strokes second nature.`,
-    `Indeed. Now, remember, these foundational characters will guide us to the more complex syllables. Rest for now, my children—we begin anew tomorrow.`,
+    `Malaking pag-unlad ang nagawa mo, Bukah! Ngunit ito ay simula pa lamang. Ang pagsasanay ay gagawing natural ang mga stroke na ito.`,
+    `Tunay nga. Ngayon, tandaan, ang mga pangunahing karakter na ito ang gagabay sa atin sa mas kumplikadong pantig. Magpahinga muna kayo, mga anak ko—magsisimula tayong muli bukas.`,
   ];
 
   // Function to handle dialogue progression

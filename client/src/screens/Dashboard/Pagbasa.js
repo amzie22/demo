@@ -39,7 +39,7 @@ const Pagbasa = () => {
         <View style={styles.line} />
         {/* Vowels Title */}
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>Syllables</Text>
+          <Text style={styles.title}>Mga Silabang (Syllables)</Text>
         </View>
 
         {/* Render syllables dynamically in rows */}
