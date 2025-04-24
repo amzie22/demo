@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ImageBackground, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Text, ImageBackground, StyleSheet, TouchableOpacity, ActivityIndicator, Image } from 'react-native';
 
 const AfterChapScreen = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -15,8 +15,8 @@ const AfterChapScreen = ({ navigation }) => {
   useEffect(() => {
     if (!isLoading) {
       const navigateTimeout = setTimeout(() => {
-        navigation.navigate('LastChap2'); // CHANGE INTO LESSON 1
-      }, 15000);
+        navigation.navigate('Lesson1'); // CHANGE INTO LESSON 1
+      }, 5000); // Navigate after loading
 
       return () => clearTimeout(navigateTimeout); // Cleanup timeout
     }
@@ -38,6 +38,10 @@ const AfterChapScreen = ({ navigation }) => {
             <Text style={styles.dialogue}>
               "Bago mo basahin ang inskripsiyong ito, kailangan mong maunawaan ang mga ugat nito—ang tatlong dalisay na tunog: 'A', 'E/I', 'O/U'. Sila ang mga pinagmulan ng ating sulat."
             </Text>
+            <Image 
+              source={require('../../assets/characters/namwaran1.png')} 
+              style={styles.characterImage} 
+            />
           </View>
         )}
       </ImageBackground>
@@ -69,15 +73,20 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     paddingHorizontal: 24,
-    paddingTop: 150,
+    paddingTop: 120,
   },
   dialogue: {
-    fontSize: 16,
+    fontSize: 18,
     fontStyle: 'italic',
     textAlign: 'center',
     color: '#333',
-    lineHeight: 25,
-    paddingTop: 50,
+  },
+  characterImage: {
+    width: 350, // Adjust width as needed
+    height: 350, // Adjust height as needed
+    alignSelf: 'center',
+    marginTop: 30,
+    opacity: 1, // Adjust opacity to make it subtle
   },
 });
 

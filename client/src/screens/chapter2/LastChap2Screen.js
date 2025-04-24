@@ -49,7 +49,10 @@ const LastChap2Screen = ({ navigation }) => {
   };
 
   const renderMainDialogue = () => {
-    const currentMainCharacter = dialogueStep < 2 ? 'Namwaran' : 'Scribeon';
+    const currentMainCharacter = dialogueStep < 2 ? 'Namwaran' : 'Angkatan'; // Determine the current character
+    const characterImage = dialogueStep < 2 
+        ? require('../../assets/characters/namwaran2.png') // Image for Namwaran
+        : require('../../assets/characters/Ankatan1.png'); // Image for Angkatan
 
     return (
       <TouchableOpacity onPress={handleNextDialogue}>
@@ -60,6 +63,11 @@ const LastChap2Screen = ({ navigation }) => {
           <View style={styles.dialogueTextWrapper}>
             <Text style={styles.dialogueText}>{lines[dialogueStep]}</Text>
           </View>
+          <ImageBackground 
+            source={characterImage} 
+            style={styles.characterImageBackground} // Use the same style as in Chapter2DetailsScreen
+            imageStyle={{ resizeMode: 'contain' }} 
+          />
         </View>
       </TouchableOpacity>
     );
@@ -301,5 +309,16 @@ const styles = StyleSheet.create({
   loadingText: {
     fontSize: 20,
     color: 'black',
+  },
+  characterImageBackground: {
+    position: 'absolute',
+    top: -370, // Adjust as needed
+    left: -10,
+    right: 0,
+    width: 500,
+    height: 500, // Adjust height as needed
+    resizeMode: 'contain',
+    opacity: 0.9, // Adjust opacity to make it subtle
+    zIndex: 0, // Lower zIndex to ensure it is behind the dialogue box
   },
 });

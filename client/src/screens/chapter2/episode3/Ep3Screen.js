@@ -3,11 +3,24 @@ import { View, Text, ImageBackground, ActivityIndicator, StyleSheet, TouchableOp
 
 const Ep3Screen = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
+  const [showDialogue, setShowDialogue] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => {
+    // Show loading for 5 seconds
+    const loadingTimer = setTimeout(() => {
       setIsLoading(false);
-    }, 1000); // Simulate loading time
+      setShowDialogue(true);
+    }, 5000);
+
+    // Show dialogue for 10 seconds, then navigate
+    const dialogueTimer = setTimeout(() => {
+      navigation.navigate('LastEp3'); // Replace with your route name if different
+    }, 15000); // 5 seconds (loading) + 10 seconds (dialogue)
+
+    return () => {
+      clearTimeout(loadingTimer);
+      clearTimeout(dialogueTimer);
+    };
   }, []);
 
   const handlePress = () => {
@@ -22,19 +35,16 @@ const Ep3Screen = ({ navigation }) => {
       >
         {isLoading ? (
           <View style={styles.loadingContainer}>
-            <ActivityIndicator size="large" color="black" />
+            <ActivityIndicator size="large" color="black" style={styles.loadingIcon} />
             <Text style={styles.loadingText}>Loading...</Text>
           </View>
-        ) : (
+        ) : showDialogue ? (
           <View style={styles.contentContainer}>
             <Text style={styles.dialogue}>
-              "Your next task is to match these sounds to their symbols. This exercise will help you remember and honor the essence of these consonants."
+              "Ang iyong susunod na gawain ay ipares ang mga tunog na ito sa kanilang mga simbolo. Ang pagsasanay na ito ay makakatulong sa iyo na maalala at igalang ang diwa ng mga katinig na ito."
             </Text>
-            <View style={styles.silhouetteContainer}>
-              <View style={styles.silhouette} />
-            </View>
           </View>
-        )}
+        ) : null}
       </ImageBackground>
     </TouchableOpacity>
   );
@@ -48,14 +58,19 @@ const styles = StyleSheet.create({
     backgroundColor: '#e6d2a9',
   },
   loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
+    position: 'absolute',
+    bottom: 30,
+    left: 30,
+    flexDirection: 'row',
     alignItems: 'center',
   },
+  loadingIcon: {
+    marginRight: 12,
+  },
   loadingText: {
-    marginTop: 10,
-    fontSize: 18,
+    fontSize: 20,
     color: 'black',
+    marginLeft: 12,
   },
   contentContainer: {
     flex: 1,
@@ -69,19 +84,6 @@ const styles = StyleSheet.create({
     color: '#333',
     lineHeight: 25,
     paddingTop: 50,
-  },
-  silhouetteContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 20,
-  },
-  silhouette: {
-    width: 160,
-    height: 320,
-    backgroundColor: 'white',
-    borderTopLeftRadius: 80,
-    borderTopRightRadius: 80,
   },
 });
 

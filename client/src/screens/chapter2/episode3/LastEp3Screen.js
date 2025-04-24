@@ -1,8 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ImageBackground, TouchableOpacity, Animated, Image, Platform } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, ImageBackground, TouchableOpacity, Modal, TouchableWithoutFeedback, Animated, ActivityIndicator, Platform } from 'react-native';
 
 const LastEp3Screen = ({ navigation }) => {
   const [dialogueStep, setDialogueStep] = useState(0);
+  const [showEpisodeModal, setShowEpisodeModal] = useState(false); // State for the modal
+  const [showLoading, setShowLoading] = useState(false); // State for the loading screen
+  const [showEpisodeIntro, setShowEpisodeIntro] = useState(false); // State for showing Episode 4 intro
   const backgroundColor = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -14,27 +17,32 @@ const LastEp3Screen = ({ navigation }) => {
   }, []);
 
   const lines = [
-    `Well done, Bukah. You've listened carefully and shown that you understand the strength of these sounds.`,
-    `Tomorrow, we will take the next step—writing these consonants, giving them a physical form.`,
-    `You're progressing faster than I expected. These syllables are starting to feel like second nature, aren't they?`,
-    `But remember, each stroke will require precision and patience. Tonight, rest well.`,
-    `Indeed. Writing is not only a test of skill—it is a connection to your spirit. Sleep now, my children. Tomorrow's work will demand steady hands and clear minds.`,
+    `Magaling, Bukah. Maingat kang nakikinig at ipinakita mong nauunawaan mo ang lakas ng mga tunog na ito.`,
+    `Bukas, tayo ay kukuha ng susunod na hakbang—pagsulat ng mga katinig na ito, pagbibigay sa kanila ng pisikal na anyo.`,
+    `Mas mabilis kang umuunlad kaysa sa inaasahan ko. Ang mga pantig na ito ay nagsisimula nang maging natural, hindi ba?`,
+    `Ngunit tandaan, bawat stroke ay mangangailangan ng kawastuhan at pasensya. Mamayang gabi, magpahinga kang mabuti.`,
+    `Tunay nga. Ang pagsulat ay hindi lamang pagsubok ng kasanayan—ito ay koneksyon sa iyong espiritu. Matulog ka na, mga anak ko. Ang gawain bukas ay mangangailangan ng matatag na kamay at malinaw na isip.`,
   ];
 
-  // Function to handle dialogue progression
   const handleNextDialogue = () => {
-    if (dialogueStep + 1 < lines.length) {
-      setDialogueStep(prevStep => prevStep + 1);
+    if (dialogueStep === lines.length - 1) {
+      setShowEpisodeModal(true); // Show the modal after the last dialogue
     } else {
-      // Navigate to Ep4Details when we reach the last dialogue
-      navigation.navigate('Ep4Details');
+      setDialogueStep(prev => prev + 1);
     }
   };
 
-  const interpolatedBackgroundColor = backgroundColor.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['#2E242499', '#291711CC'],
-  });
+  const handleGoToEpisode4 = () => {
+    setShowEpisodeModal(false);
+    setShowLoading(true); // Show the loading screen
+
+    // Simulate loading before showing Episode 4 intro
+    setTimeout(() => {
+      setShowLoading(false);
+      setShowEpisodeIntro(true); // Show the Episode 4 intro
+      setTimeout(() => navigation.navigate('Ep4Details'), 5000); // Navigate to Ep4Details after 5 seconds
+    }, 5000); // Loading screen duration
+  };
 
   const renderMainDialogue = () => {
     const currentMainCharacter = dialogueStep < 2 ? 'Namwaran' : 'Scribeon';
@@ -53,22 +61,75 @@ const LastEp3Screen = ({ navigation }) => {
     );
   };
 
+  if (showLoading) {
+    return (
+      <ImageBackground source={require('../../../assets/MainBG.png')} style={styles.background}>
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="black" style={styles.loadingIcon} />
+          <Text style={styles.loadingText}>Loading...</Text>
+        </View>
+      </ImageBackground>
+    );
+  }
+
+  if (showEpisodeIntro) {
+    return (
+      <ImageBackground source={require('../../../assets/MainBG.png')} style={styles.background}>
+        <SafeAreaView style={styles.container}>
+          <View style={styles.textContainer}>
+            <Text style={styles.title}>Episode 4</Text>
+          </View>
+        </SafeAreaView>
+      </ImageBackground>
+    );
+  }
+
   return (
     <ImageBackground source={require('../../../assets/image.png')} style={styles.background}>
       <View style={styles.overlay} />
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.dialogueContainer}>
-          <View style={styles.characterImageContainer}>
-            <Image
-              source={require('../../../assets/characters/Scribeon.png')}
-              style={[styles.characterImage]}
-            />
-          </View>
           <View style={styles.dialogueTextContainer}>
             {renderMainDialogue()}
           </View>
         </View>
       </SafeAreaView>
+
+      {/* Modal for "Go to Episode 4?" */}
+      <Modal
+        visible={showEpisodeModal}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={() => setShowEpisodeModal(false)}
+      >
+        <TouchableWithoutFeedback onPress={() => setShowEpisodeModal(false)}>
+          <View style={styles.modalOverlay}>
+            <TouchableWithoutFeedback>
+              <ImageBackground
+                source={require('../../../assets/lastquest.jpg')} // Replace with the correct background image path
+                style={styles.modalImageBackground}
+                imageStyle={{ width: '100%', height: '100%', resizeMode: 'cover' }}
+              >
+                <View style={styles.innerBorder} />
+                <Text style={styles.modalTitle}>Go to Episode 4?</Text>
+                <View style={styles.modalButtonsVertical}>
+                  <TouchableOpacity
+                    style={styles.keepLearningButton}
+                    onPress={handleGoToEpisode4} // Show loading screen and Episode 4 intro
+                  >
+                    <Text style={styles.keepLearningText}>Yes</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate('Menu')} // Navigate to Main Menu
+                  >
+                    <Text style={styles.quitText}>Main Menu</Text>
+                  </TouchableOpacity>
+                </View>
+              </ImageBackground>
+            </TouchableWithoutFeedback>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
     </ImageBackground>
   );
 };
@@ -82,7 +143,7 @@ const styles = StyleSheet.create({
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    backgroundColor: 'rgba(20, 20, 20, 0.5)', // Increased opacity to 50% for a darker overlay
   },
   safeArea: {
     flex: 1,
@@ -140,18 +201,90 @@ const styles = StyleSheet.create({
     marginTop: 10,
     alignSelf: 'flex-start',
   },
-  characterImageContainer: {
-    position: 'absolute',
-    left: -70,
-    bottom: 200,
-    width: 100,
-    height: '100%',
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'center',
-    zIndex: 0,
+    alignItems: 'center',
   },
-  characterImage: {
-    width: 300,
-    height: 300,
-    resizeMode: 'contain',
+  modalImageBackground: {
+    width: '90%',
+    height: 220,
+    borderRadius: 12,
+    overflow: 'hidden',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'relative',
+  },
+  innerBorder: {
+    position: 'absolute',
+    top: 15,
+    left: 15,
+    right: 15,
+    bottom: 15,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: '#784C34',
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#3D261C',
+    textAlign: 'center',
+  },
+  modalButtonsVertical: {
+    width: '40%',
+    marginTop: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  keepLearningButton: {
+    backgroundColor: '#784C34',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginBottom: 10,
+    width: 260,
+    height: 50,
+    justifyContent: 'center',
+    marginTop: 20,
+  },
+  keepLearningText: {
+    color: '#FFF',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  quitText: {
+    color: '#6F1D1B',
+    fontWeight: 'bold',
+    fontSize: 16,
+    textAlign: 'center',
+  },
+  loadingContainer: {
+    position: 'absolute',
+    bottom: 30,
+    left: 30,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  loadingIcon: {
+    marginRight: 12,
+  },
+  loadingText: {
+    fontSize: 20,
+    color: 'black',
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  textContainer: {
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 48,
+    color: '#3D261C',
   },
 });

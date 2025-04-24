@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ImageBackground, TouchableOpacity, Animated, Image, Platform } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, ImageBackground, TouchableOpacity, Animated, Platform } from 'react-native';
 
 const LastEp4Screen = ({ navigation }) => {
   const [dialogueStep, setDialogueStep] = useState(0);
@@ -14,11 +14,11 @@ const LastEp4Screen = ({ navigation }) => {
   }, []);
 
   const lines = [
-    `You have done well, my children. The syllables are alive in your hands. With each mark, you honor our ancestors and safeguard their legacy.`,
-    `Look at what you've created, Bukah—it's beautiful! The connection you've built with Baybayin is becoming stronger every day.`,
-    `But our mission is far from over.`,
-    `Remember, Baybayin is not just for today—it is for tomorrow. Carry it with you always, and it will guide you in times of uncertainty.`,
-    `Now, wait here I need to tell this news to others, the news that my children are learning baybayin.`,
+    `Magaling ang iyong ginawa, mga anak ko. Ang mga pantig ay buhay sa inyong mga kamay. Sa bawat marka, pinararangalan ninyo ang ating mga ninuno at pinoprotektahan ang kanilang pamana.`,
+    `Tingnan mo ang iyong nagawa, Bukah—ang ganda! Ang koneksyon na iyong nabuo sa Baybayin ay lumalakas araw-araw.`,
+    `Ngunit malayo pa ang ating misyon.`,
+    `Tandaan, ang Baybayin ay hindi lamang para sa ngayon—ito ay para sa bukas. Dalhin mo ito palagi, at gagabayan ka nito sa mga panahon ng kawalan ng katiyakan.`,
+    `Ngayon, maghintay ka rito. Kailangan kong sabihin sa iba ang balitang ito, ang balitang ang aking mga anak ay natututo ng baybayin.`,
   ];
 
   // Function to handle dialogue progression
@@ -58,12 +58,6 @@ const LastEp4Screen = ({ navigation }) => {
       <View style={styles.overlay} />
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.dialogueContainer}>
-          <View style={styles.characterImageContainer}>
-            <Image
-              source={require('../../../assets/characters/Scribeon.png')}
-              style={[styles.characterImage]}
-            />
-          </View>
           <View style={styles.dialogueTextContainer}>
             {renderMainDialogue()}
           </View>
@@ -82,7 +76,7 @@ const styles = StyleSheet.create({
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    backgroundColor: 'rgba(20, 20, 20, 0.5)', // Increased opacity to 50% for a darker overlay
   },
   safeArea: {
     flex: 1,
@@ -139,19 +133,5 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     marginTop: 10,
     alignSelf: 'flex-start',
-  },
-  characterImageContainer: {
-    position: 'absolute',
-    left: -70,
-    bottom: 200,
-    width: 100,
-    height: '100%',
-    justifyContent: 'center',
-    zIndex: 0,
-  },
-  characterImage: {
-    width: 300,
-    height: 300,
-    resizeMode: 'contain',
   },
 });

@@ -44,6 +44,9 @@ const ChapterScreen = ({ navigation }) => {
               <TouchableOpacity onPress={() => navigation.navigate('Chap2Intro', { episode: 3 })}>
                 <Text style={styles.episodeText}>Episode 3</Text>
               </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate('Chap2Intro', { episode: 4 })}>
+                <Text style={styles.episodeText}>Episode 4</Text>
+              </TouchableOpacity>
             </View>
           )}
 

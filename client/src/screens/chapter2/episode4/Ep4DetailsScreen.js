@@ -7,7 +7,6 @@ import {
   ImageBackground,
   TouchableOpacity,
   Animated,
-  Image,
   Platform,
 } from 'react-native';
 
@@ -36,14 +35,14 @@ const Ep4DetailsScreen = ({ navigation }) => {
     const maxSteps = {
       'Option 1': 3,
       'Option 2': 3,
-      'Option 3': 4
+      'Option 3': 4,
     };
 
     if (choiceDialogueStep < maxSteps[selectedChoice] - 1) {
       if (selectedChoice === 'Option 2' && choiceDialogueStep === 0) {
         setCharacterName('Namwaran');
       }
-      setChoiceDialogueStep(prev => prev + 1);
+      setChoiceDialogueStep((prev) => prev + 1);
     } else {
       navigation.navigate('Ep4');
     }
@@ -51,10 +50,10 @@ const Ep4DetailsScreen = ({ navigation }) => {
 
   const handleNextDialogue = () => {
     const lines = [
-      `Now, you will bring them to life. Writing is more than marks on parchment—it is a dance of meaning.`,
-      `Each stroke must flow like the river, steady and purposeful.`,
-      `Writing feels different, doesn't it, Bukah? It's like taking the sounds you've learned and giving them a physical body.`,
-      `But don't rush—it's a journey, not a race.`,
+      `Ngayon, bibigyan mo sila ng buhay. Ang pagsulat ay higit pa sa mga marka sa pergamino—ito ay sayaw ng kahulugan.`,
+      `Bawat stroke ay dapat dumaloy tulad ng ilog, matatag at may layunin.`,
+      `Iba ang pakiramdam ng pagsulat, hindi ba, Bukah? Parang kinukuha mo ang mga tunog na iyong natutuhan at binibigyan sila ng pisikal na katawan.`,
+      `Ngunit huwag kang magmadali—ito ay isang paglalakbay, hindi isang karera.`,
     ];
 
     if (dialogueStep === lines.length - 1) {
@@ -74,26 +73,26 @@ const Ep4DetailsScreen = ({ navigation }) => {
   const renderChoiceDialogue = () => {
     const dialogueLines = {
       'Option 1': [
-        `Perfection is a distraction, Bukah. What matters is your intent and understanding.`,
-        `Even the copperplate, which carries the most important story of our family, has imperfections. Yet its message endured for centuries.`,
-        `Besides, mistakes make learning meaningful. They remind us that mastery is earned through effort.`
+        `Ang perpeksyon ay isang pagkagambala, Bukah. Ang mahalaga ay ang iyong intensyon at pag-unawa.`,
+        `Kahit ang copperplate, na nagdadala ng pinakamahalagang kuwento ng ating pamilya, ay may mga imperpeksyon. Ngunit ang mensahe nito ay nanatili sa loob ng mga siglo.`,
+        `Bukod pa rito, ang mga pagkakamali ay nagbibigay ng kahulugan sa pag-aaral. Ipinapaalala nila sa atin na ang kahusayan ay nakakamit sa pamamagitan ng pagsisikap.`
       ],
       'Option 2': [
-        `Focus on the balance and fluidity of each line. Let your hand flow with purpose, like the river outside.`,
-        `Writing is not about force—it is about connection.`,
-        `And don't forget—breathing helps too! When your mind is calm, your hand will follow.`
+        `Magpokus sa balanse at daloy ng bawat linya. Hayaan mong ang iyong kamay ay dumaloy nang may layunin, tulad ng ilog sa labas.`,
+        `Ang pagsulat ay hindi tungkol sa puwersa—ito ay tungkol sa koneksyon.`,
+        `At huwag mong kalimutan—ang paghinga ay nakakatulong din! Kapag kalmado ang iyong isip, susunod ang iyong kamay.`
       ],
       'Option 3': [
-        `Absolutely. Writing deepens your connection to the script. It transforms knowledge into practice, and practice into preservation.`,
-        `This is how Baybayin will survive.`,
-        `Namwaran's right, Bukah. Writing these symbols makes you part of their story.`,
-        `It's like passing on a torch that has burned for generations.`
-      ]
+        `Tiyak. Ang pagsulat ay nagpapalalim ng iyong koneksyon sa sulat. Binabago nito ang kaalaman sa pagsasanay, at ang pagsasanay sa pagpreserba.`,
+        `Ito ay kung paano mabubuhay ang Baybayin.`,
+        `Tama si Namwaran, Bukah. Ang pagsulat sa mga simbolong ito ay ginagawa kang bahagi ng kanilang kuwento.`,
+         `Ito ay parang pagpasa ng sulo na nagniningas sa loob ng mga henerasyon.`
+      ],
     };
 
     const currentLine = dialogueLines[selectedChoice][choiceDialogueStep];
-    const currentCharacter = 
-      (selectedChoice === 'Option 1' && choiceDialogueStep >= 1) || 
+    const currentCharacter =
+      (selectedChoice === 'Option 1' && choiceDialogueStep >= 1) ||
       (selectedChoice === 'Option 2' && choiceDialogueStep >= 1) ||
       (selectedChoice === 'Option 3' && choiceDialogueStep >= 1)
         ? 'Namwaran'
@@ -115,10 +114,10 @@ const Ep4DetailsScreen = ({ navigation }) => {
 
   const renderMainDialogue = () => {
     const lines = [
-      `Now, you will bring them to life. Writing is more than marks on parchment—it is a dance of meaning.`,
-      `Each stroke must flow like the river, steady and purposeful.`,
-      `Writing feels different, doesn't it, Bukah? It's like taking the sounds you've learned and giving them a physical body.`,
-      `But don't rush—it's a journey, not a race.`,
+      `Ngayon, bibigyan mo sila ng buhay. Ang pagsulat ay higit pa sa mga marka sa pergamino—ito ay sayaw ng kahulugan.`,
+      `Bawat stroke ay dapat dumaloy tulad ng ilog, matatag at may layunin.`,
+      `Iba ang pakiramdam ng pagsulat, hindi ba, Bukah? Parang kinukuha mo ang mga tunog na iyong natutuhan at binibigyan sila ng pisikal na katawan.`,
+      `Ngunit huwag kang magmadali—ito ay isang paglalakbay, hindi isang karera.`,
     ];
 
     return (
@@ -140,13 +139,6 @@ const Ep4DetailsScreen = ({ navigation }) => {
       <View style={styles.overlay} />
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.dialogueContainer}>
-          <View style={styles.characterImageContainer}>
-            <Image
-              source={require('../../../assets/characters/Scribeon.png')}
-              style={[styles.characterImage]}
-            />
-          </View>
-
           <View style={styles.dialogueTextContainer}>
             {selectedChoice ? (
               renderChoiceDialogue()
@@ -156,21 +148,21 @@ const Ep4DetailsScreen = ({ navigation }) => {
                   <Animated.View
                     style={[styles.choiceButton, { backgroundColor: interpolatedBackgroundColor }]}
                   >
-                    <Text style={styles.choiceText}>What if my strokes don't look perfect?</Text>
+                    <Text style={styles.choiceText}>Paano kung hindi perpekto ang hitsura ng aking mga stroke?</Text>
                   </Animated.View>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => handleChoice('Option 2')}>
                   <Animated.View
                     style={[styles.choiceButton, { backgroundColor: interpolatedBackgroundColor }]}
                   >
-                    <Text style={styles.choiceText}>How can I make my strokes feel alive?</Text>
+                    <Text style={styles.choiceText}>Paano ko magagawa na parang buhay ang aking mga stroke?</Text>
                   </Animated.View>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => handleChoice('Option 3')}>
                   <Animated.View
                     style={[styles.choiceButton, { backgroundColor: interpolatedBackgroundColor }]}
                   >
-                    <Text style={styles.choiceText}>Will writing them help me understand Baybayin better?</Text>
+                    <Text style={styles.choiceText}>Makakatulong ba ang pagsulat sa akin na mas maunawaan ang Baybayin?</Text>
                   </Animated.View>
                 </TouchableOpacity>
               </View>
@@ -193,7 +185,7 @@ const styles = StyleSheet.create({
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    backgroundColor: 'rgba(20, 20, 20, 0.5)', // Increased opacity to 50% for a darker overlay
   },
   safeArea: {
     flex: 1,
@@ -267,19 +259,5 @@ const styles = StyleSheet.create({
     color: '#d9d9d9',
     fontSize: 14,
     textAlign: 'center',
-  },
-  characterImageContainer: {
-    position: 'absolute',
-    left: -70,
-    bottom: 200,
-    width: 100,
-    height: '100%',
-    justifyContent: 'center',
-    zIndex: 0,
-  },
-  characterImage: {
-    width: 300,
-    height: 300,
-    resizeMode: 'contain',
   },
 });

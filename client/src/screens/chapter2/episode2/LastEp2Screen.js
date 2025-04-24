@@ -1,8 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ImageBackground, TouchableOpacity, Animated, Image, Platform } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, ImageBackground, TouchableOpacity, Modal, TouchableWithoutFeedback, Animated, ActivityIndicator } from 'react-native';
 
 const LastEp2Screen = ({ navigation }) => {
   const [dialogueStep, setDialogueStep] = useState(0);
+  const [showEpisodeModal, setShowEpisodeModal] = useState(false); // State for the modal
+  const [showLoading, setShowLoading] = useState(false); // State for the loading screen
+  const [showEpisodeIntro, setShowEpisodeIntro] = useState(false); // State for showing Episode 3 intro
   const backgroundColor = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -18,20 +21,25 @@ const LastEp2Screen = ({ navigation }) => {
     `Tunay nga. Ngayon, tandaan, ang mga pangunahing karakter na ito ang gagabay sa atin sa mas kumplikadong pantig. Magpahinga muna kayo, mga anak ko—magsisimula tayong muli bukas.`,
   ];
 
-  // Function to handle dialogue progression
   const handleNextDialogue = () => {
-    if (dialogueStep + 1 < lines.length) {
-      setDialogueStep(prevStep => prevStep + 1);
+    if (dialogueStep === lines.length - 1) {
+      setShowEpisodeModal(true); // Show the modal after the last dialogue
     } else {
-      // Navigate to Ep3Details when we reach the last dialogue
-      navigation.navigate('Ep3Details');
+      setDialogueStep(prev => prev + 1);
     }
   };
 
-  const interpolatedBackgroundColor = backgroundColor.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['#2E242499', '#291711CC'],
-  });
+  const handleGoToEpisode3 = () => {
+    setShowEpisodeModal(false);
+    setShowLoading(true); // Show the loading screen
+
+    // Simulate loading before showing Episode 3 intro
+    setTimeout(() => {
+      setShowLoading(false);
+      setShowEpisodeIntro(true); // Show the Episode 3 intro
+      setTimeout(() => navigation.navigate('Ep3Details'), 5000); // Navigate to Ep3Details after 5 seconds
+    }, 5000); // Loading screen duration
+  };
 
   const renderMainDialogue = () => {
     const currentMainCharacter = dialogueStep < 2 ? 'Namwaran' : 'Scribeon';
@@ -50,22 +58,75 @@ const LastEp2Screen = ({ navigation }) => {
     );
   };
 
+  if (showLoading) {
+    return (
+      <ImageBackground source={require('../../../assets/MainBG.png')} style={styles.background}>
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="black" style={styles.loadingIcon} />
+          <Text style={styles.loadingText}>Loading...</Text>
+        </View>
+      </ImageBackground>
+    );
+  }
+
+  if (showEpisodeIntro) {
+    return (
+      <ImageBackground source={require('../../../assets/MainBG.png')} style={styles.background}>
+        <SafeAreaView style={styles.container}>
+          <View style={styles.textContainer}>
+            <Text style={styles.title}>Episode 3</Text>
+          </View>
+        </SafeAreaView>
+      </ImageBackground>
+    );
+  }
+
   return (
     <ImageBackground source={require('../../../assets/image.png')} style={styles.background}>
       <View style={styles.overlay} />
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.dialogueContainer}>
-          <View style={styles.characterImageContainer}>
-            <Image
-              source={require('../../../assets/characters/Scribeon.png')}
-              style={[styles.characterImage]}
-            />
-          </View>
           <View style={styles.dialogueTextContainer}>
             {renderMainDialogue()}
           </View>
         </View>
       </SafeAreaView>
+
+      {/* Modal for "Go to Episode 3?" */}
+      <Modal
+        visible={showEpisodeModal}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={() => setShowEpisodeModal(false)}
+      >
+        <TouchableWithoutFeedback onPress={() => setShowEpisodeModal(false)}>
+          <View style={styles.modalOverlay}>
+            <TouchableWithoutFeedback>
+              <ImageBackground
+                source={require('../../../assets/lastquest.jpg')} // Replace with the correct background image path
+                style={styles.modalImageBackground}
+                imageStyle={{ width: '100%', height: '100%', resizeMode: 'cover' }}
+              >
+                <View style={styles.innerBorder} />
+                <Text style={styles.modalTitle}>Go to Episode 3?</Text>
+                <View style={styles.modalButtonsVertical}>
+                  <TouchableOpacity
+                    style={styles.keepLearningButton}
+                    onPress={handleGoToEpisode3} // Show loading screen and Episode 3 intro
+                  >
+                    <Text style={styles.keepLearningText}>Yes</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate('Menu')} // Navigate to Main Menu
+                  >
+                    <Text style={styles.quitText}>Main Menu</Text>
+                  </TouchableOpacity>
+                </View>
+              </ImageBackground>
+            </TouchableWithoutFeedback>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
     </ImageBackground>
   );
 };
@@ -79,7 +140,7 @@ const styles = StyleSheet.create({
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    backgroundColor: 'rgba(20, 20, 20, 0.5)', // Increased opacity to 50% for a darker overlay
   },
   safeArea: {
     flex: 1,
@@ -94,12 +155,10 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     width: '90%',
     height: 220,
-    marginBottom: Platform.OS === 'ios' ? 20 : -25,
+    marginBottom: 20,
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.3)',
     alignItems: 'flex-start',
-    position: 'relative',
-    zIndex: 2,
   },
   dialogueTextContainer: {
     paddingLeft: 20,
@@ -111,7 +170,6 @@ const styles = StyleSheet.create({
   dialogueBox: {
     width: '100%',
     alignItems: 'flex-start',
-    zIndex: 1,
   },
   dialogueTextWrapper: {
     width: '100%',
@@ -122,8 +180,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#FFFFFF',
     marginBottom: 10,
-    textAlign: 'left',
-    alignSelf: 'flex-start',
   },
   characterNameContainer: {
     width: '100%',
@@ -135,20 +191,91 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     flexWrap: 'wrap',
     marginTop: 10,
-    alignSelf: 'flex-start',
   },
-  characterImageContainer: {
-    position: 'absolute',
-    left: -70,
-    bottom: 200,
-    width: 100,
-    height: '100%',
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+    justifyContent: 'center', // Center the modal vertically
+    alignItems: 'center', // Center the modal horizontally
+  },
+  modalImageBackground: {
+    width: '90%',
+    height: 220, // Fixed height for the modal
+    borderRadius: 12,
+    overflow: 'hidden', // Ensures the image respects the border radius
+    alignItems: 'center',
     justifyContent: 'center',
-    zIndex: 0,
+    position: 'relative',
   },
-  characterImage: {
-    width: 300,
-    height: 300,
-    resizeMode: 'contain',
+  innerBorder: {
+    position: 'absolute',
+    top: 15,
+    left: 15,
+    right: 15,
+    bottom: 15,
+    borderRadius: 12, // Slightly smaller than the outer border
+    borderWidth: 2,
+    borderColor: '#784C34', // Color for the inner border
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#3D261C',
+    textAlign: 'center',
+  },
+  modalButtonsVertical: {
+    width: '40%',
+    marginTop: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  keepLearningButton: {
+    backgroundColor: '#784C34',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginBottom: 10, // Adds spacing between the buttons
+    width: 260, // Full width button
+    height: 50,
+    justifyContent: 'center',
+    marginTop: 20,
+  },
+  keepLearningText: {
+    color: '#FFF',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  quitText: {
+    color: '#6F1D1B',
+    fontWeight: 'bold',
+    fontSize: 16,
+    textAlign: 'center',
+  },
+  loadingContainer: {
+    position: 'absolute',
+    bottom: 30,
+    left: 30,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  loadingIcon: {
+    marginRight: 12,
+  },
+  loadingText: {
+    fontSize: 20,
+    color: 'black',
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  textContainer: {
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 48,
+    color: '#3D261C',
   },
 });
