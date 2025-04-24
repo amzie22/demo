@@ -43,11 +43,11 @@ const Chapter2DetailsScreen = ({ navigation }) => {
   const handleNextDialogue = () => {
     // Separate lines by character
     const dialogue = [
-      { character: 'Scribeon', text: `Year of Siyaka 822, month of Waisaka.\nThe fourth day of the wailing moon.` },
-      { character: 'Scribeon', text: `This is the world where the first artifact\nrelated to Baybayin was created. The\nLaguna Copperplate 900 CE.` },
-      { character: 'Scribeon', text: `It seems I have transmigrated as\nAngkatan, the daughter of Namwaran.` },
-      { character: 'Namwaran', text: `Ah, Bukah, Angkan, come here! Look\nat this! A scribe from the Commander-\nin-Chief of Tundun and Lord Minister of\nPailah` },
-      { character: 'Namwaran', text: `We have been pardoned of all our\ndebts. This is a joyous day for our\nfamily!` },
+      { character: 'Scribeon', text: `Taon ng Siyaka 822, buwan ng Waisaka.Ika-apat na araw ng buwan ng pagluluksa.` },
+      { character: 'Scribeon', text: `Ito ang mundo kung saan unang nalikha ang artipaktong may kaugnayan sa Baybayin.Ang Laguna Copperplate 900 CE.` },
+      { character: 'Scribeon', text: `Mukhang ako ay naging si Angkatan, ang anak na babae ni Namwaran` },
+      { character: 'Namwaran', text: `Ah, Bukah, Angkatan, halika rito! Tingnan ninyo ito! Isang sulat mula sa Punong-Komandante ng Tundun at Panginoong-Ministro ng Pailah.` },
+      { character: 'Namwaran', text: `Pinatawad na tayo sa lahat ng ating utang. Ito ay isang masayang araw para sa ating pamilya!` },
     ];
 
     if (dialogueStep === dialogue.length) {
@@ -70,17 +70,17 @@ const Chapter2DetailsScreen = ({ navigation }) => {
   const renderChoiceDialogue = () => {
     const dialogueLines = {
       'Option 1': [
-        `"Real? Of course it is! The Library doesn't just show history—it lets us live it."`,
-        `"But listen—we can't change what happened. Our mission is to learn, to remember. If we fail here, Baybayin might fade forever."`,
-        `"What are you two whispering about? Anyways, as I said before, I'm going to start teaching both of you about Baybayin."`,
-        `"To understand this meaningful and important blessing from the Commander and Chief of Tundun and Lord Minister of Pailah."`,
-        `"This is very important not just to us, but also to our future generations. You both need to be ready to learn to read and write Baybayin and to fully understand this inscription."`,
+        `"Totoo? Syempre naman! Ang Aklatan ay hindi lamang nagpapakita ng kasaysayan—pinaparanas nito sa atin ito."`,
+        `"Ngunit makinig ka—hindi natin mababago ang nangyari. Ang ating misyon ay matuto, alalahanin. Kung tayo ay mabigo dito, ang Baybayin ay maaaring mawala magpakailanman."`,
+        `"Ano ang pinag-uusapan ninyong dalawa? Anyway, tulad ng sinabi ko kanina, sisimulan ko nang turuan kayong dalawa tungkol sa Baybayin."`,
+        `"Upang maunawaan ang makabuluhan at mahalagang pagpapala mula sa Punong-Komandante ng Tundun at Panginoong-Ministro ng Pailah."`,
+        `"Ito ay napakahalaga sa atin pati na rin sa ating mga susunod na henerasyon. Kailangan ninyong dalawa maghanda na matutong bumasa at sumulat ng Baybayin."`,
       ],
       'Option 2': [
-        `"We've been transmigrated into this story. You're Bukah now, Namwaran's son. This is your chance to learn Baybayin as they did back then."`,
-        `"What are you two whispering about? Anyways, as I said before, I'm going to start teaching both of you about Baybayin."`,
-        `"To understand this meaningful and important blessing from the Commander and Chief of Tundun and Lord Minister of Pailah."`,
-        `"This is very important not just to us, but also to our future generations. You both need to be ready to learn to read and write Baybayin and to fully understand this inscription."`,
+        `"Nai-transmigrate tayo sa kuwentong ito. Ikaw na ngayon si Bukah, ang anak na lalaki ni Namwaran. Ito ang iyong pagkakataon na matuto ng Baybayin tulad ng kanilang ginawa noon."`,
+        `"Ano ang pinag-uusapan ninyong dalawa? Anyway, tulad ng sinabi ko kanina, sisimulan ko nang turuan kayong dalawa tungkol sa Baybayin."`,
+        `"Upang maunawaan ang makabuluhan at mahalagang pagpapala mula sa Punong-Komandante ng Tundun at Panginoong-Ministro ng Pailah."`,
+        `"Ito ay napakahalaga sa atin pati na rin sa ating mga susunod na henerasyon. Kailangan ninyong dalawa maghanda na matutong bumasa at sumulat ng Baybayin."`,
       ],
     };
 
@@ -105,11 +105,11 @@ const Chapter2DetailsScreen = ({ navigation }) => {
 
   const renderMainDialogue = () => {
     const dialogue = [
-      { character: 'Scribeon', text: `Year of Siyaka 822, month of Waisaka. The fourth day of the wailing moon.` },
-      { character: 'Scribeon', text: `This is the world where the first artifact related to Baybayin was created. The Laguna Copperplate 900 CE.` },
-      { character: 'Scribeon', text: `It seems I have transmigrated as\nAngkatan, the daughter of Namwaran.` },
-      { character: 'Namwaran', text: `Ah, Bukah, Angkatan, come here! Look at this! A scribe from the Commander-in-Chief of Tundun and Lord Minister of Pailah` },
-      { character: 'Namwaran', text: `We have been pardoned of all our\ndebts. This is a joyous day for our family!` },
+      { character: 'Scribeon', text: `Taon ng Siyaka 822, buwan ng Waisaka. Ang ika-apat na araw ng buwan ng pagluluksa.` },
+      { character: 'Scribeon', text: `Ito ang mundo kung saan unang nalikha ang artipaktong may kaugnayan sa Baybayin.Ang Laguna Copperplate 900 CE.` },
+      { character: 'Scribeon', text: `Mukhang ako ay naging si Angkatan, ang anak na babae ni Namwaran` },
+      { character: 'Namwaran', text: `Ah, Bukah, Angkatan, halika rito! Tingnan ninyo ito! Isang sulat mula sa Punong-Komandante ng Tundun at Panginoong-Ministro ng Pailah.` },
+      { character: 'Namwaran', text: `Pinatawad na tayo sa lahat ng ating utang. Ito ay isang masayang araw para sa ating pamilya!` },
     ];
 
     const currentDialogue = dialogue[dialogueStep];
@@ -144,12 +144,12 @@ const Chapter2DetailsScreen = ({ navigation }) => {
                 <View style={styles.choicesContainer}>
                   <TouchableOpacity onPress={() => handleChoice('Option 1')}>
                     <Animated.View style={[styles.choiceButton, { backgroundColor: interpolatedBackgroundColor }]}>
-                      <Text style={styles.choiceText}>This feels too real...Is this the past?</Text>
+                      <Text style={styles.choiceText}>Parang totoo ito...Ito ba ang nakaraan?</Text>
                     </Animated.View>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={() => handleChoice('Option 2')}>
                     <Animated.View style={[styles.choiceButton, { backgroundColor: interpolatedBackgroundColor }]}>
-                      <Text style={styles.choiceText}>Where are we? Who is he?</Text>
+                      <Text style={styles.choiceText}>Nasaan tayo? Sino siya?</Text>
                     </Animated.View>
                   </TouchableOpacity>
                 </View>

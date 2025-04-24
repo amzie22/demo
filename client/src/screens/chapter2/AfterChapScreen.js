@@ -36,7 +36,7 @@ const AfterChapScreen = ({ navigation }) => {
         ) : (
           <View style={styles.contentContainer}>
             <Text style={styles.dialogue}>
-              "Before you read this inscription, you {'\n'} must understand its bones—the three {'\n'}pure sound: 'A', 'E/I', 'O/U'. {'\n'}They are the roots of our script."
+              "Bago mo basahin ang inskripsiyong ito, kailangan mong maunawaan ang mga ugat nito—ang tatlong dalisay na tunog: 'A', 'E/I', 'O/U'. Sila ang mga pinagmulan ng ating sulat."
             </Text>
           </View>
         )}
