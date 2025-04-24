@@ -73,20 +73,20 @@ const Ep3DetailsScreen = ({ navigation }) => {
   const renderChoiceDialogue = () => {
     const dialogueLines = {
       'Option 1': [
-        `Because consonants draw their energy from vowels. Vowels are the lifeblood, the breath of every word. Without them, consonants are lifeless marks.`,
-        `By mastering vowels first, you laid the foundation. Now you are ready to give strength to your words.`,
-        `And 'Ba,' 'Ka,' and 'Ra/Da' are perfect to start with—because they appear in so many words. They're like the pillars of a house, sturdy and essential.`
+       `Dahil ang mga katinig ay kumukuha ng kanilang enerhiya mula sa mga patinig. Ang mga patinig ay ang buhay, ang hininga ng bawat salita. Kung wala ang mga ito, ang mga katinig ay mga walang buhay na marka.`,
+       `Sa pamamagitan ng pag-master sa mga patinig muna, inilatag mo ang pundasyon. Ngayon ay handa ka nang bigyan ng lakas ang iyong mga salita.`,
+       `At ang 'Ba,' 'Ka,' at 'Ra/Da' ay perpekto para simulan—dahil sila ay lumilitaw sa maraming salita. Sila ay parang mga haligi ng bahay, matatag at mahalaga.`
       ],
       'Option 2': [
-        `Ba' flows like the river, steady and unyielding. 'Ka' binds us together, a symbol of kinship and community.`,
-        `'Ra' or 'Da' dances with motion, reflecting the balance of life. When you feel these meanings, your writing will hold power.`,
-        `Think of them as the rhythm of language, Bukah. They’re not just shapes—they’re movement and connection.`,
-        `Writing them is like capturing the river, the bamboo, and the wind in your hand.`
+        `Ang 'Ba' ay dumadaloy tulad ng ilog, matatag at hindi nagpapatalo. Ang 'Ka' ay nagbubuklod sa atin, isang simbolo ng pagkakamag-anak at pamayanan.`,
+        `Ang 'Ra' o 'Da' ay sumasayaw sa galaw, sumasalamin sa balanse ng buhay. Kapag nadama mo ang mga kahulugang ito, ang iyong pagsulat ay magkakaroon ng kapangyarihan.`,
+        `Isipin mo sila bilang ritmo ng wika, Bukah. Hindi lamang sila mga hugis—sila ay galaw at koneksyon.`,
+        `Ang pagsulat sa kanila ay parang pagkuha ng ilog, kawayan, at hangin sa iyong kamay.`
       ],
       'Option 3': [
-        `You’ve already proven your diligence, Bukah. But remember—mastery is not achieved through haste.`,
-        `It is a journey of understanding, patience, and care. Trust the process, and Baybayin will reward your efforts.`,
-        `And don’t forget—you’re not alone in this. Namwaran and I are here to guide you every step of the way.`
+        `Napatunayan mo na ang iyong kasipagan, Bukah. Ngunit tandaan—ang kahusayan ay hindi nakakamit sa pamamagitan ng pagmamadali.`,
+        `Ito ay isang paglalakbay ng pag-unawa, pasensya, at pag-aalaga. Magtiwala sa proseso, at gagantimpalaan ka ng Baybayin sa iyong pagsisikap.`,
+         `At huwag mong kalimutan—hindi ka nag-iisa dito. Nandito kami ni Namwaran para gabayan ka sa bawat hakbang.`
       ],
     };
 
@@ -114,9 +114,9 @@ const Ep3DetailsScreen = ({ navigation }) => {
 
   const renderMainDialogue = () => {
     const lines = [
-      `Yesterday, you both took the first step into understanding Baybayin by learning the vowels: 'A,' 'E/I,' and 'O/U.'`,
-      `These pure sounds form the foundation of our script. Today, we move forward—to the consonants 'Ba,' 'Ka,' and 'Ra/Da.'`,
-      `These will test your ability to carry the strength and rhythm of our language.`,
+      `Kahapon, nagsimula na kayong dalawa sa pag-unawa sa Baybayin sa pamamagitan ng pag-aaral ng mga patinig: 'A,' 'E/I,' at 'O/U.'`,
+      `Ang mga dalisay na tunog na ito ang bumubuo sa pundasyon ng ating sulat. Ngayon, tayo ay magpapatuloy—sa mga katinig na 'Ba,' 'Ka,' at 'Ra/Da.'`,
+      `Ito ay susubok sa inyong kakayahang dalhin ang lakas at ritmo ng ating wika.`,
     ];
 
     return (
@@ -138,13 +138,6 @@ const Ep3DetailsScreen = ({ navigation }) => {
       <View style={styles.overlay} />
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.dialogueContainer}>
-          <View style={styles.characterImageContainer}>
-            <Image
-              source={require('../../../assets/characters/Scribeon.png')}
-              style={[styles.characterImage]}
-            />
-          </View>
-
           <View style={styles.dialogueTextContainer}>
             {selectedChoice ? (
               renderChoiceDialogue()
@@ -154,21 +147,21 @@ const Ep3DetailsScreen = ({ navigation }) => {
                   <Animated.View
                     style={[styles.choiceButton, { backgroundColor: interpolatedBackgroundColor }]}
                   >
-                    <Text style={styles.choiceText}>Why are these consonants taught after the vowels?</Text>
+                    <Text style={styles.choiceText}>Bakit ang mga katinig na ito ay itinuturo pagkatapos ng mga patinig?</Text>
                   </Animated.View>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => handleChoice('Option 2')}>
                   <Animated.View
                     style={[styles.choiceButton, { backgroundColor: interpolatedBackgroundColor }]}
                   >
-                    <Text style={styles.choiceText}>What makes these consonants special?</Text>
+                    <Text style={styles.choiceText}>Ano ang nagpapakilala sa mga katinig na ito?</Text>
                   </Animated.View>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => handleChoice('Option 3')}>
                   <Animated.View
                     style={[styles.choiceButton, { backgroundColor: interpolatedBackgroundColor }]}
                   >
-                    <Text style={styles.choiceText}>Do you think I can master them like the vowels?</Text>
+                    <Text style={styles.choiceText}>Sa tingin mo ba ay kaya kong masterin ang mga ito tulad ng mga patinig?</Text>
                   </Animated.View>
                 </TouchableOpacity>
               </View>
@@ -191,7 +184,7 @@ const styles = StyleSheet.create({
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    backgroundColor: 'rgba(20, 20, 20, 0.5)', // Increased opacity to 50% for a darker overlay
   },
   safeArea: {
     flex: 1,
@@ -250,7 +243,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   choicesContainer: {
-    marginTop: 10,
+    marginTop: -20,
     alignItems: 'center',
     width: '100%',
   },
@@ -265,19 +258,5 @@ const styles = StyleSheet.create({
     color: '#d9d9d9',
     fontSize: 14,
     textAlign: 'center',
-  },
-  characterImageContainer: {
-    position: 'absolute',
-    left: -70,
-    bottom: 200,
-    width: 100,
-    height: '100%',
-    justifyContent: 'center',
-    zIndex: 0,
-  },
-  characterImage: {
-    width: 300,
-    height: 300,
-    resizeMode: 'contain',
   },
 });

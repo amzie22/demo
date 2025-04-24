@@ -14,7 +14,7 @@ import {
 const Ep2DetailsScreen = ({ navigation }) => {
   const [dialogueStep, setDialogueStep] = useState(0);
   const [selectedChoice, setSelectedChoice] = useState(null);
-  const [characterName, setCharacterName] = useState('Scribeon');
+  const [characterName, setCharacterName] = useState('Angkatan'); // Changed from 'Scribeon' to 'Angkatan'
   const [choiceDialogueStep, setChoiceDialogueStep] = useState(0);
   const backgroundColor = useRef(new Animated.Value(0)).current;
 
@@ -29,19 +29,16 @@ const Ep2DetailsScreen = ({ navigation }) => {
   const handleChoice = (choice) => {
     setSelectedChoice(choice);
     setChoiceDialogueStep(0);
-    setCharacterName('Scribeon');
+    setCharacterName('Angkatan'); // Changed from 'Scribeon' to 'Angkatan'
   };
 
   const handleChoiceDialogueNext = () => {
-    // For the first dialogue step, increase the step counter
     if (choiceDialogueStep === 0) {
       if (selectedChoice === 'Option 2') {
         setCharacterName('Namwaran');
       }
       setChoiceDialogueStep(1);
-    } 
-    // For the second dialogue step, navigate to Ep3 (not Ep3Screen)
-    else if (choiceDialogueStep === 1) {
+    } else if (choiceDialogueStep === 1) {
       navigation.navigate('Ep2');
     }
   };
@@ -91,6 +88,8 @@ const Ep2DetailsScreen = ({ navigation }) => {
         ? 'Namwaran'
         : characterName;
 
+    const characterImage = require('../../../assets/characters/namwaran2.png'); // Replace with the correct image path
+
     return (
       <TouchableOpacity onPress={handleChoiceDialogueNext}>
         <View style={styles.dialogueBox}>
@@ -101,6 +100,11 @@ const Ep2DetailsScreen = ({ navigation }) => {
             <Text style={styles.dialogueText}>{currentLine}</Text>
           </View>
         </View>
+        <Image
+          source={characterImage}
+          style={styles.characterImage}
+          resizeMode="contain"
+        />
       </TouchableOpacity>
     );
   };
@@ -114,9 +118,17 @@ const Ep2DetailsScreen = ({ navigation }) => {
     ];
 
     const currentDialogue = lines[dialogueStep];
+    const characterImage = require('../../../assets/characters/namwaran2.png'); // Replace with the correct image path
 
     return (
       <TouchableOpacity onPress={handleNextDialogue}>
+        <View style={styles.characterImageContainer}>
+          <Image
+            source={characterImage}
+            style={styles.characterImage}
+            resizeMode="contain"
+          />
+        </View>
         <View style={styles.dialogueBox}>
           <View style={styles.characterNameContainer}>
             <Text style={styles.characterName}>{currentDialogue.character}:</Text>
@@ -253,5 +265,18 @@ const styles = StyleSheet.create({
     color: '#d9d9d9',
     fontSize: 14,
     textAlign: 'center',
+  },
+  characterImageContainer: {
+    position: 'absolute',
+    bottom: 0, // Adjust to position the image at the bottom
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    zIndex: 0, // Ensure it is behind the dialogue box
+  },
+  characterImage: {
+    width: 200, // Adjust width as needed
+    height: 200, // Adjust height as needed
+    opacity: 0.8, // Optional: Add transparency
   },
 });

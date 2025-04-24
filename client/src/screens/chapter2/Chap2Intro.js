@@ -26,6 +26,10 @@ const Chap2Intro = ({ route, navigation }) => {
                 navigation.navigate('Chapter2Details'); // Navigate to Chapter2Details for Episode 1
             } else if (episode === 2) {
                 navigation.navigate('Ep2Details'); // Navigate to a different screen for Episode 2
+            } else if (episode === 3) {
+                navigation.navigate('Ep3Details'); // Navigate to a different screen for Episode 2
+            } else if (episode === 4) {
+                navigation.navigate('Ep4Details'); // Navigate to a different screen for Episode 2
             }
         }, 15000); // 5 seconds after "Episode X" is displayed
 

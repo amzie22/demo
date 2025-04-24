@@ -3,11 +3,24 @@ import { View, Text, ImageBackground, ActivityIndicator, StyleSheet, TouchableOp
 
 const Ep4Screen = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
+  const [showDialogue, setShowDialogue] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => {
+    // Show loading for 5 seconds
+    const loadingTimer = setTimeout(() => {
       setIsLoading(false);
-    }, 1000); // Simulate loading time
+      setShowDialogue(true);
+    }, 5000);
+
+    // Show dialogue for 10 seconds, then navigate
+    const dialogueTimer = setTimeout(() => {
+      navigation.navigate('LastEp4'); // Replace with your route name if different
+    }, 15000); // 5 seconds (loading) + 10 seconds (dialogue)
+
+    return () => {
+      clearTimeout(loadingTimer);
+      clearTimeout(dialogueTimer);
+    };
   }, []);
 
   const handlePress = () => {
@@ -22,19 +35,16 @@ const Ep4Screen = ({ navigation }) => {
       >
         {isLoading ? (
           <View style={styles.loadingContainer}>
-            <ActivityIndicator size="large" color="black" />
+            <ActivityIndicator size="large" color="black" style={styles.loadingIcon} />
             <Text style={styles.loadingText}>Loading...</Text>
           </View>
-        ) : (
+        ) : showDialogue ? (
           <View style={styles.contentContainer}>
             <Text style={styles.dialogue}>
-              "Take your quill and begin. Trace the characters carefully, then write them freehand. Every stroke you make is an act of remembrance, a promise to carry the story forward."
+              "Kunin mo ang iyong panulat at simulan mo. Sundan mong mabuti ang mga karakter, pagkatapos ay isulat mo sila nang malaya. Bawat stroke na iyong ginagawa ay isang gawa ng paggunita, isang pangako na ipagpapatuloy ang kuwento."
             </Text>
-            <View style={styles.silhouetteContainer}>
-              <View style={styles.silhouette} />
-            </View>
           </View>
-        )}
+        ) : null}
       </ImageBackground>
     </TouchableOpacity>
   );
@@ -48,13 +58,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#e6d2a9',
   },
   loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
+    position: 'absolute',
+    bottom: 30,
+    left: 30,
+    flexDirection: 'row',
     alignItems: 'center',
   },
+  loadingIcon: {
+    marginRight: 12,
+  },
   loadingText: {
-    marginTop: 10,
-    fontSize: 18,
+    fontSize: 20,
     color: 'black',
   },
   contentContainer: {
@@ -69,19 +83,6 @@ const styles = StyleSheet.create({
     color: '#333',
     lineHeight: 25,
     paddingTop: 50,
-  },
-  silhouetteContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 20,
-  },
-  silhouette: {
-    width: 160,
-    height: 320,
-    backgroundColor: 'white',
-    borderTopLeftRadius: 80,
-    borderTopRightRadius: 80,
   },
 });
 

@@ -7,7 +7,9 @@ import {
   ImageBackground,
   TouchableOpacity,
   Animated,
-  Image,
+  Modal,
+  TouchableWithoutFeedback,
+  ActivityIndicator,
   Platform,
 } from 'react-native';
 
@@ -16,6 +18,8 @@ const ClosingScreen = ({ navigation }) => {
   const [selectedChoice, setSelectedChoice] = useState(null);
   const [characterName, setCharacterName] = useState('Scribeon');
   const [choiceDialogueStep, setChoiceDialogueStep] = useState(0);
+  const [showEpisodeModal, setShowEpisodeModal] = useState(false); // Modal state
+  const [showLoading, setShowLoading] = useState(false); // Loading state
   const backgroundColor = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -36,11 +40,13 @@ const ClosingScreen = ({ navigation }) => {
     const maxSteps = {
       'Option 1': 3,
       'Option 2': 3,
-      'Option 3': 3
+      'Option 3': 3,
     };
 
     if (choiceDialogueStep < maxSteps[selectedChoice] - 1) {
-      setChoiceDialogueStep(prev => prev + 1);
+      setChoiceDialogueStep((prev) => prev + 1);
+    } else {
+      setShowEpisodeModal(true); // Show modal after the last choice dialogue
     }
   };
 
@@ -54,8 +60,19 @@ const ClosingScreen = ({ navigation }) => {
     if (dialogueStep < lines.length - 1) {
       setDialogueStep((prev) => prev + 1);
     } else {
-      setDialogueStep(lines.length - 1);
+      setShowEpisodeModal(true); // Show modal after the last main dialogue
     }
+  };
+
+  const handleGoToNextEpisode = () => {
+    setShowEpisodeModal(false);
+    setShowLoading(true); // Show loading screen
+
+    // Simulate loading before navigating to the next screen
+    setTimeout(() => {
+      setShowLoading(false);
+      navigation.navigate('NextEpisode'); // Replace with the actual next screen name
+    }, 5000); // Loading duration
   };
 
   const interpolatedBackgroundColor = backgroundColor.interpolate({
@@ -63,24 +80,23 @@ const ClosingScreen = ({ navigation }) => {
     outputRange: ['#2E242499', '#291711CC'],
   });
 
-
   const renderChoiceDialogue = () => {
     const dialogueLines = {
       'Option 1': [
-        `The copperplate is shifting! We're being called to the next artifact, to our next location!`,
-        `Now, Bukah! Jump with me!`,
-        `Hold on! The next artifact is—`,
+        `Gumagalaw ang copperplate! Tinatawag tayo sa susunod na artifact, sa susunod nating destinasyon!`,
+        `Ngayon, Bukah! Tumalon ka kasama ko!`,
+        `Hawak! Ang susunod na artifact ay—`,
       ],
       'Option 2': [
-        `You won't. Baybayin isn't just ink—it's memory. Trust your hands. They remember even when your mind doubts.`,
-        `Now, Bukah! Jump with me!`,
-        `Hold on! The next artifact is—`,
+        `Hindi mo makakalimutan. Ang Baybayin ay hindi lamang tinta—ito ay alaala. Pagkatiwalaan mo ang iyong mga kamay. Naaalala nila kahit na ang iyong isip ay nag-aalinlangan.`,
+        `Ngayon, Bukah! Tumalon ka kasama ko!`,
+        `Hawak! Ang susunod na artifact ay—`,
       ],
       'Option 3': [
-        `In the Library, time folds like paper. For him, we never left. For us… the next chapter awaits.`,
-        `Now, Bukah! Jump with me!`,
-        `Hold on! The next artifact is—`,
-      ]
+        `Sa Aklatan, ang oras ay nagkukulupot tulad ng papel. Para sa kanya, hindi tayo umalis. Para sa atin… naghihintay ang susunod na kabanata.`,
+        `Ngayon, Bukah! Tumalon ka kasama ko!`,
+        `Hawak! Ang susunod na artifact ay—`,
+      ],
     };
 
     const currentLine = dialogueLines[selectedChoice][choiceDialogueStep];
@@ -102,7 +118,7 @@ const ClosingScreen = ({ navigation }) => {
 
   const renderMainDialogue = () => {
     const lines = [
-      `Bukah—do you see that? The portal is already openin. The Library is pulling us forward through the copperplate!`,
+      `Bukah—nakikita mo ba iyon? Bumubukas na ang portal. Hinihila tayo ng Aklatan pasulong sa pamamagitan ng copperplate!`,
       `Sulat… isulat mo…" ("Write… write it down…`,
       `Ang kwento ay hindi dapat mawala…" ("The story must not be lost…)`,
     ];
@@ -121,51 +137,63 @@ const ClosingScreen = ({ navigation }) => {
     );
   };
 
+  if (showLoading) {
+    return (
+      <ImageBackground source={require('../../../assets/chapter2.png')} style={styles.background}>
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="black" style={styles.loadingIcon} />
+          <Text style={styles.loadingText}>Loading...</Text>
+        </View>
+      </ImageBackground>
+    );
+  }
+
   return (
     <ImageBackground source={require('../../../assets/chapter2.png')} style={styles.background}>
       <View style={styles.overlay} />
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.dialogueContainer}>
-          <View style={styles.characterImageContainer}>
-            <Image
-              source={require('../../../assets/characters/Scribeon.png')}
-              style={[styles.characterImage]}
-            />
-          </View>
-
           <View style={styles.dialogueTextContainer}>
             {selectedChoice ? (
               renderChoiceDialogue()
-            ) : dialogueStep === 2 ? (
-              <View style={styles.choicesContainer}>
-                <TouchableOpacity onPress={() => handleChoice('Option 1')}>
-                  <Animated.View
-                    style={[styles.choiceButton, { backgroundColor: interpolatedBackgroundColor }]}
-                  >
-                    <Text style={styles.choiceText}>What's happening?</Text>
-                  </Animated.View>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => handleChoice('Option 2')}>
-                  <Animated.View
-                    style={[styles.choiceButton, { backgroundColor: interpolatedBackgroundColor }]}
-                  >
-                    <Text style={styles.choiceText}>I'm not ready—what if I forget what I've learned?</Text>
-                  </Animated.View>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => handleChoice('Option 3')}>
-                  <Animated.View
-                    style={[styles.choiceButton, { backgroundColor: interpolatedBackgroundColor }]}
-                  >
-                    <Text style={styles.choiceText}>Wait—what about Namwaran? Will we see him again?</Text>
-                  </Animated.View>
-                </TouchableOpacity>
-              </View>
             ) : (
               renderMainDialogue()
             )}
           </View>
         </View>
       </SafeAreaView>
+
+      {/* Modal for "Go to Next Episode?" */}
+      <Modal
+        visible={showEpisodeModal}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={() => setShowEpisodeModal(false)}
+      >
+        <TouchableWithoutFeedback onPress={() => setShowEpisodeModal(false)}>
+          <View style={styles.modalOverlay}>
+            <TouchableWithoutFeedback>
+              <View style={styles.modalContent}>
+                <Text style={styles.modalTitle}>Proceed to the next episode?</Text>
+                <View style={styles.modalButtons}>
+                  <TouchableOpacity
+                    style={styles.modalButton}
+                    onPress={handleGoToNextEpisode}
+                  >
+                    <Text style={styles.modalButtonText}>Yes</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.modalButton}
+                    onPress={() => setShowEpisodeModal(false)}
+                  >
+                    <Text style={styles.modalButtonText}>No</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
     </ImageBackground>
   );
 };
@@ -179,7 +207,7 @@ const styles = StyleSheet.create({
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    backgroundColor: 'rgba(20, 20, 20, 0.5)', // Increased opacity to 50% for a darker overlay
   },
   safeArea: {
     flex: 1,
@@ -254,18 +282,48 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: 'center',
   },
-  characterImageContainer: {
-    position: 'absolute',
-    left: -70,
-    bottom: 200,
-    width: 100,
-    height: '100%',
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'center',
-    zIndex: 0,
+    alignItems: 'center',
   },
-  characterImage: {
-    width: 300,
-    height: 300,
-    resizeMode: 'contain',
+  modalContent: {
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  modalButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  modalButton: {
+    backgroundColor: '#784C34',
+    padding: 10,
+    borderRadius: 5,
+    marginHorizontal: 10,
+  },
+  modalButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingIcon: {
+    marginBottom: 10,
+  },
+  loadingText: {
+    fontSize: 16,
+    color: '#000',
   },
 });
