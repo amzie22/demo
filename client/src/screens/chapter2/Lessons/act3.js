@@ -298,7 +298,7 @@ const Act3 = ({ navigation }) => {
         setShowWellDone(true);
 
         const timeout = setTimeout(() => {
-          navigation.navigate('Challenges');
+          navigation.navigate('LastEp3');
         }, 10000);
 
         return () => clearTimeout(timeout);

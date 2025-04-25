@@ -96,21 +96,15 @@ const Chapter2DetailsScreen = ({ navigation }) => {
     const currentLine = dialogueLines[selectedChoice][choiceDialogueStep];
     const currentCharacter = currentLine.character; // Use the character from the current dialogue line
 
-    // Debugging logs
-    console.log('Selected Choice:', selectedChoice);
-    console.log('Choice Dialogue Step:', choiceDialogueStep);
-    console.log('Current Character:', currentCharacter);
+    // Update the characterName state to ensure correct character image is shown
+    if (characterName !== currentCharacter) {
+      setCharacterName(currentCharacter);
+    }
 
     return (
       <TouchableOpacity onPress={handleChoiceDialogueNext}>
         <View style={styles.dialogueBox}>
-          {/* Ensure the image is rendered for Angkatan's dialogues */}
-          {currentCharacter === 'Angkatan' && (
-            <Image
-              source={require('../../assets/characters/Ankatan1.png')}
-              style={styles.characterImageBackground}
-            />
-          )}
+          {/* Remove the image from here - it should only be in the main return statement */}
           <View style={styles.characterNameContainer}>
             <Text style={styles.characterName}>{currentCharacter}:</Text>
           </View>
@@ -151,13 +145,24 @@ const Chapter2DetailsScreen = ({ navigation }) => {
     <ImageBackground source={require('../../assets/chapter2.png')} style={styles.background}>
       <View style={styles.overlay} />
       <SafeAreaView style={styles.safeArea}>
-        {/* Conditionally render the character image for the 3rd dialogue */}
-        {dialogueStep === 2 && (
-          <Image
-            source={require('../../assets/characters/Ankatan1.png')}
-            style={styles.characterImageBackground}
-          />
+        {/* Character image - hidden during choice selection (dialogueStep === 5) */}
+        {((dialogueStep >= 2 && dialogueStep !== 5) || selectedChoice) && (
+          <View style={styles.characterImageContainer} pointerEvents="none">
+            <Image
+              source={
+                selectedChoice
+                  ? (characterName === 'Namwaran'
+                      ? require('../../assets/characters/namwaran2.png')
+                      : require('../../assets/characters/Ankatan1.png'))
+                  : (dialogueStep >= 3
+                      ? require('../../assets/characters/namwaran2.png')
+                      : require('../../assets/characters/Ankatan1.png'))
+              }
+              style={styles.characterImage}
+            />
+          </View>
         )}
+        
         <View style={styles.dialogueContainer}>
           <View
             style={[
@@ -197,7 +202,7 @@ const styles = StyleSheet.create({
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(20, 20, 20, 0.5)', // Increased opacity to 50% for a darker overlay
+    backgroundColor: 'rgba(0, 0, 0, 0.17)', // Increased opacity to 50% for a darker overlay
   },
   safeArea: {
     flex: 1,
@@ -206,7 +211,7 @@ const styles = StyleSheet.create({
     paddingBottom: 50,
   },
   dialogueContainer: {
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    backgroundColor: 'rgba(15, 15, 15, 0.51)',
     paddingLeft: 10,
     paddingRight: 10,
     borderRadius: 15,
@@ -277,15 +282,18 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: 'center',
   },
-  characterImageBackground: {
+  characterImageContainer: {
     position: 'absolute',
-    top: 100, // Move the image upwards
-    left: 30,
-    right: 0,
-    width: 500,
-    height: 500, // Adjust height as needed
+    left: 80,
+    bottom: 260,
+    width: 300,
+    height: 300,
+    zIndex: 3,
+    pointerEvents: 'none',
+  },
+  characterImage: {
+    width: 400,
+    height: 400,
     resizeMode: 'contain',
-    opacity: 0.9, // Adjust opacity to make it subtle
-    zIndex: 0, // Lower zIndex to ensure it is behind the dialogue box
   },
 });

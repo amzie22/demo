@@ -104,7 +104,7 @@ const Act4 = ({ navigation }) => {
 
     setShowWellDone(true); // Show the "Well Done" screen
     setTimeout(() => {
-      navigation.navigate('Challenges'); // Automatically navigate to "Challenges" after 10 seconds
+      navigation.navigate('LastEp4'); // Automatically navigate to "Challenges" after 10 seconds
     }, 10000);
   };
 

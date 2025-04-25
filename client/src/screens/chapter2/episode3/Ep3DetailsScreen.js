@@ -14,8 +14,9 @@ import {
 const Ep3DetailsScreen = ({ navigation }) => {
   const [dialogueStep, setDialogueStep] = useState(0);
   const [selectedChoice, setSelectedChoice] = useState(null);
-  const [characterName, setCharacterName] = useState('Scribeon');
+  const [characterName, setCharacterName] = useState('Namwaran'); // Changed from 'Scribeon' to 'Namwaran'
   const [choiceDialogueStep, setChoiceDialogueStep] = useState(0);
+  const [isCharacterVisible, setIsCharacterVisible] = useState(true); // Add this state for character visibility
   const backgroundColor = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -29,7 +30,8 @@ const Ep3DetailsScreen = ({ navigation }) => {
   const handleChoice = (choice) => {
     setSelectedChoice(choice);
     setChoiceDialogueStep(0);
-    setCharacterName('Scribeon');
+    // Set the character name based on the selected choice
+    setCharacterName('Namwaran');
   };
 
   const handleChoiceDialogueNext = () => {
@@ -137,8 +139,23 @@ const Ep3DetailsScreen = ({ navigation }) => {
     <ImageBackground source={require('../../../assets/chapter2.png')} style={styles.background}>
       <View style={styles.overlay} />
       <SafeAreaView style={styles.safeArea}>
+        {/* Character image - show during dialogue but hide during choice selection */}
+        {isCharacterVisible && (dialogueStep !== 3 || selectedChoice) && (
+          <View style={styles.characterImageContainer} pointerEvents="none">
+            <Image
+              source={
+                characterName === 'Namwaran'
+                  ? require('../../../assets/characters/namwaran2.png')
+                  : require('../../../assets/characters/Ankatan1.png')
+              }
+              style={styles.characterImage}
+            />
+          </View>
+        )}
+        
         <View style={styles.dialogueContainer}>
           <View style={styles.dialogueTextContainer}>
+            {/* Rest of your dialogue rendering code remains unchanged */}
             {selectedChoice ? (
               renderChoiceDialogue()
             ) : dialogueStep === 3 ? (
@@ -177,6 +194,7 @@ const Ep3DetailsScreen = ({ navigation }) => {
 
 export default Ep3DetailsScreen;
 
+// Add these styles to your existing StyleSheet
 const styles = StyleSheet.create({
   background: {
     flex: 1,
@@ -184,7 +202,7 @@ const styles = StyleSheet.create({
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(20, 20, 20, 0.5)', // Increased opacity to 50% for a darker overlay
+    backgroundColor: 'rgba(0, 0, 0, 0.17)', // Increased opacity to 50% for a darker overlay
   },
   safeArea: {
     flex: 1,
@@ -193,7 +211,7 @@ const styles = StyleSheet.create({
     paddingBottom: 50,
   },
   dialogueContainer: {
-    backgroundColor: 'rgba(252, 250, 250, 0.11)',
+    backgroundColor: 'rgba(15, 15, 15, 0.51)',
     paddingLeft: 10,
     paddingRight: 10,
     borderRadius: 15,
@@ -258,5 +276,20 @@ const styles = StyleSheet.create({
     color: '#d9d9d9',
     fontSize: 14,
     textAlign: 'center',
+  },
+  // Add these new styles for character images
+  characterImageContainer: {
+    position: 'absolute',
+    left: 80,
+    bottom: 260,
+    width: 300,
+    height: 300,
+    zIndex: 3,
+    pointerEvents: 'none',
+  },
+  characterImage: {
+    width: 400,
+    height: 400,
+    resizeMode: 'contain',
   },
 });

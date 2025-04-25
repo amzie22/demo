@@ -25,7 +25,7 @@ const ChapterScreen = ({ navigation }) => {
         {/* Content */}
         <View style={styles.content}>
           {/* Chapter 1 */}
-          <TouchableOpacity style={styles.chapterBox} onPress={() => navigation.navigate('Chapter1Details')}>
+          <TouchableOpacity style={styles.chapterBox} onPress={() => navigation.navigate('Chap1Intro')}>
             <Text style={styles.chapterText}>Chapter 1</Text>
           </TouchableOpacity>
 

@@ -20,7 +20,8 @@ const MenuScreen = ({ navigation }) => {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [avatarKey, setAvatarKey] = useState('1'); // Default avatar key
   const [userName, setUserName] = useState('User');
-  const [showUnlockPrompt, setShowUnlockPrompt] = useState(false); // State to control the prompt visibility
+  const [showChallengesUnlockPrompt, setShowChallengesUnlockPrompt] = useState(false); // State for Challenges prompt
+  const [showShopUnlockPrompt, setShowShopUnlockPrompt] = useState(false); // State for Shop prompt
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -55,11 +56,6 @@ const MenuScreen = ({ navigation }) => {
   const currentXP = 500;
   const currentLevel = 10;
   const progressPercentage = (currentXP / maxXP) * 100;
-
-  const handleShopPress = () => {
-    setShowUnlockPrompt(true); // Show the "Unlock in Chapter 3" prompt
-    setTimeout(() => setShowUnlockPrompt(false), 2000); // Hide the prompt after 2 seconds
-  };
 
   return (
     isImageLoaded ? (
@@ -102,8 +98,13 @@ const MenuScreen = ({ navigation }) => {
               <Image source={require('../../assets/practice.png')} style={styles.navIcon} />
               <Text style={styles.navText} font>LEARN</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.navItem, { marginRight: 45 }]} onPress={() => navigation.navigate('Challenges')}>
-              <FontAwesome5 name="calendar-alt" size={32} color="white" />
+            <TouchableOpacity style={[styles.navItem, { marginRight: 45 }]} onPress={() => {
+              setShowChallengesUnlockPrompt(true); // Show the "Unlock in Chapter 3" prompt for Challenges
+              setTimeout(() => setShowChallengesUnlockPrompt(false), 2000); // Hide the prompt after 2 seconds
+            }}>
+              <View style={styles.lockContainer}>
+                <Ionicons name="lock-closed" size={32} color="gray" />
+              </View>
               <Text style={styles.navText}>CHALLENGES</Text>
             </TouchableOpacity>
 
@@ -115,11 +116,14 @@ const MenuScreen = ({ navigation }) => {
             </View>
 
             {/* Shop Button */}
-            <TouchableOpacity style={[styles.navItem, { marginLeft: 45}]} onPress={handleShopPress}>
+            <TouchableOpacity style={[styles.navItem, { marginLeft: 45 }]} onPress={() => {
+              setShowShopUnlockPrompt(true); // Show the "Unlock in Chapter 3" prompt for Shop
+              setTimeout(() => setShowShopUnlockPrompt(false), 2000); // Hide the prompt after 2 seconds
+            }}>
               <View style={styles.lockContainer}>
                 <Ionicons name="lock-closed" size={32} color="gray" />
               </View>
-              <Text style={[styles.navText, { marginTop: 0}]}>SHOP</Text>
+              <Text style={[styles.navText, { marginTop: 0 }]}>SHOP</Text>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.navItem, { marginLeft: 20 }]} onPress={() => navigation.navigate('Profile')}>
               <Image source={require('../../assets/profile.png')} style={styles.navIcon} />
@@ -127,10 +131,15 @@ const MenuScreen = ({ navigation }) => {
             </TouchableOpacity>
           </View>
 
-          {/* Unlock Prompt */}
-          {showUnlockPrompt && (
-            <View style={styles.unlockPrompt}>
-              <Text style={styles.unlockPromptText}>Unlock in Chapter 3</Text>
+          {/* Unlock Prompts */}
+          {showChallengesUnlockPrompt && (
+            <View style={[styles.unlockPrompt, { left: '12%' }]}>
+              <Text style={styles.unlockPromptText}>Unlocks in Chapter 3</Text>
+            </View>
+          )}
+          {showShopUnlockPrompt && (
+            <View style={[styles.unlockPrompt, { right: '12%' }]}>
+              <Text style={styles.unlockPromptText}>Unlocks in Chapter 3</Text>
             </View>
           )}
 
@@ -302,7 +311,7 @@ const styles = StyleSheet.create({
   },
   unlockPrompt: {
     position: 'absolute',
-    bottom: '15%',
+    bottom: '16%',
     alignSelf: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.8)',
     padding: 10,
@@ -310,7 +319,7 @@ const styles = StyleSheet.create({
   },
   unlockPromptText: {
     color: 'white',
-    fontSize: 14,
+    fontSize: 12,
     fontFamily: 'Cardo',
   },
 });

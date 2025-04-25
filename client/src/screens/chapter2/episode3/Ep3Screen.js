@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ImageBackground, ActivityIndicator, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, ImageBackground, ActivityIndicator, StyleSheet, TouchableOpacity, Image } from 'react-native';
 
 const Ep3Screen = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -14,7 +14,7 @@ const Ep3Screen = ({ navigation }) => {
 
     // Show dialogue for 10 seconds, then navigate
     const dialogueTimer = setTimeout(() => {
-      navigation.navigate('LastEp3'); // Replace with your route name if different
+      navigation.navigate('Lesson3'); // Replace with your route name if different
     }, 15000); // 5 seconds (loading) + 10 seconds (dialogue)
 
     return () => {
@@ -24,7 +24,7 @@ const Ep3Screen = ({ navigation }) => {
   }, []);
 
   const handlePress = () => {
-    navigation.navigate('LastEp3'); // Replace with your route name if different
+    navigation.navigate('Lesson3'); // Replace with your route name if different
   };
 
   return (
@@ -35,7 +35,7 @@ const Ep3Screen = ({ navigation }) => {
       >
         {isLoading ? (
           <View style={styles.loadingContainer}>
-            <ActivityIndicator size="large" color="black" style={styles.loadingIcon} />
+            <ActivityIndicator size="large" color="black" />
             <Text style={styles.loadingText}>Loading...</Text>
           </View>
         ) : showDialogue ? (
@@ -43,6 +43,10 @@ const Ep3Screen = ({ navigation }) => {
             <Text style={styles.dialogue}>
               "Ang iyong susunod na gawain ay ipares ang mga tunog na ito sa kanilang mga simbolo. Ang pagsasanay na ito ay makakatulong sa iyo na maalala at igalang ang diwa ng mga katinig na ito."
             </Text>
+            <Image 
+              source={require('../../../assets/characters/namwaran1.png')} 
+              style={styles.characterImage} 
+            />
           </View>
         ) : null}
       </ImageBackground>
@@ -75,15 +79,20 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     paddingHorizontal: 24,
-    paddingTop: 150,
+    paddingTop: 120,
   },
   dialogue: {
-    fontSize: 16,
+    fontSize: 18,
     fontStyle: 'italic',
     textAlign: 'center',
     color: '#333',
-    lineHeight: 25,
-    paddingTop: 50,
+  },
+  characterImage: {
+    width: 350,
+    height: 350,
+    alignSelf: 'center',
+    marginTop: 30,
+    opacity: 1,
   },
 });
 

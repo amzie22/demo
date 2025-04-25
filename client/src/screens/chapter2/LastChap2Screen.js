@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ImageBackground, TouchableOpacity, Modal, TouchableWithoutFeedback, Platform, Animated, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, ImageBackground, TouchableOpacity, Modal, TouchableWithoutFeedback, Platform, Animated, ActivityIndicator, Image } from 'react-native';
 
 const LastChap2Screen = ({ navigation }) => {
   const [dialogueStep, setDialogueStep] = useState(0);
@@ -8,6 +8,7 @@ const LastChap2Screen = ({ navigation }) => {
   const [showEpisodeIntro, setShowEpisodeIntro] = useState(false); // State for showing Episode 2 intro
   const [showDefaultFont, setShowDefaultFont] = useState(true);
   const [showEpisodeText, setShowEpisodeText] = useState(false);
+  const [isCharacterVisible, setIsCharacterVisible] = useState(true);
   const backgroundColor = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -50,9 +51,6 @@ const LastChap2Screen = ({ navigation }) => {
 
   const renderMainDialogue = () => {
     const currentMainCharacter = dialogueStep < 2 ? 'Namwaran' : 'Angkatan'; // Determine the current character
-    const characterImage = dialogueStep < 2 
-        ? require('../../assets/characters/namwaran2.png') // Image for Namwaran
-        : require('../../assets/characters/Ankatan1.png'); // Image for Angkatan
 
     return (
       <TouchableOpacity onPress={handleNextDialogue}>
@@ -63,11 +61,6 @@ const LastChap2Screen = ({ navigation }) => {
           <View style={styles.dialogueTextWrapper}>
             <Text style={styles.dialogueText}>{lines[dialogueStep]}</Text>
           </View>
-          <ImageBackground 
-            source={characterImage} 
-            style={styles.characterImageBackground} // Use the same style as in Chapter2DetailsScreen
-            imageStyle={{ resizeMode: 'contain' }} 
-          />
         </View>
       </TouchableOpacity>
     );
@@ -104,6 +97,19 @@ const LastChap2Screen = ({ navigation }) => {
     <ImageBackground source={require('../../assets/image.png')} style={styles.background}>
       <View style={styles.overlay} />
       <SafeAreaView style={styles.safeArea}>
+        {/* Add character image outside the dialogue box */}
+        {isCharacterVisible && (
+          <View style={styles.characterImageContainer} pointerEvents="none">
+            <Image
+              source={dialogueStep < 2 
+                ? require('../../assets/characters/namwaran2.png')
+                : require('../../assets/characters/Ankatan1.png')
+              }
+              style={styles.characterImage}
+            />
+          </View>
+        )}
+        
         <View style={styles.dialogueContainer}>
           <View style={styles.dialogueTextContainer}>
             {renderMainDialogue()}
@@ -159,7 +165,7 @@ const styles = StyleSheet.create({
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(20, 20, 20, 0.5)', // Increased opacity to 50% for a darker overlay
+    backgroundColor: 'rgba(0, 0, 0, 0.17)', // Increased opacity to 50% for a darker overlay
   },
   safeArea: {
     flex: 1,
@@ -168,7 +174,7 @@ const styles = StyleSheet.create({
     paddingBottom: 50,
   },
   dialogueContainer: {
-    backgroundColor: 'rgba(252, 250, 250, 0.11)',
+    backgroundColor: 'rgba(15, 15, 15, 0.51)',
     paddingLeft: 10,
     paddingRight: 10,
     borderRadius: 15,
@@ -310,15 +316,18 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: 'black',
   },
-  characterImageBackground: {
+  characterImageContainer: {
     position: 'absolute',
-    top: -370, // Adjust as needed
-    left: -10,
-    right: 0,
-    width: 500,
-    height: 500, // Adjust height as needed
+    left: 80,
+    bottom: 260,
+    width: 300,
+    height: 300,
+    zIndex: 3,
+    pointerEvents: 'none',
+  },
+  characterImage: {
+    width: 400,
+    height: 400,
     resizeMode: 'contain',
-    opacity: 0.9, // Adjust opacity to make it subtle
-    zIndex: 0, // Lower zIndex to ensure it is behind the dialogue box
   },
 });

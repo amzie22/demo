@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ImageBackground, ActivityIndicator, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, ImageBackground, ActivityIndicator, StyleSheet, TouchableOpacity, Image } from 'react-native';
 
 const Ep4Screen = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -14,7 +14,7 @@ const Ep4Screen = ({ navigation }) => {
 
     // Show dialogue for 10 seconds, then navigate
     const dialogueTimer = setTimeout(() => {
-      navigation.navigate('LastEp4'); // Replace with your route name if different
+      navigation.navigate('Lesson4'); // Replace with your route name if different
     }, 15000); // 5 seconds (loading) + 10 seconds (dialogue)
 
     return () => {
@@ -24,7 +24,7 @@ const Ep4Screen = ({ navigation }) => {
   }, []);
 
   const handlePress = () => {
-    navigation.navigate('LastEp4'); // Replace with your route name if different
+    navigation.navigate('Lesson4'); // Replace with your route name if different
   };
 
   return (
@@ -35,7 +35,7 @@ const Ep4Screen = ({ navigation }) => {
       >
         {isLoading ? (
           <View style={styles.loadingContainer}>
-            <ActivityIndicator size="large" color="black" style={styles.loadingIcon} />
+            <ActivityIndicator size="large" color="black" />
             <Text style={styles.loadingText}>Loading...</Text>
           </View>
         ) : showDialogue ? (
@@ -43,6 +43,10 @@ const Ep4Screen = ({ navigation }) => {
             <Text style={styles.dialogue}>
               "Kunin mo ang iyong panulat at simulan mo. Sundan mong mabuti ang mga karakter, pagkatapos ay isulat mo sila nang malaya. Bawat stroke na iyong ginagawa ay isang gawa ng paggunita, isang pangako na ipagpapatuloy ang kuwento."
             </Text>
+            <Image 
+              source={require('../../../assets/characters/namwaran1.png')} 
+              style={styles.characterImage} 
+            />
           </View>
         ) : null}
       </ImageBackground>
@@ -70,19 +74,25 @@ const styles = StyleSheet.create({
   loadingText: {
     fontSize: 20,
     color: 'black',
+    marginLeft: 12,
   },
   contentContainer: {
     flex: 1,
     paddingHorizontal: 24,
-    paddingTop: 150,
+    paddingTop: 120,
   },
   dialogue: {
-    fontSize: 16,
+    fontSize: 18,
     fontStyle: 'italic',
     textAlign: 'center',
     color: '#333',
-    lineHeight: 25,
-    paddingTop: 50,
+  },
+  characterImage: {
+    width: 350,
+    height: 350,
+    alignSelf: 'center',
+    marginTop: 30,
+    opacity: 1,
   },
 });
 

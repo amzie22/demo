@@ -131,10 +131,12 @@ const Chapter1DetailsScreen = ({ navigation }) => {
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.dialogueContainer}>
           <View style={styles.characterImageContainer}>
-            <Image
-              source={require('../../assets/characters/Scribeon.png')}
-              style={[styles.characterImage, { filter: `brightness(${getCharacterImageBrightness()})` }]}
-            />
+            {dialogueStep > 0 && dialogueStep !== 3 && ( // Exclude step 3 (user choice)
+              <Image
+                source={require('../../assets/characters/Scribeon.png')}
+                style={[styles.characterImage]}
+              />
+            )}
           </View>
           {renderChoices()}
           {renderDialogue()}
@@ -151,7 +153,7 @@ const styles = StyleSheet.create({
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.3)', // Dark overlay with 30% opacity
+    backgroundColor: 'rgba(0, 0, 0, 0.17)', // Dark overlay with 30% opacity
   },
   safeArea: {
     flex: 1,
@@ -160,7 +162,7 @@ const styles = StyleSheet.create({
     paddingBottom: 50,
   },
   dialogueContainer: {
-    backgroundColor: 'rgba(252, 250, 250, 0.11)', // More transparent background
+    backgroundColor: 'rgba(15, 15, 15, 0.51)', // More transparent background
     paddingLeft: 10,
     paddingRight: 10,
     borderRadius: 15,
@@ -172,7 +174,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(255, 255, 255, 0.3)', // Optional: Add a border for better visibility
     alignItems: 'flex-start', // Ensure container aligns items to the left
     position: 'relative', // Add relative positioning
-    zIndex: 2, // Ensure dialogue box is above the character image
+    zIndex: 0, // Ensure dialogue box is above the character image
   },
   dialogueTextContainer: {
     paddingLeft: 20,
@@ -211,9 +213,9 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start', // Ensure character container aligns items to the left
   },
   choicesContainer: {
-    marginTop: 70, 
     alignItems: 'center', 
     width: '100%',
+    marginTop: 50,
   },
   choiceButton: {
     padding: 8,
@@ -228,24 +230,23 @@ const styles = StyleSheet.create({
     textAlign: 'center', 
   },
   characterImage: {
-    width: 300, // Ensure the image takes full width of the container
-    height: 300, // Ensure the image takes full height of the container
+    width: 300,
+    height: 300,
     resizeMode: 'contain',
-    filter: 'brightness(1.5)', // Adjusted brightness
   },
   characterImageContainer: {
-    position: 'absolute', // Position the image absolutely
-    left: -70, // Align to the left
-    bottom: 200, // Align to the top
-    width: 100, // Adjust width as needed
-    height: '100%', // Take full height of the container
-    justifyContent: 'center', // Center the image vertically
-    zIndex: 0, // Ensure character image is below the dialogue box but above the background
+    position: 'absolute',
+    right: 140,
+    bottom: 200,
+    width: 100,
+    height: '100%',
+    justifyContent: 'center',
+    zIndex: 0,
+    backgroundColor: 'transparent', // Ensure transparency
   },
   dialogueBox: {
     width: '100%',
     alignItems: 'flex-start',
   },
 });
-
 export default Chapter1DetailsScreen;
