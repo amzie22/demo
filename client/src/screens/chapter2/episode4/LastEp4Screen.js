@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ImageBackground, TouchableOpacity, Animated, Platform } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, ImageBackground, TouchableOpacity, Animated, Platform, Image } from 'react-native';
 
 const LastEp4Screen = ({ navigation }) => {
   const [dialogueStep, setDialogueStep] = useState(0);
+  const [isCharacterVisible, setIsCharacterVisible] = useState(true); // Add character visibility state
   const backgroundColor = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -13,20 +14,13 @@ const LastEp4Screen = ({ navigation }) => {
     }).start();
   }, []);
 
-  const lines = [
-    `Magaling ang iyong ginawa, mga anak ko. Ang mga pantig ay buhay sa inyong mga kamay. Sa bawat marka, pinararangalan ninyo ang ating mga ninuno at pinoprotektahan ang kanilang pamana.`,
-    `Tingnan mo ang iyong nagawa, Bukah—ang ganda! Ang koneksyon na iyong nabuo sa Baybayin ay lumalakas araw-araw.`,
-    `Ngunit malayo pa ang ating misyon.`,
-    `Tandaan, ang Baybayin ay hindi lamang para sa ngayon—ito ay para sa bukas. Dalhin mo ito palagi, at gagabayan ka nito sa mga panahon ng kawalan ng katiyakan.`,
-    `Ngayon, maghintay ka rito. Kailangan kong sabihin sa iba ang balitang ito, ang balitang ang aking mga anak ay natututo ng baybayin.`,
-  ];
-
-  // Function to handle dialogue progression
+  // Function to hclandle dialogue progression
   const handleNextDialogue = () => {
     if (dialogueStep + 1 < lines.length) {
       setDialogueStep(prevStep => prevStep + 1);
     } else {
       // Navigate to Closing when we reach the last dialogue
+      setIsCharacterVisible(false); // Hide character before navigating
       navigation.navigate('Closing');
     }
   };
@@ -37,7 +31,8 @@ const LastEp4Screen = ({ navigation }) => {
   });
 
   const renderMainDialogue = () => {
-    const currentMainCharacter = dialogueStep < 2 ? 'Namwaran' : 'Scribeon';
+    // Change Scribeon to Angkatan for consistency with other screens
+    const currentMainCharacter = dialogueStep < 2 ? 'Namwaran' : 'Angkatan';
 
     return (
       <TouchableOpacity onPress={handleNextDialogue}>
@@ -57,6 +52,19 @@ const LastEp4Screen = ({ navigation }) => {
     <ImageBackground source={require('../../../assets/image.png')} style={styles.background}>
       <View style={styles.overlay} />
       <SafeAreaView style={styles.safeArea}>
+        {/* Add character image */}
+        {isCharacterVisible && (
+          <View style={styles.characterImageContainer} pointerEvents="none">
+            <Image
+              source={dialogueStep < 2 
+                ? require('../../../assets/characters/namwaran2.png')
+                : require('../../../assets/characters/Ankatan1.png')
+              }
+              style={styles.characterImage}
+            />
+          </View>
+        )}
+        
         <View style={styles.dialogueContainer}>
           <View style={styles.dialogueTextContainer}>
             {renderMainDialogue()}
@@ -76,7 +84,7 @@ const styles = StyleSheet.create({
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(20, 20, 20, 0.5)', // Increased opacity to 50% for a darker overlay
+    backgroundColor: 'rgba(0, 0, 0, 0.17)', // Increased opacity to 50% for a darker overlay
   },
   safeArea: {
     flex: 1,
@@ -85,7 +93,7 @@ const styles = StyleSheet.create({
     paddingBottom: 50,
   },
   dialogueContainer: {
-    backgroundColor: 'rgba(252, 250, 250, 0.11)',
+    backgroundColor: 'rgba(15, 15, 15, 0.51)',
     paddingLeft: 10,
     paddingRight: 10,
     borderRadius: 15,
@@ -133,5 +141,20 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     marginTop: 10,
     alignSelf: 'flex-start',
+  },
+  // Add these styles for the character image
+  characterImageContainer: {
+    position: 'absolute',
+    left: 80,
+    bottom: 260,
+    width: 300,
+    height: 300,
+    zIndex: 3,
+    pointerEvents: 'none',
+  },
+  characterImage: {
+    width: 400,
+    height: 400,
+    resizeMode: 'contain',
   },
 });

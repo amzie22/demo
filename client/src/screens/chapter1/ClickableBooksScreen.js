@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, ImageBackground, TouchableOpacity, StyleSheet, Text } from 'react-native';
+import { View, ImageBackground, TouchableOpacity, StyleSheet, ScrollView, Dimensions } from 'react-native';
+
+const { width, height } = Dimensions.get('window'); // Get screen dimensions
 
 const ClickableBooksScreen = ({ navigation }) => {
   const handleBookPress = (bookNumber) => {
@@ -13,67 +15,91 @@ const ClickableBooksScreen = ({ navigation }) => {
   };
 
   return (
-    <ImageBackground 
-      source={require('../../assets/clickablebooks.png')} 
-      style={styles.background}
+    <ScrollView
+      style={styles.scrollView}
+      contentContainerStyle={styles.scrollViewContent}
+      maximumZoomScale={1.5} // Allow zooming in up to 3x
+      minimumZoomScale={1.7} // Prevent zooming out beyond the image
+      showsVerticalScrollIndicator={false}
+      showsHorizontalScrollIndicator={false}
+      bounces={false} // Prevent bouncing when zooming out
     >
-      <View style={styles.container}>
-        <View style={styles.libraryContainer}>
-          {/* You can add static library shelves here if needed */}
-        </View>
-        
-        <TouchableOpacity 
-          style={[styles.book, styles.book1]} 
-          onPress={() => handleBookPress(1)}
+      <View style={styles.imageContainer}>
+        <ImageBackground 
+          source={require('../../assets/clickablebooks.png')} 
+          style={styles.background}
         >
-          <View style={styles.bookGlow} />
-        </TouchableOpacity>
-        
-        <TouchableOpacity 
-          style={[styles.book, styles.book2]} 
-          onPress={() => handleBookPress(2)}
-        >
-          <View style={styles.bookGlow} />
-        </TouchableOpacity>
-        
-        <TouchableOpacity 
-          style={[styles.book, styles.book3]} 
-          onPress={() => handleBookPress(3)}
-        >
-          <View style={styles.bookGlow} />
-        </TouchableOpacity>
-        
-        <TouchableOpacity 
-          style={[styles.book, styles.book4]} 
-          onPress={() => handleBookPress(4)}
-        >
-          <View style={styles.bookGlow} />
-        </TouchableOpacity>
-        
-        <TouchableOpacity 
-          style={[styles.book, styles.book5]} 
-          onPress={() => handleBookPress(5)}
-        >
-          <View style={styles.bookGlow} />
-        </TouchableOpacity>
-      </View>
+          <View style={styles.container}>
+            <View style={styles.libraryContainer}>
+              {/* You can add static library shelves here if needed */}
+            </View>
+            
+            <TouchableOpacity 
+              style={[styles.book, styles.book1]} 
+              onPress={() => handleBookPress(1)}
+            >
+              <View style={styles.bookGlow} />
+            </TouchableOpacity>
+            
+            <TouchableOpacity 
+              style={[styles.book, styles.book2]} 
+              onPress={() => handleBookPress(2)}
+            >
+              <View style={styles.bookGlow} />
+            </TouchableOpacity>
+            
+            <TouchableOpacity 
+              style={[styles.book, styles.book3]} 
+              onPress={() => handleBookPress(3)}
+            >
+              <View style={styles.bookGlow} />
+            </TouchableOpacity>
+            
+            <TouchableOpacity 
+              style={[styles.book, styles.book4]} 
+              onPress={() => handleBookPress(4)}
+            >
+              <View style={styles.bookGlow} />
+            </TouchableOpacity>
+            
+            <TouchableOpacity 
+              style={[styles.book, styles.book5]} 
+              onPress={() => handleBookPress(5)}
+            >
+              <View style={styles.bookGlow} />
+            </TouchableOpacity>
+          </View>
 
-      <View style={styles.book6Container}>
-          <TouchableOpacity 
-            style={[styles.book, styles.book6]} 
-            onPress={() => handleBookPress(6)}
-          >
-            <View style={styles.book6Glow} />
-          </TouchableOpacity>
-        </View>
-      
-    </ImageBackground>
+          <View style={styles.book6Container}>
+            <TouchableOpacity 
+              style={[styles.book, styles.book6]} 
+              onPress={() => handleBookPress(6)}
+            >
+              <View style={styles.book6Glow} />
+            </TouchableOpacity>
+          </View>
+        </ImageBackground>
+      </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  background: {
+  scrollView: {
     flex: 1,
+  },
+  scrollViewContent: {
+    width, // Match the screen width
+    height, // Match the screen height
+  },
+  imageContainer: {
+    width, // Match the screen width
+    height, // Match the screen height
+    overflow: 'hidden', // Prevent white space from showing
+  },
+  background: {
+    width, // Match the screen width
+    height, // Match the screen height
     resizeMode: 'cover',
   },
   container: {
@@ -160,19 +186,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 10,
     elevation: 0,
-  },
-  instructionText: {
-    position: 'absolute',
-    bottom: 40,
-    alignSelf: 'center',
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: '500',
-    textAlign: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 15,
   },
 });
 

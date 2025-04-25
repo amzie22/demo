@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ImageBackground, TouchableOpacity, Modal, TouchableWithoutFeedback, Animated, ActivityIndicator, Platform } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, ImageBackground, TouchableOpacity, Modal, TouchableWithoutFeedback, Animated, ActivityIndicator, Platform, Image } from 'react-native';
 
 const LastEp3Screen = ({ navigation }) => {
   const [dialogueStep, setDialogueStep] = useState(0);
   const [showEpisodeModal, setShowEpisodeModal] = useState(false); // State for the modal
   const [showLoading, setShowLoading] = useState(false); // State for the loading screen
   const [showEpisodeIntro, setShowEpisodeIntro] = useState(false); // State for showing Episode 4 intro
+  const [isCharacterVisible, setIsCharacterVisible] = useState(true); // Add this state for character visibility
   const backgroundColor = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -27,6 +28,7 @@ const LastEp3Screen = ({ navigation }) => {
   const handleNextDialogue = () => {
     if (dialogueStep === lines.length - 1) {
       setShowEpisodeModal(true); // Show the modal after the last dialogue
+      setIsCharacterVisible(false); // Hide character when showing modal
     } else {
       setDialogueStep(prev => prev + 1);
     }
@@ -45,7 +47,7 @@ const LastEp3Screen = ({ navigation }) => {
   };
 
   const renderMainDialogue = () => {
-    const currentMainCharacter = dialogueStep < 2 ? 'Namwaran' : 'Scribeon';
+    const currentMainCharacter = dialogueStep < 2 ? 'Namwaran' : 'Angkatan'; // Change Scribeon to Angkatan for consistency
 
     return (
       <TouchableOpacity onPress={handleNextDialogue}>
@@ -88,6 +90,19 @@ const LastEp3Screen = ({ navigation }) => {
     <ImageBackground source={require('../../../assets/image.png')} style={styles.background}>
       <View style={styles.overlay} />
       <SafeAreaView style={styles.safeArea}>
+        {/* Add character image */}
+        {isCharacterVisible && (
+          <View style={styles.characterImageContainer} pointerEvents="none">
+            <Image
+              source={dialogueStep < 2 
+                ? require('../../../assets/characters/namwaran2.png')
+                : require('../../../assets/characters/Ankatan1.png')
+              }
+              style={styles.characterImage}
+            />
+          </View>
+        )}
+        
         <View style={styles.dialogueContainer}>
           <View style={styles.dialogueTextContainer}>
             {renderMainDialogue()}
@@ -143,7 +158,7 @@ const styles = StyleSheet.create({
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(20, 20, 20, 0.5)', // Increased opacity to 50% for a darker overlay
+    backgroundColor: 'rgba(0, 0, 0, 0.17)', // Increased opacity to 50% for a darker overlay
   },
   safeArea: {
     flex: 1,
@@ -152,7 +167,7 @@ const styles = StyleSheet.create({
     paddingBottom: 50,
   },
   dialogueContainer: {
-    backgroundColor: 'rgba(252, 250, 250, 0.11)',
+    backgroundColor: 'rgba(15, 15, 15, 0.51)',
     paddingLeft: 10,
     paddingRight: 10,
     borderRadius: 15,
@@ -286,5 +301,19 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 48,
     color: '#3D261C',
+  },
+  characterImageContainer: {
+    position: 'absolute',
+    left: 80,
+    bottom: 260,
+    width: 300,
+    height: 300,
+    zIndex: 3,
+    pointerEvents: 'none',
+  },
+  characterImage: {
+    width: 400,
+    height: 400,
+    resizeMode: 'contain',
   },
 });

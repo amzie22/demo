@@ -8,13 +8,15 @@ import {
   TouchableOpacity,
   Animated,
   Platform,
+  Image, // Add Image import
 } from 'react-native';
 
 const Ep4DetailsScreen = ({ navigation }) => {
   const [dialogueStep, setDialogueStep] = useState(0);
   const [selectedChoice, setSelectedChoice] = useState(null);
-  const [characterName, setCharacterName] = useState('Scribeon');
+  const [characterName, setCharacterName] = useState('Angkatan');
   const [choiceDialogueStep, setChoiceDialogueStep] = useState(0);
+  const [isCharacterVisible, setIsCharacterVisible] = useState(true); // Add character visibility state
   const backgroundColor = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -28,7 +30,7 @@ const Ep4DetailsScreen = ({ navigation }) => {
   const handleChoice = (choice) => {
     setSelectedChoice(choice);
     setChoiceDialogueStep(0);
-    setCharacterName('Scribeon');
+    setCharacterName('Angkatan');
   };
 
   const handleChoiceDialogueNext = () => {
@@ -39,9 +41,12 @@ const Ep4DetailsScreen = ({ navigation }) => {
     };
 
     if (choiceDialogueStep < maxSteps[selectedChoice] - 1) {
-      if (selectedChoice === 'Option 2' && choiceDialogueStep === 0) {
+      // Update characterName based on the next step
+      if (choiceDialogueStep === 0) {
+        // After first dialogue, all options switch to Namwaran
         setCharacterName('Namwaran');
       }
+      
       setChoiceDialogueStep((prev) => prev + 1);
     } else {
       navigation.navigate('Ep4');
@@ -138,6 +143,20 @@ const Ep4DetailsScreen = ({ navigation }) => {
     <ImageBackground source={require('../../../assets/chapter2.png')} style={styles.background}>
       <View style={styles.overlay} />
       <SafeAreaView style={styles.safeArea}>
+        {/* Render character image using consistent approach */}
+        {isCharacterVisible && (dialogueStep !== 3 || selectedChoice) && (
+          <View style={styles.characterImageContainer} pointerEvents="none">
+            <Image
+              source={
+                characterName === 'Namwaran'
+                  ? require('../../../assets/characters/namwaran2.png')
+                  : require('../../../assets/characters/Ankatan1.png')
+              }
+              style={styles.characterImage}
+            />
+          </View>
+        )}
+        
         <View style={styles.dialogueContainer}>
           <View style={styles.dialogueTextContainer}>
             {selectedChoice ? (
@@ -185,7 +204,7 @@ const styles = StyleSheet.create({
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(20, 20, 20, 0.5)', // Increased opacity to 50% for a darker overlay
+    backgroundColor: 'rgba(0, 0, 0, 0.17)', // Increased opacity to 50% for a darker overlay
   },
   safeArea: {
     flex: 1,
@@ -194,7 +213,7 @@ const styles = StyleSheet.create({
     paddingBottom: 50,
   },
   dialogueContainer: {
-    backgroundColor: 'rgba(252, 250, 250, 0.11)',
+    backgroundColor: 'rgba(15, 15, 15, 0.51)',
     paddingLeft: 10,
     paddingRight: 10,
     borderRadius: 15,
@@ -205,7 +224,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(255, 255, 255, 0.3)',
     alignItems: 'flex-start',
     position: 'relative',
-    zIndex: 2,
+    zIndex: 3, // Ensure the dialogue box is above the character image
   },
   dialogueTextContainer: {
     paddingLeft: 20,
@@ -213,6 +232,7 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'flex-start',
     paddingTop: 40,
+    zIndex: 1, // Ensure the text is above the background
   },
   dialogueBox: {
     width: '100%',
@@ -244,7 +264,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   choicesContainer: {
-    marginTop: 10,
+    marginTop: -20,
     alignItems: 'center',
     width: '100%',
   },
@@ -259,5 +279,19 @@ const styles = StyleSheet.create({
     color: '#d9d9d9',
     fontSize: 14,
     textAlign: 'center',
+  },
+  characterImageContainer: {
+    position: 'absolute',
+    left: 80,
+    bottom: 260,
+    width: 300,
+    height: 300,
+    zIndex: 3,
+    pointerEvents: 'none',
+  },
+  characterImage: {
+    width: 400,
+    height: 400,
+    resizeMode: 'contain',
   },
 });

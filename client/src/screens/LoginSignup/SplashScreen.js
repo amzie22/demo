@@ -27,7 +27,7 @@ const SplashScreen = ({ navigation }) => {
         duration: 10000, // Set the duration to 10000 milliseconds (10 seconds)
         useNativeDriver: false,
       }).start(() => {
-        navigation.navigate('Menu');
+        navigation.navigate('Onboarding');
       });
     }
   }, [navigation, progress, isImageLoaded]);

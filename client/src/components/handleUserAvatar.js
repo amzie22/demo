@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: '50%',
     alignItems: 'center',
-    marginTop: 35,
+
   },
   nextButtonText: {
     color: '#fff',
