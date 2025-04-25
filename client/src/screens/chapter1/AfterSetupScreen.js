@@ -6,14 +6,16 @@ const AfterSetupScreen = ({ route, navigation }) => {
   const [dialogueStep, setDialogueStep] = useState(0);
   const backgroundColor = useRef(new Animated.Value(0)).current;
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isLoading, setIsLoading] = useState(false); // State for loading screen
+  const [isLoading, setIsLoading] = useState(false); 
+  const [showAnimation, setShowAnimation] = useState(true); // Control animation visibility
 
   useEffect(() => {
-    Animated.timing(backgroundColor, {
-      toValue: 1,
-      duration: 1000,
-      useNativeDriver: false,
-    }).start();
+    // Give more time for the animation to load and play fully
+    const timer = setTimeout(() => {
+      setShowAnimation(false);
+    }, 20000); // Increased from 3000ms to 5000ms
+    
+    return () => clearTimeout(timer);
   }, []);
 
   const handleNextDialogue = () => {
@@ -78,18 +80,29 @@ const AfterSetupScreen = ({ route, navigation }) => {
     <ImageBackground source={require('../../assets/back.png')} style={styles.background}>
       <View style={styles.overlay} />
       <SafeAreaView style={styles.safeArea}>
-        <View style={styles.dialogueContainer}>
-          <View style={styles.characterImageContainer}>
-            {dialogueStep < 3 && (
-              <Image
-                source={require('../../assets/characters/Scribeon.png')}
-                style={[styles.characterImage]}
-              />
-            )}
+        {showAnimation ? (
+          <View style={styles.animationContainer}>
+            <Image 
+              source={require('../../assets/animation/fade.gif')}
+              style={styles.animation}
+              resizeMode="contain"
+            />
           </View>
-          {renderDialogue()}
-        </View>
+        ) : (
+          <View style={styles.dialogueContainer}>
+            <View style={styles.characterImageContainer}>
+              {dialogueStep < 3 && (
+                <Image
+                  source={require('../../assets/characters/Scribeon.png')}
+                  style={[styles.characterImage]}
+                />
+              )}
+            </View>
+            {renderDialogue()}
+          </View>
+        )}
       </SafeAreaView>
+      
       <Modal
         transparent={true}
         animationType="slide"
@@ -278,6 +291,29 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
     textAlign: 'center',
+  },
+  animation: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'contain',
+    backgroundColor: 'transparent', // Ensure background is transparent
+  },
+  animationContainer: {
+    width: '90%',
+    height: 300, // Increased height for better visibility
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(15, 15, 15, 0.51)',
+    borderRadius: 15,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.3)',
+  },
+  debugText: {
+    color: 'white',
+    fontSize: 16,
+    position: 'absolute', 
+    top: 10,
+    zIndex: 10,
   },
 });
 

@@ -201,18 +201,16 @@ const ClosingScreen = ({ navigation }) => {
                 imageStyle={{ width: '100%', height: '100%', resizeMode: 'cover' }}
               >
                 <View style={styles.innerBorder} />
-                <Text style={styles.modalTitle}>Proceed to the next episode?</Text>
+                <Text style={styles.modalTitle}>To be Continued...</Text>
                 <View style={styles.modalButtonsVertical}>
                   <TouchableOpacity
                     style={styles.keepLearningButton}
-                    onPress={handleGoToNextEpisode}
+                    onPress={() => {
+                      setShowEpisodeModal(false); // Close the modal first
+                      navigation.navigate('Menu'); // Then navigate to Menu
+                    }}
                   >
-                    <Text style={styles.keepLearningText}>Yes</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={() => navigation.navigate('Menu')}
-                  >
-                    <Text style={styles.quitText}>Main Menu</Text>
+                    <Text style={styles.keepLearningText}>Main Menu</Text>
                   </TouchableOpacity>
                 </View>
               </ImageBackground>
@@ -315,59 +313,58 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalImageBackground: {
-    width: 320,
-    height: 200,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 10,
+    width: '90%',
+    height: 220,
+    borderRadius: 12,
     overflow: 'hidden',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'relative',
   },
   innerBorder: {
     position: 'absolute',
-    top: 5,
-    left: 5,
-    right: 5,
-    bottom: 5,
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.5)',
-    borderRadius: 8,
+    top: 15,
+    left: 15,
+    right: 15,
+    bottom: 15,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: '#784C34',
   },
   modalTitle: {
-    color: '#fff',
-    fontSize: 22,
+    fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 20,
+    color: '#3D261C',
     textAlign: 'center',
-    textShadowColor: 'rgba(0, 0, 0, 0.75)',
-    textShadowOffset: {width: -1, height: 1},
-    textShadowRadius: 10,
   },
   modalButtonsVertical: {
+    width: '40%',
+    marginTop: 5,
+    justifyContent: 'center',
     alignItems: 'center',
-    width: '100%',
   },
   keepLearningButton: {
-    backgroundColor: 'rgba(83, 92, 104, 0.8)',
+    backgroundColor: '#784C34',
     paddingVertical: 10,
     paddingHorizontal: 20,
-    borderRadius: 20,
-    marginBottom: 16,
-    width: 200,
+    borderRadius: 8,
     alignItems: 'center',
+    marginBottom: 10,
+    width: 260,
+    height: 50,
+    justifyContent: 'center',
+    marginTop: 20,
   },
   keepLearningText: {
-    color: '#fff',
-    fontSize: 16,
+    color: '#FFF',
     fontWeight: 'bold',
+    fontSize: 16,
   },
   quitText: {
-    color: '#fff',
-    fontSize: 14,
-    textDecorationLine: 'underline',
-    marginTop: 10,
-    textShadowColor: 'rgba(0, 0, 0, 0.75)',
-    textShadowOffset: {width: -1, height: 1},
-    textShadowRadius: 10,
+    color: '#6F1D1B',
+    fontWeight: 'bold',
+    fontSize: 16,
+    textAlign: 'center',
   },
   loadingContainer: {
     flex: 1,

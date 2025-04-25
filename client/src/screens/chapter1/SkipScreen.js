@@ -105,12 +105,14 @@ const SkipScreen = ({ navigation }) => {
       <View style={styles.overlay} />
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.dialogueContainer}>
-          <View style={styles.characterImageContainer}>
-            <Image
-              source={require('../../assets/characters/Scribeon.png')}
-              style={[styles.characterImage]}
-            />
-          </View>
+          {dialogueStep !== 2 && (
+            <View style={styles.characterImageContainer}>
+              <Image
+                source={require('../../assets/characters/Scribeon.png')}
+                style={[styles.characterImage]}
+              />
+            </View>
+          )}
           {renderChoices()}
           {renderDialogue()}
         </View>
