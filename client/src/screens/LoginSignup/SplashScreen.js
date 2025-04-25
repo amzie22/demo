@@ -2,10 +2,12 @@ import React, { useEffect, useState, useRef } from 'react';
 import { View, StyleSheet, ImageBackground, Animated, Image, Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Asset } from 'expo-asset';
+import { Audio } from 'expo-av'; // Added import for audio
 
 const SplashScreen = ({ navigation }) => {
   const progress = useRef(new Animated.Value(0)).current;
   const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const [sound, setSound] = useState(null); // Added state for sound
 
   useEffect(() => {
     const loadImage = async () => {
@@ -20,11 +22,39 @@ const SplashScreen = ({ navigation }) => {
     loadImage();
   }, []);
 
+  // New effect to handle sound playback
+  useEffect(() => {
+    const playSound = async () => {
+      try {
+        const { sound } = await Audio.Sound.createAsync(
+          require('../../assets/sounds/Splash.mp3')
+        );
+        setSound(sound);
+        await sound.playAsync();
+      } catch (error) {
+        console.log('Error loading or playing sound: ', error);
+      }
+    };
+
+    if (isImageLoaded) {
+      playSound();
+    }
+  }, [isImageLoaded]);
+
+  // Clean up sound when component unmounts
+  useEffect(() => {
+    return () => {
+      if (sound) {
+        sound.unloadAsync();
+      }
+    };
+  }, [sound]);
+
   useEffect(() => {
     if (isImageLoaded) {
       Animated.timing(progress, {
         toValue: 1,
-        duration: 10000, // Set the duration to 10000 milliseconds (10 seconds)
+        duration: 10000,
         useNativeDriver: false,
       }).start(() => {
         navigation.navigate('Onboarding');

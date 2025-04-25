@@ -5,6 +5,14 @@ const LastEp4Screen = ({ navigation }) => {
   const [dialogueStep, setDialogueStep] = useState(0);
   const [isCharacterVisible, setIsCharacterVisible] = useState(true); // Add character visibility state
   const backgroundColor = useRef(new Animated.Value(0)).current;
+  
+  // Add the missing lines array
+  const lines = [
+    "We've recovered the ancient text from the ruins. This could be the key to understanding our ancestors' knowledge.",
+    "The symbols match those we found earlier in the southern temple.",
+    "I believe this manuscript contains wisdom that could help us solve the drought affecting our villages.",
+    "Let's bring this to the council. They need to see what we've discovered."
+  ];
 
   useEffect(() => {
     Animated.timing(backgroundColor, {
